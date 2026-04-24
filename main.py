@@ -1,8 +1,8 @@
 import requests
 import time
 
-BOT_TOKEN = "TON_TOKEN_ICI"
-CHAT_ID = "TON_CHAT_ID_ICI"
+BOT_TOKEN = "TON_VRAI_TOKEN"
+CHAT_ID = "TON_VRAI_CHAT_ID"
 
 def send(msg):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
