@@ -21,3 +21,10 @@ BOT_TOKEN=... CHAT_ID=... python main.py
 
 This runs as a background `worker` process (see `Procfile`), not a `web`
 process — on Heroku, scale it with `heroku ps:scale worker=1`.
+
+## Tests
+
+```
+pip install -r requirements-dev.txt
+pytest
+```
