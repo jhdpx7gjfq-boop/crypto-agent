@@ -66,3 +66,37 @@ class TestSend:
         mock_post.return_value = mock_response
         with pytest.raises(requests.HTTPError):
             main.send("tok123", "chat456", "hello")
+
+
+class TestPollOnce:
+    @patch("main.send")
+    @patch("main.get_btc")
+    def test_sends_alert_on_new_zone(self, mock_get_btc, mock_send):
+        mock_get_btc.return_value = 75000
+        result = main.poll_once("tok", "chat", 70000, 55000, last_zone=None)
+        assert result == "high"
+        mock_send.assert_called_once()
+
+    @patch("main.send")
+    @patch("main.get_btc")
+    def test_does_not_resend_while_still_in_same_zone(self, mock_get_btc, mock_send):
+        mock_get_btc.return_value = 75000
+        result = main.poll_once("tok", "chat", 70000, 55000, last_zone="high")
+        assert result == "high"
+        mock_send.assert_not_called()
+
+    @patch("main.send")
+    @patch("main.get_btc")
+    def test_malformed_api_response_is_handled_without_crashing(self, mock_get_btc, mock_send):
+        mock_get_btc.side_effect = KeyError("bitcoin")
+        result = main.poll_once("tok", "chat", 70000, 55000, last_zone="high")
+        assert result == "high"
+        mock_send.assert_not_called()
+
+    @patch("main.send")
+    @patch("main.get_btc")
+    def test_telegram_failure_does_not_prevent_zone_update(self, mock_get_btc, mock_send):
+        mock_get_btc.return_value = 75000
+        mock_send.side_effect = requests.RequestException("boom")
+        result = main.poll_once("tok", "chat", 70000, 55000, last_zone=None)
+        assert result == "high"
