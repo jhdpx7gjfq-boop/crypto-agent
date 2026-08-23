@@ -38,6 +38,16 @@ oi = client.open_interest_history("binance", "BTCUSDT", "1h", limit=100)
 funding = client.funding_rate_oi_weighted_history("BTC", "8h")
 ```
 
+**Status: `UNVERIFIED`** (see `coinglass.py: COINGLASS_DATA_STATUS`). The
+30 unit tests validate the client's behavior against mocked responses only
+— they are not proof the endpoints, auth, or response schema match the
+live API. Run `scripts/coinglass_verify.py` with a real `COINGLASS_API_KEY`
+against an environment that has network access to `coinglass.com` (this
+was written from a sandbox where that domain is blocked at the egress
+proxy) to promote the status; see
+`research/candidates/DATA-SRC-003_COINGLASS_API_V4/` for the full
+validation pipeline and alpha candidates.
+
 ## Tests
 
 ```

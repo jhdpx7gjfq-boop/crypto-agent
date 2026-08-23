@@ -3,7 +3,14 @@ from unittest.mock import Mock, patch
 import pytest
 import requests
 
-from coinglass import BASE_URL, CoinGlassAPIError, CoinGlassClient
+from coinglass import BASE_URL, COINGLASS_DATA_STATUS, CoinGlassAPIError, CoinGlassClient
+
+
+def test_data_status_is_unverified_until_real_api_evidence_is_recorded():
+    # Passing unit tests only prove the client behaves correctly against
+    # mocked responses -- see ENDPOINT_VALIDATION.md for what actually
+    # promotes this to API_VERIFIED and beyond.
+    assert COINGLASS_DATA_STATUS == "UNVERIFIED"
 
 
 def make_response(data=None, code="0", msg="success"):

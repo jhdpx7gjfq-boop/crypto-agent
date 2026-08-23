@@ -11,6 +11,25 @@ import requests
 
 BASE_URL = "https://open-api-v4.coinglass.com"
 
+# Verification ladder for this data source, tracked in
+# research/candidates/DATA-SRC-003_COINGLASS_API_V4/ENDPOINT_VALIDATION.md.
+# Only bump COINGLASS_DATA_STATUS once the evidence for that stage is
+# recorded there — passing unit tests (mocked responses) never promotes it.
+#   UNVERIFIED             -- client written and unit-tested against mocks only
+#   API_VERIFIED           -- real key, real HTTP call, per endpoint, succeeded
+#   SCHEMA_VERIFIED         -- response fields match DATA_DICTIONARY.md
+#   DATA_QUALITY_VERIFIED  -- gaps/timezone/resolution/nulls checked over a real range
+#   RESEARCH_READY          -- cleared to feed FeatureRecord construction
+STATUS_LEVELS = (
+    "UNVERIFIED",
+    "API_VERIFIED",
+    "SCHEMA_VERIFIED",
+    "DATA_QUALITY_VERIFIED",
+    "RESEARCH_READY",
+)
+
+COINGLASS_DATA_STATUS = "UNVERIFIED"
+
 
 class CoinGlassAPIError(Exception):
     """Raised when the CoinGlass API responds with a non-success code."""
