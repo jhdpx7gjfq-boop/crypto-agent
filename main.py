@@ -1,27 +1,68 @@
-import requests
+import logging
+import os
 import time
 
-BOT_TOKEN = "TON_VRAI_TOKEN"
-CHAT_ID = "TON_VRAI_CHAT_ID"
+import requests
 
-def send(msg):
-    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
-    requests.post(url, json={"chat_id": CHAT_ID, "text": msg})
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+logger = logging.getLogger(__name__)
+
+def classify_zone(price, high_threshold, low_threshold):
+    if price > high_threshold:
+        return "high"
+    if price < low_threshold:
+        return "low"
+    return None
+
+
+def format_alert(zone, price):
+    if zone == "high":
+        return f"🔴 BTC HIGH ALERT: {price}$"
+    return f"🟢 BTC DIP ALERT: {price}$"
+
+
+def send(bot_token, chat_id, msg):
+    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    response = requests.post(url, json={"chat_id": chat_id, "text": msg}, timeout=10)
+    response.raise_for_status()
+
 
 def get_btc():
-    data = requests.get(
-        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
-    ).json()
-    return data["bitcoin"]["usd"]
+    response = requests.get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd",
+        timeout=10,
+    )
+    response.raise_for_status()
+    return response.json()["bitcoin"]["usd"]
 
-while True:
 
-    btc = get_btc()
+def main():
+    bot_token = os.environ["BOT_TOKEN"]
+    chat_id = os.environ["CHAT_ID"]
+    high_threshold = float(os.environ.get("HIGH_THRESHOLD", 70000))
+    low_threshold = float(os.environ.get("LOW_THRESHOLD", 55000))
+    poll_seconds = int(os.environ.get("POLL_SECONDS", 60))
 
-    if btc > 70000:
-        send(f"🔴 BTC HIGH ALERT: {btc}$")
+    last_zone = None
+    while True:
+        try:
+            btc = get_btc()
+        except requests.RequestException as exc:
+            logger.warning("Failed to fetch BTC price: %s", exc)
+            time.sleep(poll_seconds)
+            continue
 
-    elif btc < 55000:
-        send(f"🟢 BTC DIP ALERT: {btc}$")
+        zone = classify_zone(btc, high_threshold, low_threshold)
 
-    time.sleep(60)
+        if zone is not None and zone != last_zone:
+            try:
+                send(bot_token, chat_id, format_alert(zone, btc))
+            except requests.RequestException as exc:
+                logger.warning("Failed to send Telegram alert: %s", exc)
+
+        last_zone = zone
+        time.sleep(poll_seconds)
+
+
+if __name__ == "__main__":
+    main()
