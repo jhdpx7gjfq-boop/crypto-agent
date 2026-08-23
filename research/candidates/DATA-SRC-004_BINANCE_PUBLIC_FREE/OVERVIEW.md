@@ -43,15 +43,25 @@ clairement si les deux sources sont un jour comparées dans un même alpha.
 
 ## Ce qui n'a pas d'équivalent gratuit correct
 
-### Liquidations
+### Liquidations -- implémenté, mais différent des autres
 
 Binance n'expose pas d'historique REST public de liquidations (l'ancien
 endpoint `/fapi/v1/allForceOrders` public a été retiré/restreint). Le seul
-flux public disponible est le WebSocket temps réel `!forceOrder@arr` : pour
-en tirer un historique, il faudrait faire tourner un collecteur qui
-écoute en continu et persiste les évènements soi-même -- une pièce
-d'infrastructure différente d'un simple client REST, pas juste une méthode
-en plus. Non implémenté ici.
+flux public disponible est le WebSocket temps réel `!forceOrder@arr`.
+
+`liquidation_collector.py` (`LiquidationCollector`) écoute ce flux en
+continu et persiste chaque évènement via `liquidation_store.py`
+(`LiquidationStore`, SQLite). C'est volontairement une pièce
+d'infrastructure différente des clients REST ci-dessus : un **worker
+long-lived** (voir `Procfile` : process `liquidation_collector`), pas une
+méthode qu'on appelle à la demande.
+
+Limite importante à documenter partout où cette donnée est utilisée :
+**il n'y a pas de backfill**. L'historique commence au moment où le
+collecteur a démarré ; toute coupure (redéploiement, crash, coupure
+réseau) crée un trou définitif dans la série, contrairement à
+`open_interest_history`/`funding_rate_history` qui peuvent rattraper le
+passé sur demande.
 
 ### NetFlow (spot, cross-exchange)
 
@@ -64,8 +74,8 @@ etc.) et un jeu d'adresses labellisées par exchange, pour un travail bien
 au-delà du périmètre d'un client REST.
 
 **Conclusion : sur les 6 familles P0 de CoinGlass, cette source gratuite en
-couvre 3 correctement (OI, Funding, CVD proxy single-exchange) et n'a pas
-d'équivalent réaliste pour 2 (Liquidations, NetFlow).**
+couvre 4 (OI, Funding, CVD proxy single-exchange, Liquidations via
+collecteur continu) et n'a pas d'équivalent réaliste pour 1 (NetFlow).**
 
 ## Connectivité -- constat depuis ce sandbox
 
@@ -77,6 +87,7 @@ Testé le 2026-08-23 depuis l'environnement qui a écrit ce module :
 | `api.bybit.com` | Idem, bloqué |
 | `www.okx.com` | Idem, bloqué |
 | `api.binance.com` (spot) | **Passe le proxy**, mais Binance répond HTTP 451 : *"Service unavailable from a restricted location according to 'b. Eligibility'..."* |
+| `fstream.binance.com` (WebSocket liquidations) | Bloqué par la politique d'egress, comme `fapi.binance.com` |
 
 Le 403 sur les trois premiers domaines est une politique d'organisation
 sur cette session précise (confirmé via `/root/.ccr/README.md` : *"The

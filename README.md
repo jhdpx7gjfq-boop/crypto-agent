@@ -72,12 +72,38 @@ cvd = client.spot_cvd_history("BTCUSDT", "1h", limit=100)
 ```
 
 Single-exchange only (not cross-exchange aggregated like CoinGlass), and
-has no equivalent for Liquidations or NetFlow — see
+has no equivalent for NetFlow — see
 `research/candidates/DATA-SRC-004_BINANCE_PUBLIC_FREE/OVERVIEW.md` for why,
 plus a live-connectivity note: this environment's egress policy blocks
-`fapi.binance.com` outright, and `api.binance.com` (spot) gets through the
-proxy but Binance itself returns HTTP 451 for this sandbox's location —
-verify reachability from wherever this actually runs.
+`fapi.binance.com` and `fstream.binance.com` outright, and `api.binance.com`
+(spot) gets through the proxy but Binance itself returns HTTP 451 for this
+sandbox's location — verify reachability from wherever this actually runs.
+
+## Liquidation collector (free, no API key)
+
+Binance has no free REST history for liquidations either, so
+`liquidation_collector.py` (`LiquidationCollector`) listens continuously to
+Binance's public `!forceOrder@arr` WebSocket stream (all symbols, no key)
+and persists each event via `liquidation_store.py` (`LiquidationStore`,
+SQLite). Unlike the REST clients above, this is a long-running worker, not
+something called on demand — see the `liquidation_collector` process in
+`Procfile`.
+
+```
+LIQUIDATION_DB_PATH=liquidations.db python liquidation_collector.py
+```
+
+**No backfill**: history only starts from whenever the collector was
+launched, and any downtime (crash, redeploy, network drop) is a permanent
+gap in the series — different from `open_interest_history` /
+`funding_rate_history`, which can always fetch the past on demand.
+
+```python
+from liquidation_store import LiquidationStore
+
+store = LiquidationStore("liquidations.db")
+store.recent(symbol="BTCUSDT", limit=50)
+```
 
 ## Tests
 
