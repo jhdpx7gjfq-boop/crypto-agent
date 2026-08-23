@@ -36,6 +36,24 @@ def get_btc():
     return response.json()["bitcoin"]["usd"]
 
 
+def poll_once(bot_token, chat_id, high_threshold, low_threshold, last_zone):
+    try:
+        btc = get_btc()
+    except (requests.RequestException, KeyError, ValueError) as exc:
+        logger.warning("Failed to fetch BTC price: %s", exc)
+        return last_zone
+
+    zone = classify_zone(btc, high_threshold, low_threshold)
+
+    if zone is not None and zone != last_zone:
+        try:
+            send(bot_token, chat_id, format_alert(zone, btc))
+        except requests.RequestException as exc:
+            logger.warning("Failed to send Telegram alert: %s", exc)
+
+    return zone
+
+
 def main():
     bot_token = os.environ["BOT_TOKEN"]
     chat_id = os.environ["CHAT_ID"]
@@ -45,22 +63,7 @@ def main():
 
     last_zone = None
     while True:
-        try:
-            btc = get_btc()
-        except requests.RequestException as exc:
-            logger.warning("Failed to fetch BTC price: %s", exc)
-            time.sleep(poll_seconds)
-            continue
-
-        zone = classify_zone(btc, high_threshold, low_threshold)
-
-        if zone is not None and zone != last_zone:
-            try:
-                send(bot_token, chat_id, format_alert(zone, btc))
-            except requests.RequestException as exc:
-                logger.warning("Failed to send Telegram alert: %s", exc)
-
-        last_zone = zone
+        last_zone = poll_once(bot_token, chat_id, high_threshold, low_threshold, last_zone)
         time.sleep(poll_seconds)
 
 
