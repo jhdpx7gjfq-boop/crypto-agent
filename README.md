@@ -55,6 +55,30 @@ backoff honoring `Retry-After`, and can space out calls locally via
 `min_request_interval` (disabled by default). See
 `tests/test_coinglass_resilience.py` for the behavior this covers.
 
+## Binance public client (free, no API key)
+
+CoinGlass has no free API tier. `binance_public.py` (`BinancePublicClient`)
+covers Open Interest, Funding Rate, and a CVD proxy (computed locally from
+klines' taker buy/sell volume) using Binance's public, key-less market data
+endpoints:
+
+```python
+from binance_public import BinancePublicClient
+
+client = BinancePublicClient()
+oi = client.open_interest_history("BTCUSDT", "1h", limit=100)
+funding = client.funding_rate_history("BTCUSDT", limit=100)
+cvd = client.spot_cvd_history("BTCUSDT", "1h", limit=100)
+```
+
+Single-exchange only (not cross-exchange aggregated like CoinGlass), and
+has no equivalent for Liquidations or NetFlow — see
+`research/candidates/DATA-SRC-004_BINANCE_PUBLIC_FREE/OVERVIEW.md` for why,
+plus a live-connectivity note: this environment's egress policy blocks
+`fapi.binance.com` outright, and `api.binance.com` (spot) gets through the
+proxy but Binance itself returns HTTP 451 for this sandbox's location —
+verify reachability from wherever this actually runs.
+
 ## Tests
 
 ```

@@ -8,10 +8,10 @@ spot coin netflow. Each method returns the API response's `data` payload.
 import logging
 import os
 import time
-from datetime import datetime, timezone
-from email.utils import parsedate_to_datetime
 
 import requests
+
+from http_retry import RateLimitError, backoff_wait, parse_retry_after
 
 logger = logging.getLogger(__name__)
 
@@ -39,28 +39,6 @@ COINGLASS_DATA_STATUS = "UNVERIFIED"
 
 class CoinGlassAPIError(Exception):
     """Raised when the CoinGlass API responds with a non-success code."""
-
-
-class RateLimitError(Exception):
-    """Raised when CoinGlass still returns HTTP 429 after all retries."""
-
-    def __init__(self, message="CoinGlass rate limit exceeded (429)", retry_after=None):
-        super().__init__(message)
-        self.retry_after = retry_after
-
-
-def _parse_retry_after(value):
-    """Retry-After can be seconds or an HTTP-date; return seconds or None."""
-    if value is None:
-        return None
-    try:
-        return float(value)
-    except ValueError:
-        pass
-    try:
-        return max(0.0, (parsedate_to_datetime(value) - datetime.now(timezone.utc)).total_seconds())
-    except (TypeError, ValueError):
-        return None
 
 
 class CoinGlassClient:
@@ -116,12 +94,6 @@ class CoinGlassClient:
                 "coinglass_quota endpoint=%s use=%s max=%s", path, self.rate_limit_used, self.rate_limit_max
             )
 
-    def _backoff_wait(self, attempt, retry_after):
-        wait = min(self.backoff_max, self.backoff_base * (2 ** (attempt - 1)))
-        if retry_after is not None:
-            wait = max(wait, retry_after)
-        return wait
-
     def _get(self, path, **params):
         params = {k: v for k, v in params.items() if v is not None}
         attempt = 0
@@ -137,11 +109,11 @@ class CoinGlassClient:
             self._record_quota(response.headers, path)
 
             if response.status_code == 429:
-                retry_after = _parse_retry_after(response.headers.get("Retry-After"))
+                retry_after = parse_retry_after(response.headers.get("Retry-After"))
                 attempt += 1
                 if attempt > self.max_retries:
-                    raise RateLimitError(retry_after=retry_after)
-                wait = self._backoff_wait(attempt, retry_after)
+                    raise RateLimitError("CoinGlass rate limit exceeded (429)", retry_after=retry_after)
+                wait = backoff_wait(attempt, self.backoff_base, self.backoff_max, retry_after)
                 logger.warning(
                     "coinglass_rate_limited endpoint=%s attempt=%d/%d wait=%.2fs",
                     path, attempt, self.max_retries, wait,
