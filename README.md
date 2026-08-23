@@ -22,6 +22,22 @@ BOT_TOKEN=... CHAT_ID=... python main.py
 This runs as a background `worker` process (see `Procfile`), not a `web`
 process — on Heroku, scale it with `heroku ps:scale worker=1`.
 
+## CoinGlass client
+
+`coinglass.py` provides a `CoinGlassClient` for the [CoinGlass V4 API](https://docs.coinglass.com),
+covering open interest, funding rate, liquidations, CVD (spot & futures) and
+spot coin netflow — the market-microstructure data feeding IGWT's research.
+
+Set `COINGLASS_API_KEY` (or pass `api_key=` explicitly), then:
+
+```python
+from coinglass import CoinGlassClient
+
+client = CoinGlassClient()
+oi = client.open_interest_history("binance", "BTCUSDT", "1h", limit=100)
+funding = client.funding_rate_oi_weighted_history("BTC", "8h")
+```
+
 ## Tests
 
 ```
