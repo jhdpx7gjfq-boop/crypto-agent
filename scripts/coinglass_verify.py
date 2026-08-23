@@ -1,9 +1,15 @@
 """Phase A -- API Reality Check for the CoinGlass V4 integration.
 
 Calls each of the 6 P0 endpoint families with a real COINGLASS_API_KEY and
-prints a report per endpoint: STATUS, HTTP, AUTH, SCHEMA (top-level keys of
-the first record), TIMESTAMP/SYMBOL/EXCHANGE/TIMEFRAME field presence, and a
-basic DATA QUALITY check (non-empty, timestamps present and sorted).
+prints a report per endpoint: STATUS, HTTP, AUTH, quota headers observed
+(API-KEY-MAX-LIMIT / API-KEY-USE-LIMIT), whether a 429/Retry-After was hit,
+SCHEMA (top-level keys of the first record), and a basic DATA QUALITY check
+(non-empty, timestamps present and sorted).
+
+Deliberately conservative: one shared client, 300ms spacing between calls,
+only the 8 P0 methods below. The goal is to prove the client talks to
+CoinGlass correctly, not to probe how far their API can be pushed -- this
+is not a load/stress test.
 
 This does not run in CI and is not a pytest test: it makes real network
 calls and costs real API quota. Run it manually, then copy the output table
@@ -16,7 +22,7 @@ Usage:
 
 import requests
 
-from coinglass import CoinGlassAPIError, CoinGlassClient
+from coinglass import CoinGlassAPIError, CoinGlassClient, RateLimitError
 
 TIMESTAMP_KEYS = ("time", "timestamp", "t", "ts", "createTime")
 
@@ -44,14 +50,14 @@ def check_data_quality(records):
     return "OK"
 
 
-def run_check(name, method_name, kwargs):
-    client = CoinGlassClient()
+def run_check(client, name, method_name, kwargs):
     method = getattr(client, method_name)
     row = {
         "endpoint": name,
         "status": "?",
         "http": "?",
         "auth": "?",
+        "quota": "?",
         "schema": "?",
         "data_quality": "?",
     }
@@ -61,6 +67,12 @@ def run_check(name, method_name, kwargs):
         row["status"] = "FAIL"
         row["http"] = str(exc.response.status_code if exc.response is not None else exc)
         row["auth"] = "REJECTED" if exc.response is not None and exc.response.status_code in (401, 403) else "?"
+        return row
+    except RateLimitError as exc:
+        row["status"] = "FAIL"
+        row["http"] = "429 (retries exhausted)"
+        row["auth"] = "OK"
+        row["quota"] = f"retry_after={exc.retry_after}"
         return row
     except CoinGlassAPIError as exc:
         row["status"] = "FAIL"
@@ -72,27 +84,32 @@ def run_check(name, method_name, kwargs):
     row["status"] = "PASS"
     row["http"] = "200"
     row["auth"] = "OK"
+    row["quota"] = f"{client.rate_limit_used}/{client.rate_limit_max}"
     row["schema"] = sorted(data[0].keys()) if data else "(empty payload)"
     row["data_quality"] = check_data_quality(data)
     return row
 
 
 def main():
-    results = [run_check(name, method_name, kwargs) for name, method_name, kwargs in CHECKS]
+    # One shared client so quota tracking accumulates across calls, with a
+    # conservative fixed spacing and a modest retry budget -- see the
+    # module docstring on why this deliberately stays gentle.
+    client = CoinGlassClient(min_request_interval=0.3, max_retries=3)
+    results = [run_check(client, name, method_name, kwargs) for name, method_name, kwargs in CHECKS]
 
-    header = f"| {'Endpoint':<24} | {'Status':<6} | {'HTTP':<24} | {'Auth':<9} | {'Data quality':<10} |"
+    header = f"| {'Endpoint':<24} | {'Status':<6} | {'HTTP':<24} | {'Auth':<9} | {'Quota (use/max)':<16} |"
     print(header)
     print("|" + "-" * (len(header) - 2) + "|")
     for row in results:
         print(
             f"| {row['endpoint']:<24} | {row['status']:<6} | {str(row['http']):<24} "
-            f"| {row['auth']:<9} | {row['data_quality']:<10} |"
+            f"| {row['auth']:<9} | {str(row['quota']):<16} |"
         )
 
     print()
     print("Schema (first record's keys) per endpoint -- paste into DATA_DICTIONARY.md:")
     for row in results:
-        print(f"- {row['endpoint']}: {row['schema']}")
+        print(f"- {row['endpoint']}: {row['schema']} (data quality: {row['data_quality']})")
 
 
 if __name__ == "__main__":

@@ -38,6 +38,40 @@ sortant vers `coinglass.com`, avec une vraie clé `COINGLASS_API_KEY`.
 
 Statuts possibles : `UNVERIFIED` / `PASS` / `FAIL` / `WARN`.
 
+## Rate Limit / Quota Validation
+
+`CoinGlassClient` lit `API-KEY-MAX-LIMIT` / `API-KEY-USE-LIMIT` sur chaque
+réponse (exposés via `client.rate_limit_max` / `client.rate_limit_used`),
+gère le HTTP 429 avec backoff exponentiel plafonné (`backoff_max`),
+respecte `Retry-After` s'il est fourni, et espace localement ses appels
+(`min_request_interval`). Rien n'est codé en dur à partir des chiffres de
+plan : le serveur CoinGlass reste l'autorité opérationnelle, le client
+s'adapte aux headers reçus. `scripts/coinglass_verify.py` utilise un seul
+client partagé avec `min_request_interval=0.3` (300 ms) et `max_retries=3`
+-- volontairement conservateur, ce n'est pas un stress test.
+
+Checklist à dupliquer pour chacun des 8 endpoints vérifiés par
+`scripts/coinglass_verify.py` (copier ce tableau une fois par endpoint) :
+
+| Test | Résultat |
+|---|---|
+| Auth `CG-API-KEY` | ⬜ |
+| HTTP status | ⬜ |
+| `API-KEY-MAX-LIMIT` présent | ⬜ |
+| `API-KEY-USE-LIMIT` présent | ⬜ |
+| Quota cohérent (use ≤ max, augmente entre appels) | ⬜ |
+| 429 comportement documenté | ⬜ |
+| Retry-After observé (si 429 rencontré) | ⬜ |
+| Données retournées | ⬜ |
+| Schema validé | ⬜ |
+| Timestamp validé | ⬜ |
+| Statut endpoint | ⬜ |
+
+Un 429 n'est pas nécessairement attendu pendant Phase A (le trafic est
+volontairement faible) -- "429 comportement documenté" peut se cocher avec
+la mention "non déclenché à ce volume" tant que le code de gestion est
+couvert par les tests de résilience (`tests/test_coinglass_resilience.py`).
+
 ## Critères de passage à `API_VERIFIED`
 
 - Les 6 familles P0 (10 endpoints ci-dessus) renvoient HTTP 200 avec

@@ -39,7 +39,7 @@ funding = client.funding_rate_oi_weighted_history("BTC", "8h")
 ```
 
 **Status: `UNVERIFIED`** (see `coinglass.py: COINGLASS_DATA_STATUS`). The
-30 unit tests validate the client's behavior against mocked responses only
+unit tests validate the client's behavior against mocked responses only
 — they are not proof the endpoints, auth, or response schema match the
 live API. Run `scripts/coinglass_verify.py` with a real `COINGLASS_API_KEY`
 against an environment that has network access to `coinglass.com` (this
@@ -47,6 +47,13 @@ was written from a sandbox where that domain is blocked at the egress
 proxy) to promote the status; see
 `research/candidates/DATA-SRC-003_COINGLASS_API_V4/` for the full
 validation pipeline and alpha candidates.
+
+The client reads `API-KEY-MAX-LIMIT` / `API-KEY-USE-LIMIT` off every
+response (`client.rate_limit_max` / `client.rate_limit_used`) instead of
+hardcoding plan quotas, retries on HTTP 429 with capped exponential
+backoff honoring `Retry-After`, and can space out calls locally via
+`min_request_interval` (disabled by default). See
+`tests/test_coinglass_resilience.py` for the behavior this covers.
 
 ## Tests
 
