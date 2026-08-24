@@ -12,9 +12,18 @@ compte : ce sont des endpoints de marché publics.
 
 ## Statut
 
-`COINGLASS_DATA_STATUS`-style : `UNVERIFIED`. Le client est testé
-(mocks) mais pas vérifié en direct -- voir la section connectivité
-ci-dessous, le blocage n'est pas le même que pour CoinGlass.
+`BINANCE_DATA_STATUS = "SCHEMA_VERIFIED"` (voir `binance_public.py`) pour
+les 4 méthodes REST/calculées (`open_interest`, `open_interest_history`,
+`funding_rate_history`, `*_cvd_history`) -- confirmé en direct le
+2026-08-24 depuis la machine de l'utilisateur avec
+`scripts/binance_verify.py` (voir la section Vérification en direct
+ci-dessous pour les schémas réels obtenus). Pas encore
+`DATA_QUALITY_VERIFIED` : il reste à faire la checklist trous/doublons/
+timezone sur une fenêtre d'au moins 30 jours.
+
+Le collecteur de liquidations (`liquidation_collector.py`) n'est **pas**
+couvert par ce statut -- il n'a jamais tourné en conditions réelles, à
+vérifier séparément (voir plus bas).
 
 ## Périmètre couvert
 
@@ -102,11 +111,57 @@ session). Si tu comptes utiliser ce client en production, vérifie que
 l'IP/juridiction depuis laquelle il tournera est éligible aux CGU Binance
 avant d'investir davantage dans cette source.
 
+## Vérification en direct -- 2026-08-24
+
+Exécuté par l'utilisateur (Windows, PowerShell) avec `scripts/binance_verify.py`,
+depuis sa propre machine -- réseau non restreint, contrairement à ce
+sandbox. Résultat : **5/5 PASS**, HTTP 200 partout.
+
+| Endpoint | Statut | Data quality |
+|---|---|---|
+| Open Interest (current) | PASS | OK |
+| Open Interest (history) | PASS | OK |
+| Funding Rate (history) | PASS | OK* |
+| Futures CVD (from klines) | PASS | OK |
+| Spot CVD (from klines) | PASS | OK |
+
+\* Le script a d'abord affiché un faux "WARN (no timestamp field found)"
+pour Funding Rate -- bug du script de vérification (il ne reconnaissait
+pas `fundingTime` comme champ de timestamp), pas un problème de données.
+Corrigé.
+
+### Schémas réels observés (à comparer à tout changement futur de l'API Binance)
+
+- **Open Interest (current)** : `['openInterest', 'symbol', 'time']`
+- **Open Interest (history)** : `['CMCCirculatingSupply', 'sumOpenInterest', 'sumOpenInterestValue', 'symbol', 'timestamp']`
+  -- note : pas un simple champ `openInterest`, contrairement à l'endpoint
+  "current". Contient aussi `CMCCirculatingSupply` (CoinMarketCap),
+  spécifique à cet endpoint historique.
+- **Funding Rate (history)** : `['fundingRate', 'fundingTime', 'markPrice', 'rateType', 'symbol']`
+- **Futures / Spot CVD (calculé)** : `['open_time', 'close_time', 'taker_buy_volume', 'taker_sell_volume', 'delta', 'cvd']`
+  -- conforme à `cvd_from_klines()`, confirme que le calcul local fonctionne
+  sur de vraies données.
+
+### Connectivité confirmée depuis une machine normale (hors sandbox)
+
+- `https://fapi.binance.com/...` : accessible, données réelles retournées.
+- `https://api.binance.com/...` : accessible, données réelles retournées
+  (contrairement au 451 obtenu depuis ce sandbox -- confirme que c'était
+  bien une restriction liée à la localisation apparente de *ce*
+  environnement, pas à Binance en général).
+- `https://open-api-v4.coinglass.com/...` (sans clé) : accessible aussi,
+  répond `401 API key missing` comme attendu -- donc `DATA-SRC-003`
+  (CoinGlass) n'est bloquée que par l'absence de clé, pas par le réseau,
+  depuis cette même machine.
+
 ## Prochaine étape
 
-Lancer `client.open_interest("BTCUSDT")` / `client.funding_rate_history(...)`
-/ `client.spot_cvd_history(...)` depuis un environnement qui n'a ni
-restriction réseau ni restriction géographique Binance, pour confirmer que
-les schémas de réponse correspondent à ce qu'attend `binance_public.py`
-avant de brancher ces données sur les mêmes hypothèses CG-ALPHA que
-`DATA-SRC-003` (`ALPHA_CANDIDATES.md`).
+- Lancer `liquidation_collector.py` en continu depuis cette même machine
+  (ou un hébergement qui reste allumé) pour vérifier en conditions réelles
+  le flux `!forceOrder@arr` et commencer à construire un historique --
+  actuellement non testé en direct.
+- Faire la checklist qualité (trous, doublons, timezone) sur >=30 jours
+  avant de passer à `DATA_QUALITY_VERIFIED`.
+- Si une clé CoinGlass est obtenue un jour, comparer les deux sources sur
+  les mêmes hypothèses CG-ALPHA (`DATA-SRC-003/ALPHA_CANDIDATES.md`) --
+  garder à l'esprit que le CVD Binance est single-exchange, pas agrégé.

@@ -21,7 +21,7 @@ import requests
 from binance_public import BinanceAPIError, BinancePublicClient
 from http_retry import RateLimitError
 
-TIMESTAMP_KEYS = ("time", "timestamp", "openTime", "open_time")
+TIMESTAMP_KEYS = ("time", "timestamp", "openTime", "open_time", "fundingTime")
 
 CHECKS = [
     ("Open Interest (current)", "open_interest", dict(symbol="BTCUSDT")),

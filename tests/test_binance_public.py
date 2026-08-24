@@ -4,13 +4,22 @@ import pytest
 import requests
 
 from binance_public import (
+    BINANCE_DATA_STATUS,
     FUTURES_BASE_URL,
     SPOT_BASE_URL,
     BinanceAPIError,
     BinancePublicClient,
     cvd_from_klines,
 )
+from coinglass import STATUS_LEVELS
 from http_retry import RateLimitError
+
+
+def test_data_status_is_a_recognized_verification_level():
+    # Guards against a typo silently making this an unrecognized value --
+    # see research/candidates/DATA-SRC-004_BINANCE_PUBLIC_FREE/OVERVIEW.md
+    # for what actually justifies each level.
+    assert BINANCE_DATA_STATUS in STATUS_LEVELS
 
 
 def make_response(status_code=200, payload=None, headers=None):

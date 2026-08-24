@@ -30,6 +30,21 @@ logger = logging.getLogger(__name__)
 FUTURES_BASE_URL = "https://fapi.binance.com"
 SPOT_BASE_URL = "https://api.binance.com"
 
+# Same verification ladder as coinglass.py (see COINGLASS_DATA_STATUS there
+# for what each level means). Covers open_interest*, funding_rate_history,
+# and *_cvd_history -- the REST/computed methods below. The liquidation
+# collector (liquidation_collector.py) isn't covered by this flag; it has
+# never been run live and is tracked separately.
+#
+# Promoted to SCHEMA_VERIFIED on 2026-08-24: the user ran
+# scripts/binance_verify.py from their own machine (this sandbox's egress
+# policy blocks fapi.binance.com/api.binance.com outright) and got real
+# HTTP 200s with the schemas now recorded in
+# research/candidates/DATA-SRC-004_BINANCE_PUBLIC_FREE/OVERVIEW.md. Not yet
+# DATA_QUALITY_VERIFIED: that needs the >=30 day gap/duplicate/timezone
+# checklist from that file, not just one successful call per method.
+BINANCE_DATA_STATUS = "SCHEMA_VERIFIED"
+
 
 class BinanceAPIError(Exception):
     """Raised when Binance responds with an error payload (e.g. bad symbol)."""
