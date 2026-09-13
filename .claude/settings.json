@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./data/**)",
+      "Read(**/*.parquet)",
+      "Read(**/*.csv)",
+      "Read(**/*.duckdb)",
+      "Read(./.env)",
+      "Read(**/node_modules/**)",
+      "Read(**/__pycache__/**)"
+    ]
+  }
+}

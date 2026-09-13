@@ -2,3 +2,12 @@ __pycache__/
 *.pyc
 .env
 .pytest_cache/
+
+# Données de recherche — jamais versionnées
+data/
+*.parquet
+*.duckdb
+*.csv
+
+node_modules/
+.venv/
