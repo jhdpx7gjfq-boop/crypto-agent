@@ -153,7 +153,7 @@
   "gate": {
     "gate_id": "REAL-DATA-FIXTURE-001",
     "scope": "infrastructure validation (research pipeline), not a signal verdict",
-    "evaluated_at_utc": "2026-09-15T21:11:10+00:00",
+    "evaluated_at_utc": "2026-09-15T21:49:35+00:00",
     "igwt_version": "0.1.0",
     "checks": [
       {
@@ -166,7 +166,7 @@
         "id": "G2",
         "name": "Real dataset accessible and unaltered",
         "passed": true,
-        "detail": "every raw snapshot re-hashes to its manifest sha256"
+        "detail": "every recorded artefact re-hashes to its manifest sha256"
       },
       {
         "id": "G3",

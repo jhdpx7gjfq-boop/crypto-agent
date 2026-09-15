@@ -1,0 +1,20 @@
+{
+  "fixture_id": "REAL-DATA-FULL-001",
+  "checked_at_utc": "2026-09-15T21:52:47+00:00",
+  "api_reachable": false,
+  "api_endpoint": null,
+  "probes": [
+    {
+      "endpoint": "https://data-api.binance.vision/api/v3",
+      "status": null,
+      "detail": "connection refused by the egress policy (HTTPSConnectionPool(host='data-api.binance.vision', port=443): Max retries exceeded with url: /api/v3/klines?symbol=BTCU)"
+    },
+    {
+      "endpoint": "https://api.binance.com/api/v3",
+      "status": 451,
+      "detail": "HTTP 451 \u2014 unavailable for legal reasons in this region"
+    }
+  ],
+  "file_ingress_available": true,
+  "verdict": "BLOCKED \u2014 API unreachable; use --from-files"
+}

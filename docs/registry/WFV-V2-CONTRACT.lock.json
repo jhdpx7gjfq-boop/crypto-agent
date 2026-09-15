@@ -1,0 +1,37 @@
+{
+  "artefact_id": "WFV-V2-CONTRACT",
+  "status": "FROZEN",
+  "locked_at_utc": "2026-09-15T21:45:55+00:00",
+  "igwt_version": "0.1.0",
+  "amendment_rule": "Any change to the columns, their semantics, the embargo rule or the serialisation precision is a new contract version (WFV v3) and invalidates every lock that cites this one.",
+  "columns": [
+    "date",
+    "asset",
+    "signal",
+    "fwdRet",
+    "regimeVol"
+  ],
+  "column_semantics": {
+    "date": "datetime.date \u2014 point-in-time stamp",
+    "asset": "str \u2014 instrument symbol",
+    "signal": "float \u2014 model input, reads data <= date only",
+    "fwdRet": "float \u2014 label, reads (date, date + horizon]",
+    "regimeVol": "float \u2014 trailing volatility at date, conditioner"
+  },
+  "serialisation_decimals": 10,
+  "default_feature_params": {
+    "momentum_lookback_days": 30,
+    "forward_horizon_days": 7,
+    "volatility_window_days": 30,
+    "min_cross_section": 3
+  },
+  "invariants": [
+    "embargo_days defaults to horizon_days",
+    "embargo_days < horizon_days is rejected",
+    "assert_no_leakage re-checks every training row, not only fold bounds",
+    "exactly one parameter is fitted: the sign of the signal, from training data",
+    "the information coefficient is cross-sectional within a date, then averaged",
+    "validate_contract rejects NaN, negative regimeVol and duplicate (date, asset)"
+  ],
+  "single_implementation": "igwt.features.contract.build_observations \u2014 every fixture, whatever its source, produces its observations through this one function"
+}

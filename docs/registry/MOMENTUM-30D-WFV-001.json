@@ -1,0 +1,44 @@
+{
+  "artefact_id": "MOMENTUM-30D-WFV-001",
+  "status": "INCONCLUSIVE / NO EVIDENCE OF EDGE",
+  "production": "FORBIDDEN",
+  "locked_at_utc": "2026-09-15T21:45:55+00:00",
+  "dataset": "REAL-DATA-FIXTURE-001",
+  "scope": {
+    "source": "CoinGecko composite",
+    "first_date": "2025-10-16",
+    "last_date": "2026-09-08",
+    "assets": [
+      "ADAUSDT",
+      "BNBUSDT",
+      "BTCUSDT",
+      "DOGEUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "XRPUSDT"
+    ],
+    "signal": "cross-sectional z-score, within each date, of the trailing 30-day simple return",
+    "horizon_days": 7
+  },
+  "result": {
+    "oos_folds": 4,
+    "oos_dates_scored": 120,
+    "mean_oos_ic": 0.000595238095238107,
+    "oos_ic_t_stat": 0.015887014935713754,
+    "oos_ic_hit_rate": 0.5,
+    "fold_ics": [
+      0.08095238095238097,
+      -0.13095238095238096,
+      -0.08095238095238093,
+      0.13333333333333333
+    ],
+    "direction_flips": 0
+  },
+  "interpretation": "No evidence of a 30-day momentum edge on this population, this period and this signal definition. Four folds with ICs dispersed around zero support no general conclusion about crypto momentum.",
+  "explicitly_not_claimed": [
+    "momentum is definitively invalidated",
+    "the result generalises beyond 2025-10-16 to 2026-09-08",
+    "the result generalises beyond the CoinGecko composite",
+    "the result generalises to another signal definition or horizon"
+  ]
+}

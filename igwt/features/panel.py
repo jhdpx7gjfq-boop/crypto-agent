@@ -85,12 +85,12 @@ def parse_market_chart(asset: str, payload: dict) -> AssetSeries:
         "out_of_order_input": out_of_order,
         "first_date": dates[0].isoformat() if dates else None,
         "last_date": dates[-1].isoformat() if dates else None,
-        "calendar_gaps": _calendar_gaps(dates),
+        "calendar_gaps": calendar_gaps(dates),
     }
     return AssetSeries(asset=asset, dates=dates, closes=closes, volumes=volumes, report=report)
 
 
-def _calendar_gaps(dates: list[date]) -> list[dict]:
+def calendar_gaps(dates: list[date]) -> list[dict]:
     """Missing calendar days inside the covered range (crypto trades 24/7)."""
     gaps = []
     for previous, current in zip(dates, dates[1:]):

@@ -1,8 +1,11 @@
-"""Run WFV v2 against REAL-DATA-FIXTURE-001 and emit the gate report.
+"""Run WFV v2 against a fixture and emit its gate report.
 
-    python -m igwt.validation.run_fixture_wfv
+    python -m igwt.validation.run_fixture_wfv                      # locked control fixture
+    python -m igwt.validation.run_fixture_wfv --root <fixture dir> # any other fixture
 
-Writes ``wfv_report.json`` next to the fixture. The gate it evaluates is an
+Writes ``wfv_report.json`` next to the fixture. Both manifest shapes are
+accepted — a snapshot-store fixture and an audited OHLCV fixture — so the same
+runner, and therefore the same frozen contract, serves every dataset. The gate it evaluates is an
 **infrastructure** gate: it asks whether real data flowed through a validator
 that cannot see the future. It deliberately does not certify the signal — that
 verdict belongs to the research layer and to a human.
@@ -18,6 +21,7 @@ from pathlib import Path
 
 from igwt import __version__
 from igwt.data import snapshot
+from igwt.features import contract
 from igwt.fixtures import real_data_fixture_001 as fixture
 from igwt.validation import wfv
 
@@ -28,21 +32,33 @@ MIN_FOLDS = 3
 
 
 def verify_raw_integrity(root: Path = fixture.FIXTURE_ROOT) -> dict:
-    """Re-hash every raw snapshot and compare it to the manifest."""
-    manifest = json.loads((Path(root) / "manifest.json").read_text(encoding="utf-8"))
+    """Re-hash every recorded artefact and compare it to the manifest.
+
+    Handles both manifest shapes: a snapshot-store fixture records
+    ``raw_snapshots``, an audited OHLCV fixture records ``integrity_audit``.
+    Either way the question is the same — do the committed bytes still hash to
+    what the manifest claims?
+    """
+    root = Path(root)
+    manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     results = {}
-    for symbol, record in manifest["raw_snapshots"].items():
-        path = Path(root) / record["file"]
-        if not path.exists():
-            results[symbol] = {"present": False, "matches": False}
-            continue
-        digest = snapshot.sha256_hex(path.read_bytes())
-        results[symbol] = {
-            "present": True,
-            "matches": digest == record["sha256"],
-            "sha256": digest,
-        }
+
+    for symbol, record in manifest.get("raw_snapshots", {}).items():
+        results[symbol] = _rehash(root / record["file"], record["sha256"])
+
+    for symbol, record in manifest.get("integrity_audit", {}).items():
+        results[symbol] = _rehash(
+            root / "normalized" / f"{symbol}.csv", record["sha256_normalized"]
+        )
+
     return {"manifest": manifest, "snapshots": results}
+
+
+def _rehash(path: Path, expected: str) -> dict:
+    if not path.exists():
+        return {"present": False, "matches": False}
+    digest = snapshot.sha256_hex(path.read_bytes())
+    return {"present": True, "matches": digest == expected, "sha256": digest}
 
 
 def build_config(manifest: dict, *, train_days: int, test_days: int) -> wfv.WFVConfig:
@@ -56,23 +72,24 @@ def build_config(manifest: dict, *, train_days: int, test_days: int) -> wfv.WFVC
     )
 
 
-def evaluate_gate(integrity: dict, report: dict) -> dict:
+def evaluate_gate(integrity: dict, report: dict, *, gate_id: str = GATE_ID) -> dict:
     snapshots = integrity["snapshots"]
     manifest = integrity["manifest"]
     folds = report["folds"]
+    declared_assets = len(manifest.get("raw_snapshots") or manifest.get("integrity_audit") or {})
 
     checks = [
         {
             "id": "G1",
             "name": "Real dataset identified",
-            "passed": bool(manifest["raw_snapshots"]),
-            "detail": f"{len(manifest['raw_snapshots'])} assets declared in the fixture manifest",
+            "passed": declared_assets > 0,
+            "detail": f"{declared_assets} assets declared in the fixture manifest",
         },
         {
             "id": "G2",
             "name": "Real dataset accessible and unaltered",
             "passed": bool(snapshots) and all(item["matches"] for item in snapshots.values()),
-            "detail": "every raw snapshot re-hashes to its manifest sha256",
+            "detail": "every recorded artefact re-hashes to its manifest sha256",
         },
         {
             "id": "G3",
@@ -107,7 +124,7 @@ def evaluate_gate(integrity: dict, report: dict) -> dict:
     ]
 
     return {
-        "gate_id": GATE_ID,
+        "gate_id": gate_id,
         "scope": "infrastructure validation (research pipeline), not a signal verdict",
         "evaluated_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "igwt_version": __version__,
@@ -123,26 +140,35 @@ def evaluate_gate(integrity: dict, report: dict) -> dict:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run WFV v2 on REAL-DATA-FIXTURE-001")
+    parser.add_argument(
+        "--root",
+        type=Path,
+        default=fixture.FIXTURE_ROOT,
+        help="fixture directory to validate (defaults to the locked control fixture)",
+    )
     parser.add_argument("--train-days", type=int, default=180)
     parser.add_argument("--test-days", type=int, default=30)
-    parser.add_argument("--out", type=Path, default=fixture.FIXTURE_ROOT / "wfv_report.json")
+    parser.add_argument("--out", type=Path, default=None)
     args = parser.parse_args(argv)
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 
-    integrity = verify_raw_integrity()
-    observations = fixture.load_observations()
+    root = args.root
+    out = args.out or root / "wfv_report.json"
+
+    integrity = verify_raw_integrity(root)
+    observations = contract.read_observations(root / "observations.csv")
     config = build_config(integrity["manifest"], train_days=args.train_days, test_days=args.test_days)
 
     report = wfv.run(observations, config)
-    gate = evaluate_gate(integrity, report)
+    gate = evaluate_gate(integrity, report, gate_id=integrity["manifest"]["fixture_id"])
     report["raw_integrity"] = {
         symbol: item["matches"] for symbol, item in integrity["snapshots"].items()
     }
     report["gate"] = gate
 
-    args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(json.dumps(report, indent=2, default=str) + "\n", encoding="utf-8")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(report, indent=2, default=str) + "\n", encoding="utf-8")
 
     aggregate = report["aggregate"]
     logger.info("gate %s: %s", gate["gate_id"], gate["status"])
@@ -156,7 +182,7 @@ def main(argv: list[str] | None = None) -> int:
         aggregate["oos_ic_t_stat"] or 0.0,
         aggregate["mean_oos_long_short_spread"] or 0.0,
     )
-    logger.info("report written to %s", args.out)
+    logger.info("report written to %s", out)
     return 0 if gate["status"] == "PASS" else 1
 
 

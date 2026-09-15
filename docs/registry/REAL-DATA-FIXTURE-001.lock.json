@@ -1,0 +1,54 @@
+{
+  "artefact_id": "REAL-DATA-FIXTURE-001",
+  "status": "LOCKED",
+  "role": "independent control dataset \u2014 compared against, never overwritten",
+  "locked_at_utc": "2026-09-15T21:45:55+00:00",
+  "igwt_version": "0.1.0",
+  "authority": "governance decision recorded in the IGWT registry",
+  "amendment_rule": "A different data source, a longer history or a different price field produces a NEW artefact id. This one is never edited retroactively; re-running the builder must reproduce the hashes below byte for byte.",
+  "scope": {
+    "provider": "CoinGecko",
+    "price_field": "close (cross-venue composite)",
+    "first_date": "2025-10-16",
+    "last_date": "2026-09-08",
+    "assets": [
+      "ADAUSDT",
+      "BNBUSDT",
+      "BTCUSDT",
+      "DOGEUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "XRPUSDT"
+    ],
+    "rows": 2296,
+    "distinct_dates": 328
+  },
+  "parameters": {
+    "momentum_lookback_days": 30,
+    "forward_horizon_days": 7,
+    "volatility_window_days": 30,
+    "min_cross_section": 3
+  },
+  "hashes": {
+    "observations.csv": "839ff3f1606b41d15785f3d9abb05fe2340603e4407b0d9a5448f59861e15338",
+    "raw/BTCUSDT.json": "eae555d4f12fadc17561970664840d53798c8bcbe822680f46476a2d22b9e17d",
+    "raw/ETHUSDT.json": "aa931bf9027108b3ce660e9c0cc1733f8ec43d0e91e1aae8b1813ee164ae139e",
+    "raw/SOLUSDT.json": "ef6b0e8c4abc22152748f9a18e273d3ba7b531437240608c3354da04851bfbc5",
+    "raw/BNBUSDT.json": "359632d617968885b78c17bd0d535482f9c47f753ebf9a61677067459660dfd0",
+    "raw/XRPUSDT.json": "248ca85f53148d80a030001874d8f65c46fb2500d4ca8cab22cb4f6ba4743f20",
+    "raw/ADAUSDT.json": "06ca02af453794e8a680d8d155018a0177700654602d216f734ef4dc07c5aec9",
+    "raw/DOGEUSDT.json": "bc03bd67d6d0739aa082fa33c8a7c171ec0c4295c2b8e7e811d7e2f232fb672d"
+  },
+  "gate": {
+    "id": "REAL-DATA-FIXTURE-001",
+    "status": "PASS",
+    "scope": "infrastructure validation, not a signal verdict",
+    "checks": [
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5"
+    ]
+  }
+}

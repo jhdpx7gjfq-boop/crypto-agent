@@ -1,7 +1,7 @@
 {
   "fixture_id": "REAL-DATA-FIXTURE-001",
   "igwt_version": "0.1.0",
-  "built_at_utc": "2026-09-15T21:11:10+00:00",
+  "built_at_utc": "2026-09-15T21:45:23+00:00",
   "data_source": {
     "provider": "CoinGecko",
     "endpoint": "/coins/{id}/market_chart?vs_currency=usd&days=365&interval=daily",

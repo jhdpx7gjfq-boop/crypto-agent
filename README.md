@@ -14,15 +14,22 @@ igwt/
 └── validation/   WFV v2 — walk-forward purgé et sous embargo
 ```
 
-| Spécification | Document |
-|---|---|
-| REAL-DATA-FIXTURE-001 | [`docs/specs/REAL-DATA-FIXTURE-001.md`](docs/specs/REAL-DATA-FIXTURE-001.md) |
-| Contrat WFV v2 | [`docs/specs/WFV-V2-CONTRACT.md`](docs/specs/WFV-V2-CONTRACT.md) |
+| Artefact | Statut | Document |
+|---|---|---|
+| Contrat WFV v2 | **FROZEN** | [`docs/specs/WFV-V2-CONTRACT.md`](docs/specs/WFV-V2-CONTRACT.md) |
+| REAL-DATA-FIXTURE-001 | **LOCKED** | [`docs/specs/REAL-DATA-FIXTURE-001.md`](docs/specs/REAL-DATA-FIXTURE-001.md) |
+| REAL-DATA-FULL-001 | **PENDING ACQUISITION** | [`docs/specs/REAL-DATA-FULL-001.md`](docs/specs/REAL-DATA-FULL-001.md) |
+| MOMENTUM-30D-WFV-001 | **NO EVIDENCE OF EDGE** | [`docs/registry/`](docs/registry/REGISTRY.md) |
+
+Les verrous de gouvernance sont vérifiés par la CI (`tests/test_registry_locks.py`) :
+un artefact verrouillé qui dérive fait échouer le build. Voir
+[`docs/registry/REGISTRY.md`](docs/registry/REGISTRY.md).
 
 ```bash
 python -m igwt.fixtures.real_data_fixture_001          # reconstruire depuis raw/
 python -m igwt.fixtures.real_data_fixture_001 --fetch  # recollecter puis reconstruire
 python -m igwt.validation.run_fixture_wfv              # rejouer WFV v2 + gate
+python -m igwt.fixtures.real_data_full_001 --preflight # état d'acquisition Binance
 ```
 
 Artefacts sous `fixtures/real/REAL-DATA-FIXTURE-001/` : snapshots bruts hachés,

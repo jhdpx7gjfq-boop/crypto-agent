@@ -1,6 +1,5 @@
 """WFV v2: leakage guards, and the sensitivity/specificity of the verdict."""
 
-import math
 import random
 from datetime import date, timedelta
 
