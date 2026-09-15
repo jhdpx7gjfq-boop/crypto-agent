@@ -1,30 +1,66 @@
-# crypto-agent
-Crypto quant alert system
+# crypto-agent — IGWT-PF26
 
-Polls the BTC/USD price from CoinGecko and sends a Telegram alert when it
-crosses above or below configured thresholds.
+Infrastructure de recherche quantitative. Aucune exécution de trade, aucun accès
+API trading, aucun CEX authentifié : les modules ci-dessous lisent des données
+publiques et produisent des artefacts de recherche. La décision reste humaine.
 
-## Setup
-
-Set these environment variables (never commit real credentials to the repo):
-
-- `BOT_TOKEN` — Telegram bot token
-- `CHAT_ID` — Telegram chat ID to notify
-- `HIGH_THRESHOLD` — optional, USD price above which a high alert fires (default `70000`)
-- `LOW_THRESHOLD` — optional, USD price below which a dip alert fires (default `55000`)
-- `POLL_SECONDS` — optional, polling interval in seconds (default `60`)
+## Couche recherche — `igwt/`
 
 ```
+igwt/
+├── data/         collecte (CoinGecko) + store brut immuable haché
+├── features/     validation de snapshot, panel, features point-in-time
+├── fixtures/     REAL-DATA-FIXTURE-001
+└── validation/   WFV v2 — walk-forward purgé et sous embargo
+```
+
+| Spécification | Document |
+|---|---|
+| REAL-DATA-FIXTURE-001 | [`docs/specs/REAL-DATA-FIXTURE-001.md`](docs/specs/REAL-DATA-FIXTURE-001.md) |
+| Contrat WFV v2 | [`docs/specs/WFV-V2-CONTRACT.md`](docs/specs/WFV-V2-CONTRACT.md) |
+
+```bash
+python -m igwt.fixtures.real_data_fixture_001          # reconstruire depuis raw/
+python -m igwt.fixtures.real_data_fixture_001 --fetch  # recollecter puis reconstruire
+python -m igwt.validation.run_fixture_wfv              # rejouer WFV v2 + gate
+```
+
+Artefacts sous `fixtures/real/REAL-DATA-FIXTURE-001/` : snapshots bruts hachés,
+`observations.csv`, `manifest.json` (provenance et rejets), `wfv_report.json`.
+
+**Provenance** : le registre IGWT documente des datasets Binance quotidiens qui
+n'étaient pas atteignables depuis cet environnement (fichiers absents,
+`api.binance.com` en HTTP 451, autres venues refusées par la politique réseau).
+Le fixture est donc construit sur CoinGecko — source n°1 de la Layer 1 — avec
+l'écart documenté dans le manifeste. Aucune valeur n'est simulée.
+
+## Couche alerte — `main.py`
+
+Interroge le prix BTC/USD chez CoinGecko et envoie une alerte Telegram au
+franchissement des seuils configurés.
+
+Variables d'environnement (ne jamais committer de secret) :
+
+- `BOT_TOKEN` — token du bot Telegram
+- `CHAT_ID` — identifiant de conversation à notifier
+- `HIGH_THRESHOLD` — seuil haut en USD (défaut `70000`)
+- `LOW_THRESHOLD` — seuil bas en USD (défaut `55000`)
+- `POLL_SECONDS` — intervalle d'interrogation (défaut `60`)
+
+```bash
 pip install -r requirements.txt
 BOT_TOKEN=... CHAT_ID=... python main.py
 ```
 
-This runs as a background `worker` process (see `Procfile`), not a `web`
-process — on Heroku, scale it with `heroku ps:scale worker=1`.
+Tourne comme process `worker` (voir `Procfile`), pas `web` — sur Heroku :
+`heroku ps:scale worker=1`.
 
 ## Tests
 
-```
+```bash
 pip install -r requirements-dev.txt
 pytest
 ```
+
+La suite est hors-ligne : les appels réseau sont mockés et les tests du fixture
+relisent les artefacts committés.

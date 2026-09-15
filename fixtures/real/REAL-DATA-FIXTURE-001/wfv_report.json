@@ -1,0 +1,197 @@
+{
+  "config": {
+    "horizon_days": 7,
+    "train_days": 180,
+    "test_days": 30,
+    "embargo_days": 7,
+    "step_days": 30,
+    "mode": "rolling",
+    "quantile_size": 2,
+    "min_cross_section": 3,
+    "fixture_id": "REAL-DATA-FIXTURE-001",
+    "fixture_sha256": "839ff3f1606b41d15785f3d9abb05fe2340603e4407b0d9a5448f59861e15338"
+  },
+  "input": {
+    "rows": 2296,
+    "assets": [
+      "ADAUSDT",
+      "BNBUSDT",
+      "BTCUSDT",
+      "DOGEUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "XRPUSDT"
+    ],
+    "first_date": "2025-10-16",
+    "last_date": "2026-09-08"
+  },
+  "folds": [
+    {
+      "index": 0,
+      "train_start": "2025-10-16",
+      "train_end": "2026-04-13",
+      "test_start": "2026-04-21",
+      "test_end": "2026-05-20",
+      "embargo_days": 7,
+      "train_rows": 1260,
+      "test_rows": 210,
+      "train_dates_scored": 180,
+      "test_dates_scored": 30,
+      "train_ic": -0.0732142857142857,
+      "fitted_direction": -1,
+      "oos_ic": 0.08095238095238097,
+      "oos_ic_t_stat": 1.0857272932952864,
+      "oos_hit_rate": 0.5666666666666667,
+      "oos_long_short_spread": 0.011773765559999993,
+      "regime_conditioned": {
+        "threshold": 0.6617296373642858,
+        "low_vol_dates": 30,
+        "high_vol_dates": 0,
+        "low_vol_ic": 0.08095238095238097,
+        "high_vol_ic": null
+      },
+      "sufficient_test_dates": true
+    },
+    {
+      "index": 1,
+      "train_start": "2025-11-15",
+      "train_end": "2026-05-13",
+      "test_start": "2026-05-21",
+      "test_end": "2026-06-19",
+      "embargo_days": 7,
+      "train_rows": 1260,
+      "test_rows": 210,
+      "train_dates_scored": 180,
+      "test_dates_scored": 30,
+      "train_ic": -0.09484126984126982,
+      "fitted_direction": -1,
+      "oos_ic": -0.13095238095238096,
+      "oos_ic_t_stat": -1.5658188620577584,
+      "oos_hit_rate": 0.3333333333333333,
+      "oos_long_short_spread": -0.012033541793333333,
+      "regime_conditioned": {
+        "threshold": 0.6125296870642858,
+        "low_vol_dates": 30,
+        "high_vol_dates": 0,
+        "low_vol_ic": -0.13095238095238096,
+        "high_vol_ic": null
+      },
+      "sufficient_test_dates": true
+    },
+    {
+      "index": 2,
+      "train_start": "2025-12-15",
+      "train_end": "2026-06-12",
+      "test_start": "2026-06-20",
+      "test_end": "2026-07-19",
+      "embargo_days": 7,
+      "train_rows": 1260,
+      "test_rows": 210,
+      "train_dates_scored": 180,
+      "test_dates_scored": 30,
+      "train_ic": -0.11190476190476197,
+      "fitted_direction": -1,
+      "oos_ic": -0.08095238095238093,
+      "oos_ic_t_stat": -1.182641073988046,
+      "oos_hit_rate": 0.4,
+      "oos_long_short_spread": 0.001677554284999999,
+      "regime_conditioned": {
+        "threshold": 0.5476232955428572,
+        "low_vol_dates": 14,
+        "high_vol_dates": 16,
+        "low_vol_ic": -0.03571428571428571,
+        "high_vol_ic": -0.12053571428571426
+      },
+      "sufficient_test_dates": true
+    },
+    {
+      "index": 3,
+      "train_start": "2026-01-14",
+      "train_end": "2026-07-12",
+      "test_start": "2026-07-20",
+      "test_end": "2026-08-18",
+      "embargo_days": 7,
+      "train_rows": 1260,
+      "test_rows": 210,
+      "train_dates_scored": 180,
+      "test_dates_scored": 30,
+      "train_ic": -0.0621031746031746,
+      "fitted_direction": -1,
+      "oos_ic": 0.13333333333333333,
+      "oos_ic_t_stat": 2.070746471019419,
+      "oos_hit_rate": 0.7,
+      "oos_long_short_spread": 0.021904081763333336,
+      "regime_conditioned": {
+        "threshold": 0.5545945596499999,
+        "low_vol_dates": 30,
+        "high_vol_dates": 0,
+        "low_vol_ic": 0.13333333333333333,
+        "high_vol_ic": null
+      },
+      "sufficient_test_dates": true
+    }
+  ],
+  "aggregate": {
+    "folds": 4,
+    "oos_dates_scored": 120,
+    "mean_oos_ic": 0.000595238095238107,
+    "oos_ic_t_stat": 0.015887014935713754,
+    "oos_ic_hit_rate": 0.5,
+    "folds_with_positive_oos_ic": 2,
+    "mean_oos_long_short_spread": 0.005830464953749999,
+    "direction_flips": 0
+  },
+  "raw_integrity": {
+    "BTCUSDT": true,
+    "ETHUSDT": true,
+    "SOLUSDT": true,
+    "BNBUSDT": true,
+    "XRPUSDT": true,
+    "ADAUSDT": true,
+    "DOGEUSDT": true
+  },
+  "gate": {
+    "gate_id": "REAL-DATA-FIXTURE-001",
+    "scope": "infrastructure validation (research pipeline), not a signal verdict",
+    "evaluated_at_utc": "2026-09-15T21:11:10+00:00",
+    "igwt_version": "0.1.0",
+    "checks": [
+      {
+        "id": "G1",
+        "name": "Real dataset identified",
+        "passed": true,
+        "detail": "7 assets declared in the fixture manifest"
+      },
+      {
+        "id": "G2",
+        "name": "Real dataset accessible and unaltered",
+        "passed": true,
+        "detail": "every raw snapshot re-hashes to its manifest sha256"
+      },
+      {
+        "id": "G3",
+        "name": "Fixture built to the WFV contract",
+        "passed": true,
+        "detail": "2296 observations, 7 assets, 2025-10-16 -> 2026-09-08"
+      },
+      {
+        "id": "G4",
+        "name": "No lookahead: embargo covers the label horizon",
+        "passed": true,
+        "detail": "embargo 7d >= horizon 7d on every fold; per-row leakage re-checked by wfv.assert_no_leakage"
+      },
+      {
+        "id": "G5",
+        "name": "Walk-forward executed on real data",
+        "passed": true,
+        "detail": "4 folds, 120 scored OOS dates"
+      }
+    ],
+    "status": "PASS",
+    "explicitly_not_claimed": [
+      "the signal in this fixture is predictive",
+      "any BCE / X20 / RPM module is validated or modified",
+      "this dataset replaces the Binance daily datasets named in the registry"
+    ]
+  }
+}

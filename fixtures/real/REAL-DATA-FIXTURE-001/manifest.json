@@ -1,0 +1,194 @@
+{
+  "fixture_id": "REAL-DATA-FIXTURE-001",
+  "igwt_version": "0.1.0",
+  "built_at_utc": "2026-09-15T21:11:10+00:00",
+  "data_source": {
+    "provider": "CoinGecko",
+    "endpoint": "/coins/{id}/market_chart?vs_currency=usd&days=365&interval=daily",
+    "fields_available": [
+      "close",
+      "market_cap",
+      "total_volume"
+    ],
+    "fields_unavailable": [
+      "open",
+      "high",
+      "low",
+      "per-candle volume"
+    ],
+    "history_limit_days": 365,
+    "synthetic_data": false
+  },
+  "provenance_note": "The IGWT registry documents this fixture's assets as Binance daily datasets (BTCUSDT_Daily_2017-2026.xlsx, Binance_*USDT_d.csv). Those files were not reachable from this environment, and the Binance public API is not reachable either (api.binance.com answers HTTP 451 for this region; data-api.binance.vision is refused by the network policy). CoinGecko \u2014 IGWT Layer 1 source #1 \u2014 was used instead. Prices are therefore CoinGecko's cross-venue composite, not Binance spot, and the history is capped at 365 days by the public tier. No value in this fixture is simulated.",
+  "parameters": {
+    "momentum_lookback_days": 30,
+    "forward_horizon_days": 7,
+    "volatility_window_days": 30,
+    "min_cross_section": 3,
+    "signal_definition": "cross-sectional z-score, within each date, of the trailing 30-day simple return",
+    "fwdRet_definition": "forward 7-day simple return (label)",
+    "regimeVol_definition": "annualised stdev of daily log returns over the trailing 30 days"
+  },
+  "raw_snapshots": {
+    "BTCUSDT": {
+      "file": "raw/BTCUSDT.json",
+      "sha256": "eae555d4f12fadc17561970664840d53798c8bcbe822680f46476a2d22b9e17d",
+      "bytes": 37760,
+      "coingecko_id": "bitcoin"
+    },
+    "ETHUSDT": {
+      "file": "raw/ETHUSDT.json",
+      "sha256": "aa931bf9027108b3ce660e9c0cc1733f8ec43d0e91e1aae8b1813ee164ae139e",
+      "bytes": 37905,
+      "coingecko_id": "ethereum"
+    },
+    "SOLUSDT": {
+      "file": "raw/SOLUSDT.json",
+      "sha256": "ef6b0e8c4abc22152748f9a18e273d3ba7b531437240608c3354da04851bfbc5",
+      "bytes": 37649,
+      "coingecko_id": "solana"
+    },
+    "BNBUSDT": {
+      "file": "raw/BNBUSDT.json",
+      "sha256": "359632d617968885b78c17bd0d535482f9c47f753ebf9a61677067459660dfd0",
+      "bytes": 37565,
+      "coingecko_id": "binancecoin"
+    },
+    "XRPUSDT": {
+      "file": "raw/XRPUSDT.json",
+      "sha256": "248ca85f53148d80a030001874d8f65c46fb2500d4ca8cab22cb4f6ba4743f20",
+      "bytes": 37843,
+      "coingecko_id": "ripple"
+    },
+    "ADAUSDT": {
+      "file": "raw/ADAUSDT.json",
+      "sha256": "06ca02af453794e8a680d8d155018a0177700654602d216f734ef4dc07c5aec9",
+      "bytes": 38186,
+      "coingecko_id": "cardano"
+    },
+    "DOGEUSDT": {
+      "file": "raw/DOGEUSDT.json",
+      "sha256": "bc03bd67d6d0739aa082fa33c8a7c171ec0c4295c2b8e7e811d7e2f232fb672d",
+      "bytes": 38358,
+      "coingecko_id": "dogecoin"
+    }
+  },
+  "snapshot_validation": [
+    {
+      "asset": "BTCUSDT",
+      "raw_points": 366,
+      "accepted_points": 365,
+      "intraday_points_dropped": 1,
+      "duplicate_dates_dropped": 0,
+      "invalid_prices_dropped": 0,
+      "out_of_order_input": false,
+      "first_date": "2025-09-16",
+      "last_date": "2026-09-15",
+      "calendar_gaps": []
+    },
+    {
+      "asset": "ETHUSDT",
+      "raw_points": 366,
+      "accepted_points": 365,
+      "intraday_points_dropped": 1,
+      "duplicate_dates_dropped": 0,
+      "invalid_prices_dropped": 0,
+      "out_of_order_input": false,
+      "first_date": "2025-09-16",
+      "last_date": "2026-09-15",
+      "calendar_gaps": []
+    },
+    {
+      "asset": "SOLUSDT",
+      "raw_points": 366,
+      "accepted_points": 365,
+      "intraday_points_dropped": 1,
+      "duplicate_dates_dropped": 0,
+      "invalid_prices_dropped": 0,
+      "out_of_order_input": false,
+      "first_date": "2025-09-16",
+      "last_date": "2026-09-15",
+      "calendar_gaps": []
+    },
+    {
+      "asset": "BNBUSDT",
+      "raw_points": 366,
+      "accepted_points": 365,
+      "intraday_points_dropped": 1,
+      "duplicate_dates_dropped": 0,
+      "invalid_prices_dropped": 0,
+      "out_of_order_input": false,
+      "first_date": "2025-09-16",
+      "last_date": "2026-09-15",
+      "calendar_gaps": []
+    },
+    {
+      "asset": "XRPUSDT",
+      "raw_points": 366,
+      "accepted_points": 365,
+      "intraday_points_dropped": 1,
+      "duplicate_dates_dropped": 0,
+      "invalid_prices_dropped": 0,
+      "out_of_order_input": false,
+      "first_date": "2025-09-16",
+      "last_date": "2026-09-15",
+      "calendar_gaps": []
+    },
+    {
+      "asset": "ADAUSDT",
+      "raw_points": 366,
+      "accepted_points": 365,
+      "intraday_points_dropped": 1,
+      "duplicate_dates_dropped": 0,
+      "invalid_prices_dropped": 0,
+      "out_of_order_input": false,
+      "first_date": "2025-09-16",
+      "last_date": "2026-09-15",
+      "calendar_gaps": []
+    },
+    {
+      "asset": "DOGEUSDT",
+      "raw_points": 366,
+      "accepted_points": 365,
+      "intraday_points_dropped": 1,
+      "duplicate_dates_dropped": 0,
+      "invalid_prices_dropped": 0,
+      "out_of_order_input": false,
+      "first_date": "2025-09-16",
+      "last_date": "2026-09-15",
+      "calendar_gaps": []
+    }
+  ],
+  "observations": {
+    "rows": 2296,
+    "columns": [
+      "date",
+      "asset",
+      "signal",
+      "fwdRet",
+      "regimeVol"
+    ],
+    "assets": [
+      "ADAUSDT",
+      "BNBUSDT",
+      "BTCUSDT",
+      "DOGEUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "XRPUSDT"
+    ],
+    "rows_per_asset": {
+      "ADAUSDT": 328,
+      "BNBUSDT": 328,
+      "BTCUSDT": 328,
+      "DOGEUSDT": 328,
+      "ETHUSDT": 328,
+      "SOLUSDT": 328,
+      "XRPUSDT": 328
+    },
+    "first_date": "2025-10-16",
+    "last_date": "2026-09-08",
+    "distinct_dates": 328,
+    "sha256": "839ff3f1606b41d15785f3d9abb05fe2340603e4407b0d9a5448f59861e15338"
+  }
+}
