@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "amendment_rules": {
+    "new_source_never_amends": "A new data source never retroactively modifies an existing research artefact. When the methodological scope changes, it creates a new reference.",
+    "no_inferred_ancestry": "A relation is never inferred from a name, a numbering scheme or temporal proximity. Every relation carries evidence resolvable inside this repository."
+  },
+  "relation_types": {
+    "contract_dependency": "this artefact must satisfy the target contract",
+    "parent": "this artefact descends from the target: same feature code and parameters, or the target is the control it is built against",
+    "derived": "this artefact was extracted from the target",
+    "result_of": "this artefact is a research result computed on the target dataset",
+    "sibling": "this artefact and the target share an ancestor and neither depends on the other"
+  },
+  "artefact_kinds": ["contract", "dataset", "result", "code"],
+  "statuses": {
+    "FROZEN": "contract; any change is a new version",
+    "LOCKED": "artefact pinned by hash; never edited retroactively",
+    "PENDING_ACQUISITION": "pipeline implemented, data not available",
+    "RECORDED": "research result recorded with its scope",
+    "ACTIVE": "code in use"
+  },
+  "allowed_targets": {
+    "contract_dependency": ["contract"],
+    "parent": ["dataset"],
+    "derived": ["dataset", "code"],
+    "result_of": ["dataset"],
+    "sibling": ["contract", "dataset", "result", "code"]
+  },
+  "artefacts": {
+    "WFV-V2-CONTRACT": {
+      "kind": "contract",
+      "status": "FROZEN",
+      "record": "docs/registry/WFV-V2-CONTRACT.lock.json",
+      "specification": "docs/specs/WFV-V2-CONTRACT.md",
+      "relations": []
+    },
+    "REAL-DATA-FIXTURE-001": {
+      "kind": "dataset",
+      "status": "LOCKED",
+      "record": "docs/registry/REAL-DATA-FIXTURE-001.lock.json",
+      "specification": "docs/specs/REAL-DATA-FIXTURE-001.md",
+      "relations": [
+        {
+          "type": "contract_dependency",
+          "target": "WFV-V2-CONTRACT",
+          "evidence": {
+            "file": "docs/registry/REAL-DATA-FIXTURE-001.lock.json",
+            "contains": "\"forward_horizon_days\""
+          }
+        }
+      ]
+    },
+    "CODE-FEATURE-CONTRACT": {
+      "kind": "code",
+      "status": "ACTIVE",
+      "record": "docs/registry/LINEAGE.md",
+      "path": "igwt/features/contract.py",
+      "relations": [
+        {
+          "type": "derived",
+          "target": "REAL-DATA-FIXTURE-001",
+          "evidence": {
+            "file": "igwt/fixtures/real_data_fixture_001.py",
+            "contains": "contract.build_observations"
+          }
+        },
+        {
+          "type": "contract_dependency",
+          "target": "WFV-V2-CONTRACT",
+          "evidence": {
+            "file": "igwt/features/contract.py",
+            "contains": "docs/registry/WFV-V2-CONTRACT.lock.json"
+          }
+        }
+      ]
+    },
+    "REAL-DATA-FULL-001": {
+      "kind": "dataset",
+      "status": "PENDING_ACQUISITION",
+      "record": "docs/specs/REAL-DATA-FULL-001.md",
+      "specification": "docs/specs/REAL-DATA-FULL-001.md",
+      "relations": [
+        {
+          "type": "contract_dependency",
+          "target": "WFV-V2-CONTRACT",
+          "evidence": {
+            "file": "igwt/fixtures/real_data_full_001.py",
+            "contains": "contract.build_observations"
+          }
+        },
+        {
+          "type": "parent",
+          "target": "REAL-DATA-FIXTURE-001",
+          "evidence": {
+            "file": "igwt/fixtures/real_data_full_001.py",
+            "contains": "CONTROL_FIXTURE = \"REAL-DATA-FIXTURE-001\""
+          }
+        }
+      ]
+    },
+    "MOMENTUM-30D-WFV-001": {
+      "kind": "result",
+      "status": "RECORDED",
+      "production": "FORBIDDEN",
+      "record": "docs/registry/MOMENTUM-30D-WFV-001.json",
+      "relations": [
+        {
+          "type": "result_of",
+          "target": "REAL-DATA-FIXTURE-001",
+          "evidence": {
+            "file": "docs/registry/MOMENTUM-30D-WFV-001.json",
+            "contains": "\"dataset\": \"REAL-DATA-FIXTURE-001\""
+          }
+        },
+        {
+          "type": "sibling",
+          "target": "REAL-DATA-FULL-001",
+          "evidence": {
+            "shared_ancestor": "REAL-DATA-FIXTURE-001"
+          }
+        }
+      ]
+    }
+  },
+  "excluded_ancestors": {
+    "reason": "Referenced in external IGWT working notes but absent from this repository. No external reference becomes a lineage parent until a verifiable link exists here.",
+    "search_scope": ["igwt", "tests", "fixtures", "docs/specs", "main.py", "README.md"],
+    "search_exceptions": ["tests/test_lineage.py"],
+    "tokens": ["DATA-005", "DATA_005", "FeatureRegistry", "GLME", "DPE", "LSI", "SCE"]
+  }
+}

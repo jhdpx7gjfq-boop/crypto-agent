@@ -22,14 +22,18 @@ igwt/
 | MOMENTUM-30D-WFV-001 | **NO EVIDENCE OF EDGE** | [`docs/registry/`](docs/registry/REGISTRY.md) |
 
 Les verrous de gouvernance sont vérifiés par la CI (`tests/test_registry_locks.py`) :
-un artefact verrouillé qui dérive fait échouer le build. Voir
-[`docs/registry/REGISTRY.md`](docs/registry/REGISTRY.md).
+un artefact verrouillé qui dérive fait échouer le build. La filiation des
+artefacts est elle aussi validée (`tests/test_lineage.py`, dix règles) — aucune
+relation sans preuve résolvant dans ce dépôt. Voir
+[`docs/registry/REGISTRY.md`](docs/registry/REGISTRY.md) et
+[`docs/registry/LINEAGE.md`](docs/registry/LINEAGE.md).
 
 ```bash
 python -m igwt.fixtures.real_data_fixture_001          # reconstruire depuis raw/
 python -m igwt.fixtures.real_data_fixture_001 --fetch  # recollecter puis reconstruire
 python -m igwt.validation.run_fixture_wfv              # rejouer WFV v2 + gate
 python -m igwt.fixtures.real_data_full_001 --preflight # état d'acquisition Binance
+python -m igwt.registry.lineage                       # valider la filiation
 ```
 
 Artefacts sous `fixtures/real/REAL-DATA-FIXTURE-001/` : snapshots bruts hachés,

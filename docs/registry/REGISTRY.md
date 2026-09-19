@@ -10,6 +10,10 @@ Statuts de gouvernance. Les verrous ci-dessous sont **vérifiés par la CI**
 | `MOMENTUM-30D-WFV-001` | **INCONCLUSIVE / NO EVIDENCE OF EDGE** — production **FORBIDDEN** | [`MOMENTUM-30D-WFV-001.json`](MOMENTUM-30D-WFV-001.json) |
 | `REAL-DATA-FULL-001` | **PENDING ACQUISITION** | [`../specs/REAL-DATA-FULL-001.md`](../specs/REAL-DATA-FULL-001.md) |
 
+Filiation des artefacts : [`LINEAGE.md`](LINEAGE.md) — graphe canonique
+[`lineage.json`](lineage.json), dix règles appliquées par
+`tests/test_lineage.py`.
+
 ## Règles d'amendement
 
 1. Un artefact `LOCKED` n'est jamais modifié rétroactivement. Une source, une
@@ -20,7 +24,10 @@ Statuts de gouvernance. Les verrous ci-dessous sont **vérifiés par la CI**
 3. Un résultat de recherche est enregistré avec sa portée. `MOMENTUM-30D-WFV-001`
    est négatif **sur cette population, cette période et cette définition du
    signal** — il n'établit pas que le momentum est invalidé.
-4. Ces PASS sont des PASS de **recherche**. Rien ici n'est intégré en production
+4. Aucune référence externe ne devient un parent de filiation tant qu'aucun
+   lien vérifiable n'existe dans ce dépôt. Chaque arête porte une preuve qui
+   résout ici, et la CI vérifie que les ascendances exclues restent absentes.
+5. Ces PASS sont des PASS de **recherche**. Rien ici n'est intégré en production
    IGWT, et aucun moteur BCE / X20 / RPM / NARM-P+ n'est touché.
 
 ## État du gel production
