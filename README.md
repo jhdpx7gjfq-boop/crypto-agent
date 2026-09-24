@@ -11,14 +11,15 @@ Intelligent market analysis and opportunity detection for cryptocurrency quantit
 
 IGWT-AIOS is the data intelligence layer for IGWT (Intelligent Growth Without Trap). It scans Top 500 cryptocurrencies to identify market structures, potential accumulation zones, and asymmetric risk/reward opportunities.
 
-### Current Capabilities (P0.1)
-- ✅ CoinGecko universe metadata (Top 500)
-- ✅ Binance OHLCV (Daily + 4H)
-- ✅ Parquet storage + validation
-- ✅ Look-ahead bias prevention
-- 🚧 Bottom detection (P0.3)
-- 🚧 Wyckoff Spring detection (P0.4)
-- 🚧 Watchlist output (P0.8)
+### Current Capabilities
+- ✅ P0.1: CoinGecko universe metadata (Top 500)
+- ✅ P0.1: Binance OHLCV (Daily + 4H)
+- ✅ P0.1: Parquet storage + validation
+- ✅ P0.1: Look-ahead bias prevention
+- ✅ P0.2: Universe filtering (market cap, volume, data availability, quality)
+- 🚧 P0.3: Bottom detection
+- 🚧 P0.4: Wyckoff Spring detection
+- 🚧 P0.8: Watchlist output
 
 ### Legacy Code
 The original `main.py` is a simple BTC alert bot (Telegram). It remains functional but is not part of IGWT-AIOS.

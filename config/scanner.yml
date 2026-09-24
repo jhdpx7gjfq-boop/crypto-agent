@@ -1,7 +1,7 @@
-# IGWT-AIOS Scanner Configuration — P0.1
+# IGWT-AIOS Scanner Configuration — P0.1–P0.2
 
 data:
-  # Universe configuration
+  # Universe configuration (P0.1)
   universe:
     source: coingecko
     max_tokens: 500
@@ -9,7 +9,7 @@ data:
     min_rank: 1
     max_rank: 500
 
-  # Binance OHLCV configuration
+  # Binance OHLCV configuration (P0.1)
   binance:
     timeframes:
       - daily
@@ -19,27 +19,57 @@ data:
     retry_delay: 1.0
     timeout: 10
 
-  # CoinGecko configuration
+  # CoinGecko configuration (P0.1)
   coingecko:
     pagination_size: 250
     retry_count: 3
     retry_delay: 1.0
     timeout: 10
 
-  # Storage
+  # Storage (P0.1)
   storage:
     backend: parquet
     data_dir: data
     compression: snappy
 
-# Data validation
+# Data validation (P0.1)
 validation:
   check_duplicates: true
   check_monotonic_timestamps: true
   check_ohlc_consistency: true
   check_missing_columns: true
 
-# Timeframe priorities (P0.1 only supports daily and 4h)
+# Universe filtering (P0.2) — RESEARCH_CANDIDATE
+filters:
+  market_cap:
+    enabled: true
+    min_market_cap: null  # No minimum (accept all available)
+    max_market_cap: null  # No maximum
+    status: "RESEARCH_CANDIDATE"
+    note: "Thresholds not optimized. Adjust as needed for analysis."
+
+  volume_24h:
+    enabled: true
+    min_volume_24h: null  # No minimum (accept all available)
+    status: "RESEARCH_CANDIDATE"
+    note: "Minimum not optimized. May adjust for liquidity filtering."
+
+  data_availability:
+    enabled: true
+    require_daily: true
+    require_4h: true
+    min_candles_per_timeframe: 50
+    status: "RESEARCH_CANDIDATE"
+    note: "Minimum candles prevents incomplete histories. P1+ will extend."
+
+  data_quality:
+    enabled: true
+    check_nan: true
+    check_duplicates: true
+    check_monotonic: true
+    status: "RESEARCH_CANDIDATE"
+
+# Timeframe priorities (P0.1–P0.2 supports daily and 4h)
 timeframes:
   daily:
     enabled: true
@@ -47,4 +77,4 @@ timeframes:
   4h:
     enabled: true
     purpose: "Confirmation, reclaim, structure"
-  # 1h, 15m, 5m are P1+, disabled in P0.1
+  # 1h, 15m, 5m are P1+, disabled in P0.1–P0.2
