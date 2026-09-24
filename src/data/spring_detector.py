@@ -65,6 +65,7 @@ class RangeDetector:
     def detect(self, df: pd.DataFrame) -> Tuple[Optional[float], Optional[float], Optional[float], bool]:
         """
         Detect range structure in recent candles.
+        Uses robust range_low to avoid contamination from extreme lows.
 
         Args:
             df: DataFrame with 'high', 'low' columns
@@ -95,14 +96,15 @@ class SweepDetector:
     """Detects liquidity sweep below support level."""
 
     def detect(
-        self, df: pd.DataFrame, range_low: float
+        self, df: pd.DataFrame, range_low: float, lookback: int = 30
     ) -> Tuple[Optional[int], Optional[float], Optional[float], Optional[int]]:
         """
-        Detect sweep below support level.
+        Detect sweep below support level within recent candles.
 
         Args:
             df: DataFrame with 'low' column
             range_low: Support level (range low)
+            lookback: Number of recent candles to search (default 30, must match range detection)
 
         Returns:
             (sweep_idx, sweep_low, sweep_depth_pct, sweep_candles) or (None, None, None, None)
@@ -113,9 +115,13 @@ class SweepDetector:
         if df["low"].isna().any():
             raise DataQualityError("DataFrame contains NaN in low")
 
-        # Find first penetration below support
+        # Find most recent penetration below support (backward scan recent history)
+        # Search in a wider window (2x lookback) to capture sweeps that occur before range contamination
+        max_lookback = max(lookback * 2, 50)
+        start_idx = max(0, len(df) - max_lookback)
+
         sweep_idx = None
-        for i in range(len(df) - 1, -1, -1):
+        for i in range(len(df) - 1, start_idx - 1, -1):
             if df["low"].iloc[i] < range_low:
                 sweep_idx = i
                 break
@@ -224,9 +230,9 @@ class SpringStateMachine:
                 "range_high": range_high,
             }, None
 
-        # Step 3: Detect sweep
+        # Step 3: Detect sweep (search only within recent lookback window)
         sweep_idx, sweep_low, sweep_depth_pct, sweep_candles = self._sweep_detector.detect(
-            df, range_low
+            df, range_low, lookback=self._range_detector.lookback
         )
 
         if sweep_idx is None:
@@ -262,10 +268,14 @@ class SpringStateMachine:
 
         # Step 5: Check if reclaim window closed without reclaim
         if sweep_idx + self.reclaim_window_candles < len(df):
+            # Calculate sweep_low from sweep window only (not including post-window)
+            sweep_window_end = min(sweep_idx + self.reclaim_window_candles, len(df))
+            sweep_low_in_window = df.iloc[sweep_idx:sweep_window_end]["low"].min()
+
             post_window = df.iloc[sweep_idx + self.reclaim_window_candles :]
             new_low = post_window["low"].min()
 
-            if new_low < sweep_low:
+            if new_low < sweep_low_in_window:
                 # Continued weakness → BREAKDOWN
                 return "BREAKDOWN", {
                     "reason": "continued_weakness_no_reclaim",
@@ -331,7 +341,8 @@ class SpringDetector:
             if df.empty:
                 raise DataQualityError("DataFrame is empty")
 
-            if df[["open", "high", "low", "close", "volume"]].isna().any().any():
+            required_cols = ["open", "high", "low", "close"]
+            if df[required_cols].isna().any().any():
                 raise DataQualityError("DataFrame contains NaN values")
 
             if df["timestamp"].duplicated().any():
