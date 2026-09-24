@@ -69,12 +69,25 @@ filters:
     check_monotonic: true
     status: "RESEARCH_CANDIDATE"
 
-# Timeframe priorities (P0.1–P0.2 supports daily and 4h)
+# Bottom Detector (P0.3) — RESEARCH_CANDIDATE
+bottom_detector:
+  enabled: true
+  drawdown_lookback: 100  # days
+  drawdown_threshold: -20  # percent
+  base_lookback: 30  # days
+  base_range_threshold: 12  # percent
+  min_base_candles: 10
+  stability_threshold: 30  # percent closes above mid-range
+  escape_threshold: -2  # percent below base_low for invalidation
+  status: "RESEARCH_CANDIDATE"
+  note: "All thresholds are research guesses. Not optimized. Requires PIT/OOS/WFV validation before production."
+
+# Timeframe priorities (P0.1–P0.3 supports daily and 4h)
 timeframes:
   daily:
     enabled: true
-    purpose: "Context, bottom detection, spring setup"
+    purpose: "Context, bottom detection (primary), spring setup"
   4h:
     enabled: true
     purpose: "Confirmation, reclaim, structure"
-  # 1h, 15m, 5m are P1+, disabled in P0.1–P0.2
+  # 1h, 15m, 5m are P1+, disabled in P0.1–P0.3
