@@ -82,6 +82,16 @@ bottom_detector:
   status: "RESEARCH_CANDIDATE"
   note: "All thresholds are research guesses. Not optimized. Requires PIT/OOS/WFV validation before production."
 
+# Spring Detector (P0.4) — RESEARCH_CANDIDATE
+spring_detector:
+  enabled: true
+  range_lookback: 30  # days to analyze for range
+  range_width_min: 2.0  # percent (minimum identifiable range)
+  range_width_max: 25.0  # percent (maximum consolidation)
+  reclaim_window_candles: 10  # max candles to reclaim after sweep
+  status: "RESEARCH_CANDIDATE"
+  note: "Range detection uses last 30 candles. Sweep requires price below range low. Reclaim must occur within 10 candles of sweep. All parameters are research guesses. Requires validation before production."
+
 # Timeframe priorities (P0.1–P0.3 supports daily and 4h)
 timeframes:
   daily:
