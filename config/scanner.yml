@@ -1,0 +1,50 @@
+# IGWT-AIOS Scanner Configuration — P0.1
+
+data:
+  # Universe configuration
+  universe:
+    source: coingecko
+    max_tokens: 500
+    rank_filter: true
+    min_rank: 1
+    max_rank: 500
+
+  # Binance OHLCV configuration
+  binance:
+    timeframes:
+      - daily
+      - 4h
+    max_candles_per_fetch: 500
+    retry_count: 3
+    retry_delay: 1.0
+    timeout: 10
+
+  # CoinGecko configuration
+  coingecko:
+    pagination_size: 250
+    retry_count: 3
+    retry_delay: 1.0
+    timeout: 10
+
+  # Storage
+  storage:
+    backend: parquet
+    data_dir: data
+    compression: snappy
+
+# Data validation
+validation:
+  check_duplicates: true
+  check_monotonic_timestamps: true
+  check_ohlc_consistency: true
+  check_missing_columns: true
+
+# Timeframe priorities (P0.1 only supports daily and 4h)
+timeframes:
+  daily:
+    enabled: true
+    purpose: "Context, bottom detection, spring setup"
+  4h:
+    enabled: true
+    purpose: "Confirmation, reclaim, structure"
+  # 1h, 15m, 5m are P1+, disabled in P0.1
