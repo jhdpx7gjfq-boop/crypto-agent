@@ -4,6 +4,8 @@ import time
 
 import requests
 
+import perplexity_agent
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
 
@@ -15,10 +17,14 @@ def classify_zone(price, high_threshold, low_threshold):
     return None
 
 
-def format_alert(zone, price):
+def format_alert(zone, price, context=None):
     if zone == "high":
-        return f"🔴 BTC HIGH ALERT: {price}$"
-    return f"🟢 BTC DIP ALERT: {price}$"
+        msg = f"🔴 BTC HIGH ALERT: {price}$"
+    else:
+        msg = f"🟢 BTC DIP ALERT: {price}$"
+    if context:
+        msg += f"\n\n{context}"
+    return msg
 
 
 def send(bot_token, chat_id, msg):
@@ -46,8 +52,12 @@ def poll_once(bot_token, chat_id, high_threshold, low_threshold, last_zone):
     zone = classify_zone(btc, high_threshold, low_threshold)
 
     if zone is not None and zone != last_zone:
+        direction = "spiking" if zone == "high" else "dipping"
+        context = perplexity_agent.get_market_context(
+            f"Why is Bitcoin's price {direction} right now? One sentence, cite the source."
+        )
         try:
-            send(bot_token, chat_id, format_alert(zone, btc))
+            send(bot_token, chat_id, format_alert(zone, btc, context))
         except requests.RequestException as exc:
             logger.warning("Failed to send Telegram alert: %s", exc)
 
