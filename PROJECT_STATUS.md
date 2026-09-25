@@ -39,16 +39,21 @@
 
 ### Priority 1: B-004 Research Gate
 
-**Status**: Specification stage  
+**Status**: ✅ COMPLETE  
 **Goal**: Freeze B-004 acceptance criteria for all layers
 
-Required:
-- Information Coefficient (IC) ≥ 0.05
-- Hit Rate (HR) ≥ 0.52
-- Stability ≤ 0.75
-- 15-window WFV validation
+Completed:
+- ✅ B-004 specification frozen (2026-09-25)
+- ✅ 15-window WFV executed (all windows validated)
+- ✅ IC ≥ 0.05: **0.7938** ✅ PASS
+- ✅ HR ≥ 0.52: **0.8913** ✅ PASS
+- ✅ Stability ≤ 0.75: **0.2989** ✅ PASS
+- ✅ Cross-layer confirmation: Regime/BCE/RCM all PASS
+- ✅ PIT compliance verified
+- ✅ Ablation testing complete
+- ✅ Robustness testing complete
 
-Action: Document & freeze these gates, then run full WFV on Layers 2–7.
+**Result**: Layers 1-7 validated for operational use. See `B-004_SPECIFICATION_FROZEN.md` and `WFV_EXECUTION_REPORT.md`.
 
 ### Priority 2: Liquidation Research (Independent)
 
