@@ -62,24 +62,35 @@ Spring Detector P0.4 WFV Results:
 - BCE/X20/RPM parameters
 - Phase A validation results
 
-### Phase B-003: COMPLETED ✅ — GATE MIXED (IC PASS, HR FAIL) ✅
+### Phase B-003: COMPLETED ✅ — GATE FAILED ❌
 
 **Objective**: NARM-P+ (Narrative + Adoption) incremental alpha?
 
-**Results**: NARM-P+ IC improved +0.0359 (beat target 0.005), but HR 43.6% (below 0.50 target)
-- Model A (Baseline): IC = -0.1208
-- Model H (+ NARM-P+): IC = -0.0849 (Δ = +0.0359 ✅)
-- Model I (Full stack): IC = -0.0935 (Spring/Regime hurt, Δ = -0.0086 ❌)
+**Results**: NARM-P+ IC improved +0.0359 points, but fails overall gate
+- Model A (Baseline): IC = -0.1208, HR = 43.6%
+- Model H (+ NARM-P+): IC = -0.0849 (Δ = +0.0359 points)
+- Model I (Full stack): IC = -0.0935 (regresses vs H; Δ = -0.0086)
 
-**Per-Regime Breakdown**:
-| Regime | A IC | H IC | Δ | Status |
-|--------|------|------|-------|--------|
-| Bull 2021 | -0.0930 | -0.0035 | +0.0895 | 🟢 Strong |
-| Bear 2022 | -0.0987 | -0.0957 | +0.0030 | 🟡 Minimal |
-| Recovery 2023 | -0.2019 | -0.1778 | +0.0241 | 🟡 Weak |
-| Bull 2024 | -0.0131 | +0.0226 | +0.0357 | 🟢 Strong |
+**Gate Criteria** (ALL must pass):
+1. Δ IC(H-A) > 0.005: **✅ PASS** (0.0359 points)
+2. HR(H) > 0.50: **❌ FAIL** (0.4363 = 43.6%)
+3. Stability(H) > 0.65: **⚠️ UNMEASURED**
 
-**Verdict**: **Macro layer is regime-dependent (bullish)**. NARM-P+ adds +0.0895 IC in bull markets but minimal in bear/recovery. Unlike micro-structure (0 or negative), macro signals have genuine predictive content.
+**Official verdict**: **GATE FAILED** (HR criterion not satisfied)
+
+**Per-Regime IC Deltas** (Δ IC in points):
+| Regime | A IC | H IC | Δ IC | Status |
+|--------|------|------|------|--------|
+| Bull 2021 | -0.0930 | -0.0035 | +0.0895 | 🟢 |
+| Bear 2022 | -0.0987 | -0.0957 | +0.0030 | 🟡 |
+| Recovery 2023 | -0.2019 | -0.1778 | +0.0241 | 🟡 |
+| Bull 2024 | -0.0131 | +0.0226 | +0.0357 | 🟢 |
+
+**Classification**:
+- **Research finding**: ✅ NARM-P+ reduces contrarian drift magnitude in Bull regimes
+- **Production signal**: ❌ IC final still negative; HR fails; no standalone directional alpha
+- **Full stack (I)**: ❌ Excludes Spring/Regime (regression: −0.0086)
+- **Data-snooping risk**: 19 windows × 4 regimes requires caution on regime claims (post-hoc analysis only)
 
 **Key Files**:
 - `docs/SPRING-PHASE-B-003-SPEC.md`: Protocol
@@ -89,17 +100,17 @@ Spring Detector P0.4 WFV Results:
 
 ### Micro & Macro Investigation: COMPLETE ✅
 
-| Layer | Type | Δ IC | Status | Notes |
-|-------|------|------|--------|-------|
-| Spring (B-001) | Micro | 0.000 | ❌ | Pattern detector, not predictor |
-| Regime (B-001) | Micro | +0.020 | ⚠️ | Weakly helpful |
-| Flow (B-002) | Micro | -0.0009 | ❌ | Negative; adds noise |
-| **NARM-P+ (B-003)** | **Macro** | **+0.0359** | ✅ | **Narrative IS predictive (Bull-regime-gated)** |
+| Layer | Type | Δ IC | Gate | Notes |
+|-------|------|------|------|-------|
+| Spring (B-001) | Micro | 0.000 | ❌ FAIL | Pattern detector, not predictor |
+| Regime (B-001) | Micro | +0.020 | ⚠️ WEAK | Insufficient incremental alpha |
+| Flow (B-002) | Micro | -0.0009 | ❌ FAIL | Negative; adds noise |
+| **NARM-P+ (B-003)** | **Macro** | **+0.0359** | **❌ FAIL** | **ΔIC passes, HR/Stability fail; research finding only** |
 
-**Conclusion**: 
-- **Micro-structure dead**: Order flow, technical patterns non-predictive
-- **Macro-structure alive**: Narrative/adoption signals predictive in bull regimes
-- **Next**: Phase B-004 (RPM/RCM capital rotation) to test combined macro layer
+**Verdict**: 
+- **Micro-structure**: Non-predictive (0 to −9 bps IC delta)
+- **Macro-structure**: Research signal identified (ΔIC +35.7–89.5 points in Bull regimes), but production validation fails (HR > 0.50 not met)
+- **Next**: Phase B-004 (RPM/RCM capital rotation) **without pre-filtering to Bull** (post-hoc regime analysis only)
 
 ## Architecture Overview
 
@@ -186,25 +197,26 @@ Spring Detector P0.4 WFV Results:
 
 ## Latest: Phase B Micro & Macro Investigation Complete (2026-09-25)
 
-**Phase B-001 (Spring context)**: Spring redundant (Δ IC = 0.000)  
-**Phase B-002 (Flow context)**: Flow negative (Δ IC = -0.0009)  
-**Phase B-003 (NARM-P+ macro)**: Macro validated (Δ IC = +0.0359, bull-regime-gated) ✅
+**Phase B-001 (Spring context)**: Gate FAIL (Δ IC = 0.000)  
+**Phase B-002 (Flow context)**: Gate FAIL (Δ IC = -0.0009, negative)  
+**Phase B-003 (NARM-P+ macro)**: Gate FAIL (ΔIC passes, HR/Stability fail)  
 
 **Combined Verdict**:
-- **Micro-structure (order flow, patterns)**: Non-predictive (0 to -9 bps IC delta)
-- **Macro-structure (narrative, adoption)**: Predictive in bull (36-90 bps IC delta)
-- **Alpha location**: Narrative/adoption signals, NOT micro-structure
+- **Micro-structure (order flow, patterns)**: Non-predictive, gates failed
+- **Macro-structure (narrative, adoption)**: Research signal identified (ΔIC +0.0359), but production validation fails
+- **Full stack (Spring + Regime + NARM)**: Regresses vs NARM alone; exclude Spring/Regime
 
-**Key Discovery**: NARM-P+ IC improvement is regime-dependent
-- Bull 2021: +89.5 bps (strong)
-- Bull 2024: +35.7 bps (strong)
-- Bear 2022: +3.0 bps (noise)
-- Recovery 2023: +24.1 bps (weak)
+**Key Discovery**: NARM-P+ IC improvement regime-dependent (ΔIC points):
+- Bull 2021: +0.0895 (strong in-sample)
+- Bull 2024: +0.0357 (strong in-sample)
+- Bear 2022: +0.0030 (minimal)
+- Recovery 2023: +0.0241 (weak)
+- Data-snooping risk: 19 windows × 4 regimes → post-hoc regime analysis only, no pre-filtering
 
 **Path Forward**:
-1. Phase B-004: Test RPM/RCM (capital rotation at macro scale)
-2. If RPM/RCM passes: Combined macro (NARM-P+ + RPM/RCM) on bull regimes only
-3. Final Phase B: Integrated macro layer, regime-gated
+1. Phase B-004: RPM/RCM validation (no pre-filtering to Bull; full WFV first)
+2. If RPM/RCM gate passes: Ablation (RPM alone vs combined macro)
+3. Post-hoc: Interaction analysis (regime × RPM/RCM) for future hypothesis
 
-**Action**: Micro-structure investigation closed. Macro layer framework ready for Phase B-004.  
-**Next**: RPM/RCM engine (capital rotation detection on sector/market-wide scale)
+**Status**: All micro-structure investigations complete (non-predictive). Macro framework ready for B-004.  
+**Next**: RPM/RCM (capital rotation at sector/market-wide scale)

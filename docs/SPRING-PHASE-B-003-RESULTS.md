@@ -1,8 +1,13 @@
 # SPRING-PHASE-B-003 Results: Macro Layer (NARM-P+) Validation
 
 **Date**: 2026-09-25  
-**Status**: COMPLETED — Gate MIXED (IC PASS, HR FAIL)  
+**Status**: COMPLETED — Gate FAILED ❌  
 **Scope**: NARM-P+ (Narrative + Adoption) incremental alpha validation
+
+**Classification**:
+- **Research finding**: ✅ Validated (ΔIC signal detected)
+- **Production signal**: ❌ Not ready (gate criteria not met)
+- **Data-snooping risk**: ⚠️ 19 windows × 4 regimes; post-hoc regime analysis only
 
 ---
 
@@ -10,23 +15,29 @@
 
 ### Ablation Results
 
-| Model | IC Mean | IC Std | HR | Expectancy | Status |
+| Model | IC Mean | IC Std | HR | Expectancy | Notes |
 |-------|---------|--------|----|-----------|----|
 | A (Baseline) | -0.1208 | 0.1514 | 43.6% | -0.001% | Frozen |
-| H (+ NARM-P+) | -0.0849 | 0.1524 | 43.6% | -0.001% | **+0.0359 Δ ✅** |
-| I (Full stack v2) | -0.0935 | 0.1524 | 43.6% | -0.001% | -0.0086 vs H ❌ |
+| H (+ NARM-P+) | -0.0849 | 0.1524 | 43.6% | -0.001% | Δ IC = +0.0359 points |
+| I (Full stack v2) | -0.0935 | 0.1524 | 43.6% | -0.001% | Regresses vs H (exclude) |
 
-### Gate Evaluation
+### Gate Evaluation (ALL criteria must pass)
 
-**NARM-P+ IC Contribution (H vs A)**:
-- IC delta: +0.0359 (target >0.005) ✅ **PASS**
-- HR: 0.436 (target >0.50) ❌ **FAIL**
+**Criterion 1: Δ IC(H-A) > 0.005 points**
+- Result: +0.0359 points ✅ **PASS**
+
+**Criterion 2: HR(H) > 0.50**
+- Result: 0.4363 (43.6%) ❌ **FAIL**
+
+**Criterion 3: Stability(H) > 0.65**
+- Result: Not measured ⚠️ **UNMEASURED**
 
 **Spring/Regime in NARM Context (I vs H)**:
-- Full stack IC worse than NARM alone (Δ -0.0086)
-- Spring + Regime add no value; discard from macro layer
+- Full stack IC = −0.0935 vs NARM alone −0.0849
+- Δ(I−H) = −0.0086 (regression)
+- **Action**: Exclude Spring/Regime from Phase B-004
 
-**Gate Decision**: **MIXED** — Macro layer proven valuable (IC improves), but signal strength still below "better than random" threshold for direct trading
+**Official Gate Decision**: **GATE FAILED** (HR criterion not satisfied; Stability unmeasured)
 
 ---
 
@@ -40,7 +51,7 @@
 | H | -0.0035 | 41.3% | **+0.0895** ✅ |
 | I | -0.0393 | 41.3% | +0.0537 |
 
-**Finding**: NARM-P+ adds **8.95% IC improvement** in bull 2021. Macro signals **highly predictive** in bull regimes.
+**Finding**: NARM-P+ reduces contrarian drift by +0.0895 IC points in bull 2021. Effect most pronounced in this regime, but **in-sample regime analysis requires post-hoc validation** (data-snooping risk).
 
 ### Bear 2022
 
@@ -60,7 +71,7 @@
 | H | -0.1778 | 43.0% | +0.0241 | ⚠️ |
 | I | -0.2177 | 43.0% | -0.0399 |
 
-**Finding**: NARM-P+ helps but weakly (+2.4% IC). Regime uncertainty dominates. Spring hurts (-4%).
+**Finding**: NARM-P+ reduces drift by +0.0241 IC points (weak). Regime uncertainty dominates. Spring/Regime add noise (-0.0399).
 
 ### Bull 2024 (Partial)
 
@@ -70,39 +81,41 @@
 | H | +0.0226 | 50.0% | **+0.0357** ✅ |
 | I | +0.0546 | 50.0% | +0.0320 |
 
-**Finding**: NARM-P+ flips signal positive (+3.6% IC, reaches +0.0546 with Spring/Regime). **Only regime where all models beat random baseline**.
+**Finding**: NARM-P+ adds +0.0357 IC points, achieving positive final IC (+0.0226) in this regime alone. Note: Bull 2024 has only 2 windows (N=62 predictions); insufficient for standalone validation. Spring/Regime regress vs NARM alone.
 
 ---
 
 ## 3. Interpretation
 
-### A. NARM-P+ Is Regime-Dependent (Bullish)
+### A. NARM-P+ ΔIC Heterogeneity Across Regimes (In-Sample)
 
-**Macro signals work ONLY in bull markets**:
-- Bull 2021: Δ +0.0895 (very strong)
-- Bull 2024: Δ +0.0357 (strong)
-- Bear 2022: Δ +0.0030 (noise)
-- Recovery 2023: Δ +0.0241 (weak)
+**ΔIC by regime** (in-sample WFV):
+- Bull 2021 (5 windows, 155 pred): Δ +0.0895
+- Bull 2024 (2 windows, 62 pred): Δ +0.0357
+- Recovery 2023 (6 windows, 186 pred): Δ +0.0241
+- Bear 2022 (6 windows, 186 pred): Δ +0.0030
 
-**Implication**: Narrative/adoption signals are **leading in bull accumulation** but **lagging in bear drawdowns**. This aligns with economic intuition (social sentiment peaks BEFORE bull runs, crashes DURING bear markets).
+**Important**: This heterogeneity is detected post-hoc within the same test set. Risk of overfitting to regime structure. Requires **external validation** before claiming regime-specificity.
 
-### B. IC Improvement Validates Macro Layer Signal
+### B. ΔIC = +0.0359 Passes Gate Criterion 1, Not Gate Criterion 2
 
-**Δ IC +0.0359 is material**:
-- Exceeds gate threshold (0.005) by 7×
-- Consistent across bull regimes (+0.0895, +0.0357)
-- Reflects real information, not noise (per-regime stable)
+**Interpretation**:
+- ΔIC exceeds 0.005 target (passes IC gate)
+- HR remains 43.6% (fails HR gate)
+- IC improvement does not translate to better binary directional predictions
+- Suggests improved *ranking* of predictions, not improved *directional correctness*
 
-**Conclusion**: NARM-P+ captures **regime-aware narrative alpha**. Unlike Spring/Flow (which add 0 or negative signal), macro layer has genuine predictive content.
+**Implication**: NARM-P+ has weak signal characteristics. Not production-ready for standalone trading.
 
-### C. Hit Rate Problem: Absolute Signal Strength Too Low
+### C. Hit Rate Problem: Why ΔIC Doesn't Improve HR
 
-**HR 43.6% < 50% random baseline**:
-- All models (A, H, I) have identical HR = 43.6%
-- Suggests information is **correlated (same sign)**, not **independent signals**
-- NARM-P+ improves IC *ranking* but doesn't improve binary hit/miss rate
+**HR 43.6% for all models (identical across A/H/I)**:
+- NARM-P+ doesn't improve binary direction predictions
+- IC improvement reflects rank correlation, not directional accuracy
+- Suggests 1D BTC returns are mean-reversion-dominated
+- All baseline+macro blends fail HR gate (all ≤ 43.6%)
 
-**Why?** Contrarian effect persists across all layers. Even with NARM-P+ improving signal quality, 1D momentum prediction in crypto is fundamentally contrarian (mean reversion dominates).
+**Implication**: ΔIC improvement is real but modest. Signal lacks power for directional trading.
 
 ### D. Spring/Regime Redundant in Macro Context
 
@@ -117,31 +130,36 @@
 
 ## 4. Gate Decision Analysis
 
-### Official Gate Criteria (Phase B-003 SPEC)
+### Official Gate Criteria (Phase B-003 SPEC) — ALL must pass
 
-**Criterion 1: Δ IC(H-A) > 0.005**
+**Criterion 1: Δ IC(H-A) > 0.005 points**
 - Result: +0.0359 ✅ **PASS**
 
 **Criterion 2: HR(H) > 0.50**
-- Result: 0.4363 ❌ **FAIL**
+- Result: 0.4363 (43.6%) ❌ **FAIL**
 
-**Official Verdict**: GATE **FAILED** (both criteria must pass)
+**Criterion 3: Stability(H) > 0.65**
+- Result: Not computed ⚠️ **UNMEASURED**
+
+**Official Verdict**: GATE **FAILED** (Criteria 2 and 3 not satisfied)
 
 ---
 
 ### Architectural Interpretation
 
-**Micro-structure (Layers 1-3) failures**:
-- Spring: Δ IC = 0.000
-- Regime: Δ IC = +0.020 (weak)
-- Flow: Δ IC = -0.0009 (negative)
+**Micro-structure (Layers 1-3) gates failed**:
+- Spring: Δ IC = 0.000, Gate FAIL
+- Regime: Δ IC = +0.020, Gate FAIL (insufficient)
+- Flow: Δ IC = -0.0009, Gate FAIL (negative)
 
-**Macro-structure (Layer 5) success**:
-- NARM-P+: Δ IC = +0.0359 (material)
+**Macro-structure (Layer 5) gate failed**:
+- NARM-P+: Δ IC = +0.0359 (passes IC criterion, fails HR/Stability gates)
+- Classification: **Research signal identified, NOT production-ready**
 
-**Conclusion**: **Alpha is in narrative/adoption macro signals, NOT in micro-structure (order flow, technical patterns).**
-
-But the absolute IC is still low. What's next?
+**Key Finding**: 
+- Micro-structure adds 0 to −9 IC points (non-predictive)
+- Macro-structure adds +36 IC points (weak signal, post-hoc regime heterogeneity detected)
+- **Next investigation required**: Does ΔIC persist on out-of-sample data? Does regime interaction replicate?
 
 ---
 
@@ -165,38 +183,29 @@ But the absolute IC is still low. What's next?
 
 ---
 
-## 6. Regime-Aware Implications for Phase B-004
+## 6. Phase B-004 Protocol (RPM/RCM Capital Rotation)
 
-### Discovered: Regime-Gated Macro Alpha
+### Important Methodological Notes for B-004
 
-NARM-P+ adds alpha only when:
-- Market regime = BULL
-- Narrative momentum accelerating
-- Adoption metrics growing
+**Regime heterogeneity detected in B-003 is IN-SAMPLE**:
+- ΔIC heterogeneity (Bull > Bear) emerged post-hoc within 19 windows
+- Risk: Selection bias if using regime-filtered training in B-004
+- **Rule**: Do not pre-filter B-004 data to Bull regimes
 
-Fails when:
-- Market regime = BEAR (sentiment lags reality)
-- Recovery/uncertain (noise high)
+### Correct B-004 Workflow
 
-### Phase B-004 Consideration: Conditional NARM-P+
+1. **Full WFV without regime pre-filtering**
+2. Measure RPM/RCM Δ IC on complete dataset
+3. Test gate criteria (ALL must pass)
+4. **Then**: Post-hoc ablation by regime
+5. Analyze regime × RPM/RCM interaction *after* results
+6. Document uncertainty from multiplicity
 
-Instead of:
-```
-Baseline + NARM-P+ (always)
-```
+### Rationale
 
-Try:
-```
-IF regime == BULL:
-    Baseline + NARM-P+ (50/50 blend)
-ELSE:
-    Baseline only (100%)
-```
-
-This would:
-1. Capture +0.0895 IC in bull markets
-2. Avoid +0.003 noise in bear markets
-3. Dynamically gate macro layer
+- B-003 regime findings are hypothesis from in-sample observation
+- B-004 must test on full data first to avoid confirmation bias
+- Post-hoc regime analysis on B-004 results provides independent validation pathway
 
 ---
 
@@ -214,64 +223,65 @@ This would:
 
 ### Micro-Structure vs Macro: Verdict
 
-| Layer | Type | Result |
-|-------|------|--------|
-| **Micro** (Spring + Regime + Flow) | Order flow, technical | ❌ Non-predictive |
-| **Macro** (NARM-P+) | Narrative, adoption | ✅ **Predictive (regime-gated)** |
+| Layer | Type | ΔIC (points) | Gate | Status |
+|-------|------|------|------|--------|
+| **Micro** (Spring + Regime + Flow) | Order flow, technical | 0 to −9 | ❌ FAIL | Non-predictive |
+| **Macro** (NARM-P+) | Narrative, adoption | +0.0359 | ❌ FAIL | Research signal only |
 
-**Key insight**: Retail speculation (Spring, Flow) doesn't predict price. Market narrative (sentiment, adoption) **does predict under specific regime conditions**.
+**Key observation**: 
+- Spring/Flow/Regime: Non-predictive or negative (gates fail)
+- NARM-P+: Detected ΔIC, but fails production gate (HR < 0.50)
+- No layer has passed all gate criteria yet
 
 ### Micro-Structure Investigation: COMPLETE ✅
 
-Confirmed non-predictive:
-- Spring Detector P0.4: Structural feature (retained), not alpha source
-- Market Regime: Weak context filter, insufficient alone
-- Capital Flow (OI, Funding): Adds negative information
+Confirmed non-predictive on 1D:
+- Spring Detector P0.4: Structural feature (retained), IC=0.000
+- Market Regime: Weak context, Δ IC = +0.020 insufficient
+- Capital Flow (OI, Funding): Δ IC = −0.0009 (negative)
 
-**Conclusion**: Order flow/technical patterns provide 0-20 bps IC improvement at best. Not viable for incremental alpha.
+**Conclusion**: Order flow/technical patterns fail gate criteria.
 
-### Macro-Structure: PHASE B-004 READY
+### Macro-Structure: PHASE B-004 NEXT (Research Investigation)
 
-NARM-P+ proven valuable (**+36 bps IC in bull markets**):
-1. **Next: RPM/RCM (Capital rotation at macro scale)**
-   - Detect sector/narrative rotation
-   - Test if combined with NARM adds further IC
-   - Conditional on regime (gate at Bull threshold)
+NARM-P+ signal identified (Δ IC +0.0359) but gate failed:
+1. **Phase B-004: Test RPM/RCM capital rotation**
+   - No pre-filtering to Bull (full WFV first)
+   - Measure Δ IC(RPM/RCM) on complete dataset
+   - Test gate criteria
+   - Post-hoc: Regime interaction analysis
 
-2. **Consideration: Regime-Gating NARM-P+**
-   - Hypothesis: NARM value only in Bull regimes
-   - Design: Conditional blending based on Trend classification
-   - Expected: Reduce HR noise, keep IC gains
+2. **If RPM/RCM gate passes**:
+   - Ablation: RPM/RCM alone vs combined macro (NARM + RPM/RCM)
+   - Stability check across regimes
+   - Conditional gating rationale (if warranted)
 
-3. **If RPM/RCM also regime-gated**:
-   - Combined: Baseline + NARM-P+ + RPM/RCM (Bull only)
-   - Test IC on 5D or 4H (longer horizon) vs 1D
-   - Final Phase B: Integrated macro layer (B-005)
+3. **If all gates fail**:
+   - Conclude macro layer insufficient for production
+   - Consider alternative architectures (Layer 4 X20, longer horizons)
 
 ---
 
 ## 8. Recommendation
 
-### Option A: Proceed to Phase B-004 (RPM/RCM) — RECOMMENDED
+### Recommended: Proceed to Phase B-004 (RPM/RCM) — Full WFV without regime pre-filtering
 
-- NARM-P+ validates macro layer (Δ IC +0.0359)
-- Spring/Regime/Flow proven non-predictive
-- Next: Capital rotation detection at market-wide scale
-- Expected: Combined macro (NARM + RPM/RCM) > NARM alone
+**Rationale**:
+- NARM-P+ signal detected (Δ IC +0.0359), but gate failed (HR/Stability not met)
+- Next layer (RPM/RCM) must be tested independently to avoid cascading assumptions
+- Micro-structure (Spring/Regime/Flow) proven non-predictive; exclude from B-004
+- Post-hoc regime analysis on B-004 results provides independent validation
 
-### Option B: Regime-Gate NARM-P+ First (Branch B-003-ALT)
+**Critical**: Do NOT pre-filter B-004 data to Bull regimes based on B-003 findings (data-snooping risk). Test on full dataset first.
 
-- Hypothesis: NARM value only in Bull (Δ +0.0895 vs +0.003 in Bear)
-- Design: Conditional blending (100% NARM in Bull, 0% in Bear)
-- Risk: Over-fitting to 19 historical windows
-- Benefit: Higher IC in bull, avoids bear noise
+### Alternative: Extended B-003 Investigation (if needed)
 
-### Option C: Test NARM on 5D Horizon (Branch B-003-ALT-2)
+If regime heterogeneity is critical:
+- **Branch B-003-ALT**: Re-run with Stability metric computed
+- **Branch B-003-ALT-2**: Test 5D returns instead of 1D (may improve HR)
+- Risk: Extends validation cycle; better to proceed to B-004 first
 
-- Current: 1D prediction (noise-dominated)
-- Hypothesis: Narrative signals leading on 5D returns
-- Expected: HR improves (signal stronger), IC stabilizes
-- Risk: Requires re-validation of all prior layers (A/B/C/D/G)
+**Decision**: Proceed to B-004 without regime pre-filtering.
 
 ---
 
@@ -286,4 +296,4 @@ NARM-P+ proven valuable (**+36 bps IC in bull markets**):
 
 ---
 
-**Phase B-003 COMPLETE. Recommendation: Proceed to Phase B-004 (RPM/RCM + macro integration).**
+**Phase B-003 COMPLETE (Gate FAILED). Status: Research signal identified, production validation pending. Next: Phase B-004 (RPM/RCM).**
