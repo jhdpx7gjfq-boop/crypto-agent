@@ -1,6 +1,6 @@
 {
   "validation_run": "REAL_DATA",
-  "timestamp": "2026-09-25T13:19:12.448958Z",
+  "timestamp": "2026-09-25T13:59:22.073895Z",
   "symbols": [
     "BTC",
     "ETH",
@@ -17,7 +17,7 @@
       "independent_signals_found": 0,
       "signal_analysis": {},
       "result": "FAIL",
-      "timestamp": "2026-09-25T13:19:12.448986Z"
+      "timestamp": "2026-09-25T13:59:22.073984Z"
     },
     "4": {
       "stage": 4,
@@ -28,7 +28,7 @@
       "baseline_ic_samples": 0,
       "advantage": 0.0,
       "result": "PASS",
-      "timestamp": "2026-09-25T13:19:12.449020Z"
+      "timestamp": "2026-09-25T13:59:22.074065Z"
     },
     "6": {
       "stage": 6,
@@ -38,7 +38,7 @@
       "total": 0,
       "threshold": 0.55,
       "result": "FAIL",
-      "timestamp": "2026-09-25T13:19:12.449060Z"
+      "timestamp": "2026-09-25T13:59:22.074191Z"
     }
   },
   "summary": {

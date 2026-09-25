@@ -169,7 +169,7 @@ def main():
     synthetic_results = load_synthetic_results()
 
     # Run real data validation
-    logger.info("Loading real market data (2 years monthly OHLCV)...")
+    logger.info("Loading real market data (6 months weekly OHLCV, 27 candles)...")
     validator = RealDataRRPValidator(symbols=["BTC", "ETH", "SOL", "AVAX"], data_dir="./real_market_data")
 
     logger.info("Executing validation stages 1, 4, 6 on real data...")

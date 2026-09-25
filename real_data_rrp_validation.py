@@ -35,16 +35,23 @@ class RealDataRRPValidator:
         self.output_dir.mkdir(exist_ok=True)
 
         # Load real data from saved JSON files
+        # Try weekly data first (27 candles, 6 months), fallback to monthly (25 candles)
         self.datasets = {}
         data_dir_path = Path(data_dir)
         for symbol in self.symbols:
-            filepath = data_dir_path / f"{symbol}_tipransk_real_730d.json"
+            # Try weekly first (better granularity)
+            filepath = data_dir_path / f"{symbol}_tipransk_weekly_6m.json"
+            if not filepath.exists():
+                # Fallback to monthly
+                filepath = data_dir_path / f"{symbol}_tipransk_real_730d.json"
+
             if filepath.exists():
                 try:
                     with open(filepath) as f:
                         data = json.load(f)
                         self.datasets[symbol] = data["candles"]
-                        logger.info(f"Loaded {len(data['candles'])} candles for {symbol}")
+                        granularity = "weekly" if "weekly" in str(filepath) else "monthly"
+                        logger.info(f"Loaded {len(data['candles'])} {granularity} candles for {symbol}")
                 except Exception as e:
                     logger.error(f"Failed to load {symbol}: {e}")
             else:
@@ -275,7 +282,7 @@ class RealDataRRPValidator:
         logger.info("=" * 60)
         logger.info("REAL DATA RRP VALIDATION GATE")
         logger.info(f"Symbols: {list(self.datasets.keys())}")
-        logger.info(f"Data candles per symbol: 25 (monthly bars, 2 years)")
+        logger.info(f"Data granularity: 27 weekly candles (6 months, Mar-Sep 2026)")
         logger.info("=" * 60)
 
         results = {

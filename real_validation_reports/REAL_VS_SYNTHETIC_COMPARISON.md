@@ -1,6 +1,6 @@
 # RRP Validation: Synthetic vs Real Data Comparison
 
-**Generated:** 2026-09-25T13:19:12.449454Z
+**Generated:** 2026-09-25T13:59:22.074887Z
 
 ## Executive Summary
 
@@ -95,7 +95,7 @@ REVIVING signals with positive 30-day forward return ≥55%
   "total": 0,
   "threshold": 0.55,
   "result": "FAIL",
-  "timestamp": "2026-09-25T13:19:12.449060Z"
+  "timestamp": "2026-09-25T13:59:22.074191Z"
 }...
 
 ### Analysis
@@ -132,4 +132,4 @@ REVIVING signals with positive 30-day forward return ≥55%
 ---
 
 **Governance:** This comparison is binding. No criteria changes post-observation.
-**Date:** 2026-09-25T13:19:12.449454Z
+**Date:** 2026-09-25T13:59:22.074887Z
