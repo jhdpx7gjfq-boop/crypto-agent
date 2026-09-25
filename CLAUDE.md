@@ -20,31 +20,38 @@ Spring Detector P0.4 WFV Results:
 - Stability = 1.0 (target >0.75) ✅
 - Status: **Frozen. Retained as structural feature, NOT modified.**
 
-### Phase B-001: IN PROGRESS 🔄
+### Phase B-001: COMPLETED ✅ — GATE FAILED ❌
 
 **Objective**: Determine if Spring becomes predictive when conditioned on market context.
 
-**Framework**:
-- Ablation matrix: 7 models (A=Baseline, B=+Spring, C=+Regime, D=+Flow, E=+Spring+Regime, F=+Spring+Flow, G=Full)
-- PIT validation across 4 market regimes (2021-2024), 18 WFV windows
-- Metrics: Incremental IC, HR, Expectancy, MFE/MAE per window + per regime
+**Results**:
+```
+Model A (Baseline)           : IC = -0.121
+Model B (+ Spring)           : IC = -0.121  [delta = 0.000 ❌ <0.005]
+Model C (+ Regime)           : IC = -0.100  [delta = +0.020]
+Model E (+ Spring + Regime)  : IC = -0.100  [delta = 0.000 ❌ <0.003]
+```
 
-**Gate Criteria**:
-- Spring incremental IC: IC(B) - IC(A) > 0.005
-- Spring + Regime synergy: IC(E) - IC(C) > 0.003
+**Key Findings**:
+- **Spring is fully redundant** (delta IC = 0.000): No new predictive information
+- **Regime adds marginal value** (+0.020 IC): Weak but present
+- **Spring + Regime: No synergy** (E = C): Spring doesn't enrich regime context
+- **Baseline momentum is contrarian** (IC<0): Predicts DOWN when momentum UP
 
-**Status**: 
-- Framework built ✅ (spec + 6 modules)
-- WFV running (30-45 min) 🔄
-- Output: `reports/research/phase_b_001_ablation.json`
+**Gate Decision**: FAIL
+- Spring incremental IC: 0.000 (target >0.005) ❌
+- Spring + Regime synergy: 0.000 (target >0.003) ❌
+
+**Interpretation**:
+- Spring excels at pattern detection (HR=87% from Phase A)
+- But produces signals uncorrelated with short-term returns (IC=0)
+- Possible issues: 1D horizon too short, momentum reversion natural in crypto, or Spring simply doesn't predict
 
 **Key Files**:
-- `docs/SPRING-PHASE-B-001-SPEC.md`: Full protocol
-- `src/research/market_regime_detector.py`: Trend/Vol classification (PIT-safe)
-- `src/research/baseline_predictor.py`: Model A (momentum only)
-- `src/research/spring_context_predictor.py`: Models B-G
-- `src/research/ablation_framework.py`: IC/HR measurement engine
-- `src/research/phase_b_001_runner.py`: WFV orchestration
+- `docs/SPRING-PHASE-B-001-SPEC.md`: Protocol
+- `docs/SPRING-PHASE-B-001-RESULTS.md`: Full interpretation
+- `reports/research/phase_b_001_ablation.json`: Raw results
+- `src/research/`: Framework (6 modules, reusable for Phase B-002)
 
 ### Constraints (FROZEN)
 
@@ -53,17 +60,38 @@ Spring Detector P0.4 WFV Results:
 - BCE/X20/RPM parameters
 - Phase A validation results
 
-### Next Steps (Conditional on Phase B-001 Gate)
+### Architectural Decision: Phase B-002 Roadmap
 
-**If Phase B-001 PASS**:
-1. Phase B-002: Capital Flow layer (OI, funding, liquidations)
-2. Re-validate integrated system (Layers 2-6 combined)
-3. Final IC measurement after full architecture assembly
+Phase B-001 FAILED → Multiple options forward:
 
-**If Phase B-001 FAIL**:
-1. Archive Spring P0.4 as non-predictive structural feature
-2. Pivot to Regime-only model (C) for Phase B gates
-3. Investigate alternative entry signals (X20, NARM-P+)
+**Option 1: Archive Spring (Recommended)**
+- Spring retained as structural/risk-mgmt tool (not signal)
+- Proceed to Phase B-002: Capital Flow layer (OI, Funding, Liquidations)
+- Test: IC(Flow) alone, then IC(Regime + Flow)
+
+**Option 2: Investigate Capital Flow First**
+- Test if Flow layer is sufficient for Phase B predictiveness
+- Ablation: D, F, G fully implemented (currently placeholder)
+- If IC(D-A) >0.010, proceed; else abandon this path
+
+**Option 3: Modify Horizon**
+- Test 5D returns instead of 1D (momentum reversion vs trend)
+- Re-run B/C/E on longer horizon
+- If Spring IC improves on longer term, reconsider architecture
+
+**Option 4: Pivot to Layer 4 (X20 Engine)**
+- Skip Flow layer entirely
+- Test X20 (asymmetric opportunities) as Phase B core
+- Measure IC(X20 alone), then IC(Regime + X20)
+
+**Option 5: Reconsider Entire Stack**
+- Accept that micro-structure layers (Spring/Flow) may not be predictive
+- Build Phase B on macro layers (Layer 5: NARM-P+, Layer 6: RPM/RCM)
+- Wyckoff + narrative rotation + capital rotation as primary signals
+
+---
+
+**Awaiting user directive. CLAUDE.md will freeze here until Phase B-002 scope is chosen.**
 
 ## Architecture Overview
 
