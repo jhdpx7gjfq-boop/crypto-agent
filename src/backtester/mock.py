@@ -3,6 +3,7 @@
 from datetime import datetime
 from typing import Any
 
+import numpy as np
 import pandas as pd
 
 from src.utils.logging import get_logger
@@ -18,15 +19,30 @@ class MockBacktester(Backtester):
     def __init__(self) -> None:
         """Initialize mock backtester."""
         self.config: dict[str, Any] = {}
+        self.initial_cash = 10000.0
         self.portfolio = PortfolioState(
             timestamp=datetime.now(),
             positions={},
-            cash=10000.0,
-            equity=10000.0,
+            cash=self.initial_cash,
+            equity=self.initial_cash,
         )
-        self.equity_curve: list[float] = [10000.0]
+        self.equity_curve: list[float] = [self.initial_cash]
         self.trade_log: list[dict[str, Any]] = []
         self.active_trades: dict[str, dict[str, Any]] = {}
+        self.last_price: dict[str, float] = {}
+
+    def _update_equity_curve_event(self) -> None:
+        """Update equity curve at trade event.
+
+        Equity = cash + mark-to-market value of positions (at last observed price).
+        This is event-driven (updates on LONG/EXIT), not observation-driven.
+        """
+        marked_value = sum(
+            qty * self.last_price.get(asset, 0.0)
+            for asset, qty in self.portfolio.positions.items()
+        )
+        total_equity = self.portfolio.cash + marked_value
+        self.equity_curve.append(total_equity)
 
     def setup(self, config: dict[str, Any]) -> None:
         """Setup with config.
@@ -50,9 +66,14 @@ class MockBacktester(Backtester):
     ) -> list[BacktestSignal]:
         """Generate simple buy/sell signals on raw_price feature.
 
+        Execution convention: Signal at timestamp T uses price at T (not T+1).
+        - current_price = df["raw_price"].iloc[-1] is the last available price ≤ timestamp T
+        - This ensures point-in-time safety — no forward-looking data access
+        - Signals generated at T can use only data up to and including T
+
         Args:
             features: Dict mapping asset -> DataFrame.
-            timestamp: Current timestamp.
+            timestamp: Current timestamp (point-in-time).
 
         Returns:
             List of signals.
@@ -64,6 +85,7 @@ class MockBacktester(Backtester):
                 continue
 
             current_price = df["raw_price"].iloc[-1]
+            self.last_price[asset] = current_price
 
             buy_threshold = self.config.get("buy_threshold", 60000)
             sell_threshold = self.config.get("sell_threshold", 70000)
@@ -77,6 +99,7 @@ class MockBacktester(Backtester):
                             action="EXIT",
                             confidence=0.8,
                             exit_price=current_price,
+                            metadata={"price_timestamp": timestamp.isoformat()},
                         )
                     )
             elif current_price <= buy_threshold:
@@ -87,6 +110,7 @@ class MockBacktester(Backtester):
                         action="LONG",
                         confidence=0.7,
                         entry_price=current_price,
+                        metadata={"price_timestamp": timestamp.isoformat()},
                     )
                 )
 
@@ -116,6 +140,9 @@ class MockBacktester(Backtester):
 
             self.portfolio.positions[signal.asset] = quantity
             self.portfolio.cash -= allocation
+            self.portfolio.timestamp = signal.timestamp
+
+            self._update_equity_curve_event()
 
             logger.info(
                 "LONG signal processed",
@@ -143,6 +170,7 @@ class MockBacktester(Backtester):
 
             self.portfolio.cash += proceeds
             self.portfolio.positions.pop(signal.asset, None)
+            self.portfolio.timestamp = signal.timestamp
 
             self.trade_log.append(
                 {
@@ -153,8 +181,15 @@ class MockBacktester(Backtester):
                     "pnl": pnl,
                     "entry_time": trade["entry_time"],
                     "exit_time": signal.timestamp,
+                    "provenance": {
+                        "signal_timestamp": signal.timestamp.isoformat(),
+                        "price_timestamp": signal.metadata.get("price_timestamp"),
+                        "confidence": signal.confidence,
+                    },
                 }
             )
+
+            self._update_equity_curve_event()
 
             logger.info(
                 "EXIT signal processed",
@@ -166,6 +201,61 @@ class MockBacktester(Backtester):
                     }
                 },
             )
+
+    def _calculate_metrics(self) -> BacktestMetrics:
+        """Calculate real metrics from equity_curve and trade_log."""
+        if not self.equity_curve or len(self.equity_curve) < 1:
+            raise ValueError("No equity curve data")
+
+        equity = np.array(self.equity_curve)
+
+        total_return_pct = ((equity[-1] - equity[0]) / equity[0]) * 100
+
+        if len(equity) > 1:
+            returns = np.diff(equity) / equity[:-1]
+            max_drawdown = self._calculate_max_drawdown(equity)
+            sharpe = self._calculate_sharpe(returns)
+        else:
+            max_drawdown = 0.0
+            sharpe = 0.0
+
+        profit_factor = self._calculate_profit_factor()
+        win_rate = (
+            sum(1 for t in self.trade_log if t["pnl"] > 0) / len(self.trade_log)
+            if self.trade_log
+            else 0.0
+        )
+
+        return BacktestMetrics(
+            total_return=total_return_pct,
+            annual_return=total_return_pct,
+            max_drawdown=max_drawdown,
+            sharpe_ratio=sharpe,
+            profit_factor=profit_factor,
+            trade_count=len(self.trade_log),
+            win_rate=win_rate,
+            equity_curve=self.equity_curve,
+            trade_log=self.trade_log,
+        )
+
+    def _calculate_max_drawdown(self, equity: np.ndarray[Any, np.dtype[np.floating[Any]]]) -> float:
+        """Calculate max drawdown % from equity curve."""
+        running_max = np.maximum.accumulate(equity)
+        drawdown = (equity - running_max) / running_max
+        return float(np.min(drawdown) * 100) if len(drawdown) > 0 else 0.0
+
+    def _calculate_sharpe(self, returns: np.ndarray[Any, np.dtype[np.floating[Any]]], risk_free_rate: float = 0.02) -> float:
+        """Calculate annualized Sharpe ratio."""
+        if len(returns) == 0 or np.std(returns) == 0:
+            return 0.0
+        excess_returns = returns - (risk_free_rate / 252)
+        return float((np.mean(excess_returns) / np.std(excess_returns)) * np.sqrt(252))
+
+    def _calculate_profit_factor(self) -> float:
+        """Calculate profit factor from trade_log."""
+        gross_profit = sum(t["pnl"] for t in self.trade_log if t["pnl"] > 0)
+        gross_loss = abs(sum(t["pnl"] for t in self.trade_log if t["pnl"] < 0))
+        return gross_profit / (gross_loss + 1e-6) if gross_loss > 0 else 0.0
 
     def get_portfolio_state(self) -> PortfolioState:
         """Get current portfolio state.
@@ -181,7 +271,7 @@ class MockBacktester(Backtester):
         end_date: datetime,
         initial_capital: float,
     ) -> BacktestMetrics:
-        """Run backtest (placeholder).
+        """Run backtest.
 
         Args:
             start_date: Start date.
@@ -189,7 +279,7 @@ class MockBacktester(Backtester):
             initial_capital: Starting capital.
 
         Returns:
-            BacktestMetrics (mocked).
+            BacktestMetrics with real metrics calculated from equity curve.
         """
         if start_date >= end_date:
             raise ValueError("start_date must be < end_date")
@@ -197,61 +287,15 @@ class MockBacktester(Backtester):
         if initial_capital <= 0:
             raise ValueError("initial_capital must be positive")
 
-        total_pnl = sum(t["pnl"] for t in self.trade_log)
-        total_return = (total_pnl / initial_capital) * 100
-
-        win_count = sum(1 for t in self.trade_log if t["pnl"] > 0)
-        win_rate = win_count / len(self.trade_log) if self.trade_log else 0.0
-
-        profit_factor = (
-            sum(t["pnl"] for t in self.trade_log if t["pnl"] > 0)
-            / abs(sum(t["pnl"] for t in self.trade_log if t["pnl"] < 0))
-            if any(t["pnl"] < 0 for t in self.trade_log)
-            else 0.0
-        )
-
-        return BacktestMetrics(
-            total_return=total_return,
-            annual_return=total_return / 1.0,
-            max_drawdown=-5.0,
-            sharpe_ratio=1.5,
-            profit_factor=profit_factor,
-            trade_count=len(self.trade_log),
-            win_rate=win_rate,
-            equity_curve=self.equity_curve,
-            trade_log=self.trade_log,
-        )
+        return self._calculate_metrics()
 
     def get_metrics(self) -> BacktestMetrics:
         """Get metrics.
 
         Returns:
-            BacktestMetrics.
+            BacktestMetrics with real metrics from equity curve.
         """
-        total_pnl = sum(t["pnl"] for t in self.trade_log)
-        total_return = (total_pnl / 10000.0) * 100
-
-        win_count = sum(1 for t in self.trade_log if t["pnl"] > 0)
-        win_rate = win_count / len(self.trade_log) if self.trade_log else 0.0
-
-        profit_factor = (
-            sum(t["pnl"] for t in self.trade_log if t["pnl"] > 0)
-            / abs(sum(t["pnl"] for t in self.trade_log if t["pnl"] < 0))
-            if any(t["pnl"] < 0 for t in self.trade_log)
-            else 0.0
-        )
-
-        return BacktestMetrics(
-            total_return=total_return,
-            annual_return=total_return,
-            max_drawdown=-5.0,
-            sharpe_ratio=1.5,
-            profit_factor=profit_factor,
-            trade_count=len(self.trade_log),
-            win_rate=win_rate,
-            equity_curve=self.equity_curve,
-            trade_log=self.trade_log,
-        )
+        return self._calculate_metrics()
 
     def close(self) -> None:
         """Clean up resources."""

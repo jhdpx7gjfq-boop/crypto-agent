@@ -226,3 +226,166 @@ class TestMockBacktester:
         """Test close() completes without error."""
         bt = MockBacktester()
         bt.close()
+
+    def test_portfolio_timestamp_updated_on_signal(self) -> None:
+        """Test portfolio.timestamp updates to signal.timestamp."""
+        bt = MockBacktester()
+        bt.setup({"position_size": 0.5})
+
+        ts1 = datetime(2024, 1, 1, 12, 0, 0, tzinfo=UTC)
+        ts2 = datetime(2024, 1, 2, 12, 0, 0, tzinfo=UTC)
+
+        signal1 = BacktestSignal(
+            timestamp=ts1,
+            asset="BTC",
+            action="LONG",
+            confidence=0.8,
+            entry_price=65000.0,
+        )
+        bt.on_signal(signal1)
+        assert bt.portfolio.timestamp == ts1
+
+        signal2 = BacktestSignal(
+            timestamp=ts2,
+            asset="BTC",
+            action="EXIT",
+            confidence=0.8,
+            exit_price=70000.0,
+        )
+        bt.on_signal(signal2)
+        assert bt.portfolio.timestamp == ts2
+
+    def test_equity_curve_updates_on_long(self) -> None:
+        """Test equity_curve updates when LONG signal processed."""
+        bt = MockBacktester()
+        bt.setup({"position_size": 0.5})
+
+        initial_length = len(bt.equity_curve)
+
+        ts = datetime.now(UTC)
+        signal = BacktestSignal(
+            timestamp=ts,
+            asset="BTC",
+            action="LONG",
+            confidence=0.8,
+            entry_price=65000.0,
+        )
+        bt.on_signal(signal)
+
+        assert len(bt.equity_curve) == initial_length + 1
+        assert bt.equity_curve[-1] < 10000.0
+
+    def test_equity_curve_updates_on_exit(self) -> None:
+        """Test equity_curve updates when EXIT signal processed."""
+        bt = MockBacktester()
+        bt.setup({"position_size": 0.5})
+
+        ts = datetime.now(UTC)
+
+        entry_signal = BacktestSignal(
+            timestamp=ts,
+            asset="BTC",
+            action="LONG",
+            confidence=0.8,
+            entry_price=65000.0,
+        )
+        bt.on_signal(entry_signal)
+        length_after_entry = len(bt.equity_curve)
+
+        exit_signal = BacktestSignal(
+            timestamp=ts,
+            asset="BTC",
+            action="EXIT",
+            confidence=0.8,
+            exit_price=70000.0,
+        )
+        bt.on_signal(exit_signal)
+
+        assert len(bt.equity_curve) == length_after_entry + 1
+        assert bt.equity_curve[-1] > bt.equity_curve[-2]
+
+    def test_trade_log_has_provenance(self) -> None:
+        """Test trade_log entries include provenance."""
+        bt = MockBacktester()
+        bt.setup({"position_size": 0.5})
+
+        ts = datetime.now(UTC)
+
+        entry_signal = BacktestSignal(
+            timestamp=ts,
+            asset="BTC",
+            action="LONG",
+            confidence=0.8,
+            entry_price=65000.0,
+            metadata={"price_timestamp": ts.isoformat()},
+        )
+        bt.on_signal(entry_signal)
+
+        exit_signal = BacktestSignal(
+            timestamp=ts,
+            asset="BTC",
+            action="EXIT",
+            confidence=0.8,
+            exit_price=70000.0,
+            metadata={"price_timestamp": ts.isoformat()},
+        )
+        bt.on_signal(exit_signal)
+
+        assert len(bt.trade_log) == 1
+        trade = bt.trade_log[0]
+        assert "provenance" in trade
+        assert "signal_timestamp" in trade["provenance"]
+        assert "price_timestamp" in trade["provenance"]
+        assert "confidence" in trade["provenance"]
+
+    def test_metrics_not_hardcoded(self) -> None:
+        """Test get_metrics returns real values, not hardcoded ones."""
+        bt = MockBacktester()
+        bt.setup({"position_size": 0.5})
+
+        ts = datetime.now(UTC)
+
+        entry_signal = BacktestSignal(
+            timestamp=ts,
+            asset="BTC",
+            action="LONG",
+            confidence=0.8,
+            entry_price=65000.0,
+        )
+        bt.on_signal(entry_signal)
+
+        exit_signal = BacktestSignal(
+            timestamp=ts,
+            asset="BTC",
+            action="EXIT",
+            confidence=0.8,
+            exit_price=70000.0,
+        )
+        bt.on_signal(exit_signal)
+
+        metrics = bt.get_metrics()
+
+        assert metrics.sharpe_ratio != 1.5
+        assert metrics.max_drawdown != -5.0
+        assert metrics.total_return > 0
+
+    def test_execution_convention_t_price_t(self) -> None:
+        """Test execution convention: signal at T uses price at T (no T+1)."""
+        bt = MockBacktester()
+        bt.setup({"buy_threshold": 70000, "sell_threshold": 80000})
+
+        ts = datetime.now(UTC)
+
+        features = {
+            "BTC": pd.DataFrame({
+                "raw_price": [75000.0, 65000.0],
+                "timestamp": [ts, ts],
+            })
+        }
+
+        signals = bt.generate_signals(features, ts)
+
+        assert len(signals) == 1
+        assert signals[0].action == "LONG"
+        assert signals[0].entry_price == 65000.0
+        assert signals[0].metadata["price_timestamp"] == ts.isoformat()
