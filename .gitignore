@@ -6,11 +6,12 @@ __pycache__/
 .venv/
 venv/
 
-# Data storage (local, not committed)
-data/
+# Raw data storage (local, not committed)
+# NOTE: src/data/ is source code and should be committed
+/data/
 logs/
 
-# DuckDB
+# DuckDB database files
 *.duckdb
 *.duckdb.wal
 
