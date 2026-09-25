@@ -1,0 +1,13 @@
+{
+  "stage": 8,
+  "title": "Robustness Testing",
+  "timestamp": "2026-09-25T13:09:33.719267",
+  "results": {
+    "stage": 8,
+    "timestamp": "2026-09-25T13:09:33.700212",
+    "bull_market_candles": 316,
+    "bear_market_candles": 49,
+    "regime_stability": true,
+    "result": "PASS"
+  }
+}

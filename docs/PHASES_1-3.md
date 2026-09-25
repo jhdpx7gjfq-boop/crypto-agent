@@ -228,81 +228,19 @@ pip install -r requirements.txt
 
 ---
 
-## Phase 9: AI Research Copilot
-
-### Read-Only Human-Gated Research Assistant - v1.0.0
-
-Augments human decision-making with structured hypothesis generation, anomaly detection, and scenario comparison.
-
-**Constraints:**
-```
-✅ CAN: Read data, analyze, propose hypotheses, generate experiments, challenge assumptions
-❌ CANNOT: Modify parameters, execute trades, approve signals, bypass human validation
-```
-
-**Core Functions:**
-- `propose_hypothesis()` - Generate structured hypothesis with confidence level
-- `detect_anomaly()` - Flag statistical anomalies (3-sigma volume spikes, etc.)
-- `compare_scenarios()` - Side-by-side coin/metric comparison
-- `challenge_assumption()` - Evidence-based assumption validation
-- `propose_experiment()` - Framework for PIT/OOS/WFV validation
-- `format_research_report()` - Markdown report with governance disclaimers
-
-**Data Structures:**
-- `ResearchProposal` - Hypothesis with confidence, evidence, assumptions, risks
-- `AnomalyReport` - Statistical anomaly with severity and human verification
-- `ComparisonScenario` - Multi-coin analysis with divergences and convergences
-
-**Workflow:**
-```
-Query → AI Analysis → Proposal → Human Review → Experiment → Decision
-(Read-only analysis) (Approve/Reject) (Validate) (Manual execution)
-```
-
-**Usage:**
-```python
-copilot = AIResearchCopilot(read_only=True)
-
-# Generate hypothesis
-proposal = copilot.propose_hypothesis(
-    coin_id="bitcoin",
-    hypothesis="Institutional accumulation",
-    confidence=0.72,
-    supporting_metrics={...},
-    conflicting_metrics={...},
-    data_sources=["coingecko", "indicators"],
-    assumptions=[...],
-    risk_factors=[...]
-)
-
-# Format report for human review
-report = copilot.format_research_report(proposal.proposal_id, ...)
-print(report)
-
-# Human approves
-approved = copilot.mark_proposal_approved(proposal.proposal_id, "OK for WFV")
-```
-
-**Tests:** 18/18 ✓
-
-**See:** `docs/PHASE_9_AI_RESEARCH_COPILOT.md` for detailed specification.
-
----
-
 ## Test Coverage
 
 ```
-test_coingecko_collector.py       10/10 ✓
-test_feature_store.py              4/5  ✓ (1 infrastructure skip)
-test_wyckoff_bce.py                7/7  ✓
-test_x20_engine.py                 7/7  ✓
-test_narm_p_plus.py                9/9  ✓
-test_rcm_rpm_engine.py            12/12 ✓
-test_rrp_revival_radar.py         21/21 ✓
-test_dashboard.py                  5/5  ✓
-test_ai_research_copilot.py       18/18 ✓
+test_coingecko_collector.py    10/10 ✓
+test_feature_store.py           4/5  ✓
+test_wyckoff_bce.py             7/7  ✓
+test_x20_engine.py              7/7  ✓
+test_narm_p_plus.py             9/9  ✓
+test_rcm_rpm_engine.py          12/12 ✓
+test_rrp_revival_radar.py       21/21 ✓
+test_dashboard.py               5/5  ✓
 
-Total: 108/109 ✓ (99.1% effective)
+Total: 75/76 ✓ (98.7%)
 ```
 
 Run all:
@@ -312,13 +250,12 @@ pytest tests/ -v
 
 ---
 
-## Completed: Phases 1-9 ✓
+## Completed: Phases 1-8 ✓
 
 **5. NARM-P+** - Narrative adoption rotation model ✓  
 **6. RCM/RPM** - Capital rotation detection ✓  
 **7. RRP** - Revival Radar Pipeline ✓  
-**8. Dashboard** - Real-time monitoring interface ✓  
-**9. AI Research Copilot** - Read-only human-gated research assistant ✓
+**8. Dashboard** - Real-time monitoring interface ✓
 
 ---
 
@@ -537,8 +474,7 @@ Access: http://localhost:8501 (mobile-friendly)
 | `src/analysis/rcm_rpm_engine.py` | Capital rotation | ✓ v1.0.0 |
 | `src/analysis/rrp_revival_radar.py` | Dead token revival | ✓ v1.0.0 |
 | `src/dashboard/app.py` | Real-time UI | ✓ v1.0.0 |
-| `src/agent/ai_research_copilot.py` | Read-only research copilot | ✓ v1.0.0 |
-| `tests/` | Full test suite | ✓ 99.1% |
+| `tests/` | Full test suite | ✓ 98.7% |
 
 ---
 

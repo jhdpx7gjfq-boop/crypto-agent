@@ -1,0 +1,15 @@
+{
+  "stage": 5,
+  "title": "Out-of-Sample Validation",
+  "timestamp": "2026-09-25T13:09:33.718699",
+  "results": {
+    "stage": 5,
+    "timestamp": "2026-09-25T13:09:33.681955",
+    "is_split_idx": 255,
+    "is_correlation": -0.13950520871132163,
+    "oos_correlation": 0.0,
+    "correlation_drop_pct": -100.0,
+    "overfit_detected": false,
+    "result": "PASS"
+  }
+}
