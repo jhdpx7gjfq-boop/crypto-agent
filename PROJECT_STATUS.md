@@ -39,7 +39,7 @@
 
 ### Priority 1: B-004 Research Gate
 
-**Status**: ✅ COMPLETE  
+**Status**: ✅ OWNER-APPROVED & FROZEN  
 **Goal**: Freeze B-004 acceptance criteria for all layers
 
 Completed:
@@ -53,6 +53,7 @@ Completed:
 - ✅ Ablation testing complete
 - ✅ Robustness testing complete
 
+**Owner Approval**: ✅ ACCEPTED (see `OWNER_DECISION_FINAL.md`)  
 **Result**: Layers 1-7 validated for operational use. See `B-004_SPECIFICATION_FROZEN.md` and `WFV_EXECUTION_REPORT.md`.
 
 ### Priority 2: Liquidation Research (Independent)
