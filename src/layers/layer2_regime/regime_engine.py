@@ -83,7 +83,7 @@ class MarketRegimeDetector:
             macro_score=macro_score,
         )
 
-        logger.info(f"Regime: {regime.value} | BTC Dom: {btc_dominance:.1f}% | FR: {funding_rate:.4f}")
+        logger.info(f"Regime: {regime.value} | BTC Dom: {btc_dominance or 50.0:.1f}% | FR: {funding_rate or 0.0:.4f}")
 
         return market_regime
 
@@ -96,7 +96,7 @@ class MarketRegimeDetector:
         """Classify regime based on signals."""
 
         if funding_rate is None:
-            return RegimeType.NEUTRAL
+            return RegimeType.SIDEWAYS
 
         # Thresholds
         fr_bull_threshold = 0.0005   # 0.05% per 8h = bullish
