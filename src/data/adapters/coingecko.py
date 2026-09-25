@@ -8,6 +8,7 @@ No authentication required.
 from typing import List
 from datetime import datetime, timezone
 import requests
+import time
 
 from src.data.adapters.base import DatasourceAdapter
 from src.data.schemas.types import OHLCV, Provenance
@@ -22,6 +23,7 @@ class CoinGeckoAdapter(DatasourceAdapter):
     BASE_URL = "https://api.coingecko.com/api/v3"
     TIMEOUT_SECONDS = 10
     RETRY_COUNT = 3
+    MIN_REQUEST_INTERVAL = 0.5  # Minimum seconds between requests (rate limiting)
 
     # Map symbol names to CoinGecko IDs
     SYMBOL_MAP = {
@@ -35,6 +37,7 @@ class CoinGeckoAdapter(DatasourceAdapter):
 
     def __init__(self, timeout_seconds: int = TIMEOUT_SECONDS):
         self.timeout_seconds = timeout_seconds
+        self._last_request_time = 0  # Track last request for rate limiting
 
     def get_name(self) -> str:
         return "coingecko"
@@ -95,23 +98,52 @@ class CoinGeckoAdapter(DatasourceAdapter):
             },
         )
 
-        try:
-            response = requests.get(
-                url, params=params, timeout=self.timeout_seconds
-            )
-            response.raise_for_status()
-            data = response.json()
-        except requests.RequestException as e:
+        # Apply rate limiting: ensure minimum interval between requests
+        elapsed = time.time() - self._last_request_time
+        if elapsed < self.MIN_REQUEST_INTERVAL:
+            wait_time = self.MIN_REQUEST_INTERVAL - elapsed
+            time.sleep(wait_time)
+
+        data = None
+        last_error = None
+
+        for attempt in range(1, self.RETRY_COUNT + 1):
+            try:
+                self._last_request_time = time.time()
+                response = requests.get(
+                    url, params=params, timeout=self.timeout_seconds
+                )
+                response.raise_for_status()
+                data = response.json()
+                break  # Success
+            except requests.RequestException as e:
+                last_error = e
+                if attempt < self.RETRY_COUNT:
+                    wait_seconds = 2 ** (attempt - 1)  # Exponential backoff: 1s, 2s, 4s
+                    logger.warning(
+                        f"CoinGecko API error (attempt {attempt}/{self.RETRY_COUNT}), retrying in {wait_seconds}s",
+                        extra={
+                            "event": "fetch_retry",
+                            "status": "retrying",
+                            "symbol": cg_symbol,
+                            "attempt": attempt,
+                            "error": str(e),
+                        },
+                    )
+                    time.sleep(wait_seconds)
+
+        if data is None:
             logger.error(
-                f"CoinGecko API error: {e}",
+                f"CoinGecko API error after {self.RETRY_COUNT} attempts: {last_error}",
                 extra={
                     "event": "fetch_error",
                     "status": "error",
                     "symbol": cg_symbol,
-                    "error": str(e),
+                    "attempts": self.RETRY_COUNT,
+                    "error": str(last_error),
                 },
             )
-            raise RuntimeError(f"Failed to fetch from CoinGecko: {e}")
+            raise RuntimeError(f"Failed to fetch from CoinGecko after {self.RETRY_COUNT} attempts: {last_error}")
 
         # Parse OHLCV from response
         ohlcv_list = []
@@ -177,6 +209,7 @@ class CoinGeckoAdapter(DatasourceAdapter):
         - OHLC ordering
         - Monotonic timestamps
         - Provenance fields
+        - Gap detection for daily data
         """
         if not ohlcv_list:
             return True
@@ -210,4 +243,44 @@ class CoinGeckoAdapter(DatasourceAdapter):
                         f"{ohlcv_list[i-1].timestamp} >= {candle.timestamp}"
                     )
 
+        # Gap detection for daily data
+        if ohlcv_list and ohlcv_list[0].provenance.timeframe == "1d":
+            self._detect_daily_gaps(ohlcv_list)
+
         return True
+
+    def _detect_daily_gaps(self, ohlcv_list: List[OHLCV]) -> None:
+        """
+        Detect gaps in daily OHLCV data.
+
+        Logs warnings for missing days (weekends may be ok, but unexpected gaps should be flagged).
+        """
+        from datetime import timedelta
+
+        gaps = []
+        for i in range(len(ohlcv_list) - 1):
+            current_ts = ohlcv_list[i].timestamp
+            next_ts = ohlcv_list[i + 1].timestamp
+            diff = next_ts - current_ts
+
+            # For daily data, expect 1 day (86400 sec) but allow for weekends (~3 days)
+            expected_diff = timedelta(days=1)
+            max_allowed_diff = timedelta(days=3)  # Weekends + 1 extra day
+
+            if diff > max_allowed_diff:
+                gaps.append({
+                    "after": current_ts.isoformat(),
+                    "before": next_ts.isoformat(),
+                    "gap_days": diff.days
+                })
+
+        if gaps:
+            logger.warning(
+                f"Detected {len(gaps)} gaps in daily data",
+                extra={
+                    "event": "data_gap_detected",
+                    "status": "warning",
+                    "gap_count": len(gaps),
+                    "first_gap": gaps[0],
+                },
+            )
