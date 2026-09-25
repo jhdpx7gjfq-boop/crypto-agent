@@ -1,0 +1,123 @@
+{
+  "mean_win_rate": 0.5,
+  "std_win_rate": 0.0,
+  "mean_precision": 0.5,
+  "mean_return_winners": 0.0,
+  "mean_loss_losers": 0.0,
+  "stability": 1.0,
+  "oos_win_rate": 0.5,
+  "gate_criteria": {
+    "criterion_1_wr": false,
+    "criterion_2_precision": false,
+    "criterion_3_stability": false,
+    "criterion_4_oos": true
+  },
+  "gate_decision": "FAIL",
+  "frozen": true,
+  "window_metrics": {
+    "win_rates": [
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "precisions": [
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ]
+  },
+  "top_candidates": [
+    {
+      "symbol": "MATIC",
+      "confidence": 79.57358286369319,
+      "dormancy_days": 30,
+      "recommendation": "HIGH"
+    },
+    {
+      "symbol": "FTT",
+      "confidence": 78.2343700903953,
+      "dormancy_days": 180,
+      "recommendation": "HIGH"
+    },
+    {
+      "symbol": "DOGE",
+      "confidence": 77.19264954190663,
+      "dormancy_days": 8,
+      "recommendation": "HIGH"
+    },
+    {
+      "symbol": "SOL",
+      "confidence": 74.22399655659669,
+      "dormancy_days": 5,
+      "recommendation": "HIGH"
+    },
+    {
+      "symbol": "ADA",
+      "confidence": 67.3356320635448,
+      "dormancy_days": 15,
+      "recommendation": "MEDIUM"
+    },
+    {
+      "symbol": "THETA",
+      "confidence": 62.6646522835909,
+      "dormancy_days": 95,
+      "recommendation": "MEDIUM"
+    },
+    {
+      "symbol": "XRP",
+      "confidence": 61.44804344469914,
+      "dormancy_days": 22,
+      "recommendation": "MEDIUM"
+    },
+    {
+      "symbol": "LUNA",
+      "confidence": 56.2054578689747,
+      "dormancy_days": 45,
+      "recommendation": "MEDIUM"
+    },
+    {
+      "symbol": "GALA",
+      "confidence": 52.84952223044409,
+      "dormancy_days": 120,
+      "recommendation": "MEDIUM"
+    },
+    {
+      "symbol": "AVAX",
+      "confidence": 51.82594230243937,
+      "dormancy_days": 25,
+      "recommendation": "MEDIUM"
+    }
+  ]
+}
