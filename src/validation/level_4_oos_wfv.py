@@ -161,41 +161,50 @@ class WFVPipeline:
                        detector,
                        df: pd.DataFrame,
                        window: WFVWindow) -> Dict:
-        """Valider Spring Detector sur une fenêtre WFV."""
+        """Valider Spring Detector sur une fenêtre WFV (PIT)."""
 
-        # Split train/test par date
-        train_data = df[window.train_start:window.train_end]
-        test_data = df[window.test_start:window.test_end]
+        # Filter data by date range (inclusive)
+        train_mask = (df.index >= window.train_start) & (df.index <= window.train_end)
+        test_mask = (df.index >= window.test_start) & (df.index <= window.test_end)
 
-        logger.info(f"Window {window.window_id} ({window.regime}): "
-                   f"train {len(train_data)} candles, test {len(test_data)} candles")
+        train_data = df[train_mask]
+        test_data = df[test_mask]
 
         if len(test_data) < 5:
             logger.warning(f"Not enough test data for window {window.window_id}")
             return None
 
-        # Classifier chaque point dans le test set
+        # Classifier each point in test set with PIT (point-in-time)
         predictions = []
-        for i in range(len(test_data)):
-            # Point-in-time : jamais utiliser data future
-            pit_data = df[:test_data.index[i]]
-            if len(pit_data) < 30:  # Minimum pour range detection
+        for test_timestamp in test_data.index:
+            # PIT: use ONLY data available at this timestamp (exclusive)
+            pit_data = df[df.index < test_timestamp]
+            if len(pit_data) < 30:  # Minimum for range detection
                 continue
 
-            result = detector.classify(f"BTC_test", pit_data)
+            result = detector.classify(f"BTC_window{window.window_id}", pit_data)
+            next_close = test_data.loc[test_timestamp, "close"] if test_timestamp in test_data.index else None
+
             predictions.append({
-                "timestamp": test_data.index[i],
+                "timestamp": test_timestamp,
                 "state": result.state,
                 "range_low": result.evidence.get("range_low"),
                 "sweep_low": result.evidence.get("sweep_low"),
                 "recovery_pct": result.evidence.get("recovery_pct"),
+                "next_close": next_close,
             })
+
+        if not predictions:
+            logger.warning(f"No predictions for window {window.window_id}")
+            return None
 
         return {
             "window_id": window.window_id,
             "regime": window.regime,
             "train_period": f"{window.train_start} to {window.train_end}",
             "test_period": f"{window.test_start} to {window.test_end}",
+            "train_size": len(train_data),
+            "test_size": len(test_data),
             "predictions": predictions,
             "n_predictions": len(predictions),
         }
@@ -242,18 +251,26 @@ class ICCalculator:
 
     @staticmethod
     def hit_rate(predictions: List[Dict]) -> float:
-        """Pourcentage de prédictions correctes."""
+        """Pourcentage de prédictions correctes (signal vs next move)."""
         correct = 0
         total = 0
 
         for i, pred in enumerate(predictions[:-1]):
             state = pred["state"]
-            next_recovery = predictions[i + 1].get("recovery_pct", 0)
+            range_low = pred.get("range_low")
+            next_close = pred.get("next_close")
 
-            # Si Spring_Candidate détecté, vérifier si vraiment reclaim
-            if state == "SPRING_CANDIDATE" and next_recovery > 0:
+            if range_low is None or next_close is None:
+                continue
+
+            # Signal validation:
+            # SPRING_CANDIDATE should precede upward move
+            # Non-SPRING should precede flat/down move
+            next_move_up = next_close > range_low
+
+            if state == "SPRING_CANDIDATE" and next_move_up:
                 correct += 1
-            elif state != "SPRING_CANDIDATE" and next_recovery <= 0:
+            elif state != "SPRING_CANDIDATE" and not next_move_up:
                 correct += 1
 
             total += 1
@@ -340,20 +357,91 @@ class ValidationReporter:
 
 if __name__ == "__main__":
     import argparse
+    import os
+    from src.data.spring_detector import SpringDetector
+    from src.validation.data_sourcing import get_btc_data
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ticker", default="BTC/USDT")
+    parser.add_argument("--ticker", default="BTCUSDT")
     parser.add_argument("--start", default="2021-01-01")
+    parser.add_argument("--source", default="binance", help="binance, yfinance, or CSV path")
     parser.add_argument("--output", default="reports/validation/spring_detector_level4.json")
     args = parser.parse_args()
 
-    logger.info("Spring Detector Level 4 Validation Starting...")
-    logger.info(f"This will run WFV on {len(REGIMES)} regimes")
-    logger.info("Data sourcing required: Binance historical OHLCV (3+ years)")
-    logger.info("Expected runtime: 10-30 minutes")
-    logger.info(f"\nNext steps:")
-    logger.info("1. Load BTC OHLCV data (Binance API or CSV)")
-    logger.info("2. Create WFV windows for each regime")
-    logger.info("3. Run Spring Detector on each window (PIT)")
-    logger.info("4. Calculate IC, Hit rate, Stability")
-    logger.info("5. Generate report with Gate decision")
+    # Create output directory
+    os.makedirs(os.path.dirname(args.output), exist_ok=True)
+
+    logger.info("=" * 60)
+    logger.info("Spring Detector Level 4 OOS/WFV Validation")
+    logger.info("=" * 60)
+    logger.info(f"Ticker: {args.ticker}")
+    logger.info(f"Start: {args.start}")
+    logger.info(f"Regimes: {len(REGIMES)}")
+    logger.info(f"Source: {args.source}")
+
+    # Load data
+    logger.info("\n[1/5] Loading BTC OHLCV data...")
+    df = get_btc_data(source=args.source, start_date=args.start)
+    if df is None:
+        logger.error("Failed to load data. Exiting.")
+        exit(1)
+
+    logger.info(f"✅ Loaded {len(df)} candles ({df.index[0]} to {df.index[-1]})")
+
+    # Initialize detector and WFV pipeline
+    detector = SpringDetector()
+    pipeline = WFVPipeline(train_period_days=180, test_period_days=30, overlap_days=0)
+
+    # Run WFV on each regime
+    logger.info("\n[2/5] Creating WFV windows for each regime...")
+    all_results = []
+
+    for regime in REGIMES:
+        logger.info(f"\n  Regime: {regime.name}")
+        logger.info(f"  Period: {regime.start_date} to {regime.end_date}")
+        logger.info(f"  Desc: {regime.description}")
+
+        windows = pipeline.create_windows(regime)
+        logger.info(f"  Created {len(windows)} WFV windows")
+
+        # Run validation on each window
+        logger.info(f"\n[3/5] Running Spring Detector on windows (PIT)...")
+        for i, window in enumerate(windows):
+            logger.info(f"    Window {window.window_id}/{len(windows)-1}: "
+                       f"{window.train_start} to {window.test_end}")
+
+            result = pipeline.validate_window(detector, df, window)
+            if result:
+                all_results.append(result)
+
+    # Calculate metrics
+    logger.info(f"\n[4/5] Calculating IC and Hit Rates...")
+    summary = ValidationReporter.summarize_oos(all_results)
+
+    logger.info(f"  IC Mean: {summary.get('ic_mean', 0):.6f}")
+    logger.info(f"  IC Std: {summary.get('ic_std', 0):.6f}")
+    logger.info(f"  Hit Rate: {summary.get('hit_rate_mean', 0):.4%}")
+    logger.info(f"  Stability: {summary.get('stability', 0):.4f}")
+
+    # Generate report
+    logger.info(f"\n[5/5] Generating report...")
+    report = ValidationReporter.generate_report(all_results, args.output)
+
+    logger.info(f"✅ Report saved to {args.output}")
+    logger.info("=" * 60)
+
+    # Gate decision
+    gate = (summary.get('ic_mean', 0) > 0.01 and
+           summary.get('hit_rate_mean', 0) > 0.52 and
+           summary.get('stability', 0) > 0.75)
+
+    if gate:
+        logger.info("✅ GATE PASSED: Spring Detector qualifies for Phase B")
+    else:
+        logger.info("❌ GATE FAILED: Refinement needed")
+        if summary.get('ic_mean', 0) <= 0.01:
+            logger.info("  → IC too low (need > 0.01)")
+        if summary.get('hit_rate_mean', 0) <= 0.52:
+            logger.info("  → Hit rate too low (need > 52%)")
+        if summary.get('stability', 0) <= 0.75:
+            logger.info("  → Stability too low (need > 0.75)")
