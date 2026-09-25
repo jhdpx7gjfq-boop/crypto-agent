@@ -393,9 +393,9 @@ All 6 layers tested across micro/macro/alt signal classes (real/synthetic data):
 5. ⏳ **Results freeze**: JSON lock before any analysis
 6. ⏳ **Gate evaluation**: Against frozen criteria (ALL 3 must pass)
 7. ⏳ **Decision**:
-   - **PASS**: All 3 gates → Proceed to Layer 8 validation
-   - **FAIL**: Any gate fails → B-004 rejected for tested scope (BTC 1D 2021-2024)
-   - **DATA UNAVAILABLE**: Cannot access real market data → No conclusion (retry required)
+   - **PASS**: All 3 gates → B-004 validated for tested scope; Layer 8 becomes eligible for governance review (no automatic unlock)
+   - **FAIL**: Any gate fails → B-004 rejected for tested scope (BTC 1D 2021-2024); Layer 8 remains blocked
+   - **DATA UNAVAILABLE**: Cannot access real market data → No conclusion possible (retry with alternative source required)
 
 #### Important: Scope-Specific Outcomes
 
@@ -428,7 +428,8 @@ All 6 layers tested across micro/macro/alt signal classes (real/synthetic data):
 - Layer 8 🔴 INDEFINITELY BLOCKED (pending B-004 real data)
 
 **Next Mandatory Step**:
-1. **B-004-DATA-RETRY**: Real BTC OHLCV (Binance or verified source) → same WFV protocol
-2. **Gate decision on real data**: Accept/reject RPM/RCM alpha empirically
-3. **Layer 8 unlock criterion**: ONLY if any layer passes ALL gate criteria on real data
-4. **No alternative alpha hypothesis until**: Real data validation attempt completed
+1. **B-004-DATA-RETRY**: Real BTC OHLCV (Binance strict protocol) → SHA256 freeze → same WFV
+2. **Gate decision on real data**: Accept (scope-valid) / reject (scope-specific) / data-error (retry)
+3. **Layer 8 governance** (if PASS): B-004 eligible for review; owner decides unlock
+4. **No alternative alpha until**: B-004-DATA-RETRY completed with definitive outcome
+5. **No tuning, fallback, or regime post-hoc**: Preserved per governance rules
