@@ -143,6 +143,41 @@ Spring Detector P0.4 WFV Results:
 
 **Status**: Ready for Phase B-004 RPM/RCM validation
 
+### Phase B-004: IMPLEMENTATION COMPLETE ✅ — AWAITING REAL DATA
+
+**Objective**: RPM/RCM capital rotation layers — incremental alpha from market-wide capital flows
+
+**Specification**: Frozen (B-004_SPEC.md v1.0, owner approved 2026-09-25)
+
+**Implementation Status**:
+- ✅ src/research/rpm_layer.py: RPM signal (6 features, fixed weights, tanh normalization)
+- ✅ src/research/rcm_layer.py: RCM regime alignment (Bull +1.2, Accumulation +0.8, Bear +0.5)
+- ✅ src/research/phase_b_004_runner.py: 19-window expanding WFV orchestrator (PIT-compliant)
+- ✅ tests/test_rpm_rcm.py: 12 PIT compliance tests (all passing)
+- ✅ scripts/run_phase_b_004_wfv.py: WFV execution + gate decision reporting
+
+**Dry-Run Results** (synthetic random data):
+- Model J (RPM alone): ΔIC = +0.102 ✅, HR = 41% ❌, Stability = -8.89 ❌
+- Model K (RCM regime): ΔIC = +0.102 ✅, HR = 41% ❌, Stability = -8.89 ❌
+- Model L (Full stack): ΔIC = -0.147 ❌
+- **Gate Decision**: ❌ FAIL (HR criterion not met on synthetic data)
+- **Note**: Synthetic features are random; real data needed for validation
+
+**WFV Protocol** (per frozen spec):
+- 19 expanding windows (180D train fixed, 30D test, 30D slide)
+- PIT-compliant: signal receives only data[:idx+1]
+- No pre-filtering to Bull/Bear (full dataset, post-hoc analysis only)
+- Gate criteria: ALL must pass (ΔIC > 0.005 AND HR > 0.50 AND Stability > 0.65)
+
+**Next Steps**:
+1. Integrate real market data (Binance, CryptoQuant, Glassnode)
+2. Execute production WFV with market-sourced features
+3. Freeze results before post-hoc regime decomposition
+4. If gate passes: Proceed to Layer 8 (Optimizer)
+5. If gate fails: Document findings, iterate
+
+**Status**: Ready for production WFV execution (awaiting real data directive or confirmation to run with available sources)
+
 ## Architecture Overview
 
 ### Layer 1: Data Intelligence
@@ -226,7 +261,7 @@ Spring Detector P0.4 WFV Results:
 
 ---
 
-## Latest: Phase 2.1 FINAL PASS | B-004 UNBLOCKED (2026-09-25)
+## Latest: Phase 2.1 FINAL PASS | B-004 IMPLEMENTATION COMPLETE (2026-09-25)
 
 **Phase 2.1 Backtester Hardening**: ✅ FINAL PASS
 - EquityBacktester: Real MTM, PIT compliance, T→T convention, trade provenance
@@ -234,14 +269,24 @@ Spring Detector P0.4 WFV Results:
 - Gate 2.1: ALL 6 CRITERIA VERIFIED PASSING
 - Exception: Accepted (test pre-existing on commit `2e2fbd5`, zero Phase 2.1 interaction)
 
+**Phase B-004 Implementation**: ✅ COMPLETE (awaiting real data for production WFV)
+- RPMLayer: 6 features, fixed weights, tanh normalization, PIT-safe ✅
+- RCMLayer: Regime alignment (Bull +1.2, Accumulation +0.8, Bear +0.5) ✅
+- WFV Runner: 19-window expanding, IC/HR/Stability computation, gate enforcement ✅
+- Test Suite: 12 tests (PIT, bounds, regime, IC) — all passing ✅
+- Dry-run: Pipeline validated with synthetic data (gate FAIL expected; random features)
+
 **Phase B Micro & Macro Investigation**: COMPLETE
 - **Micro-structure (Spring + Regime + Flow)**: Non-predictive (Δ IC = 0 to −9 points)
 - **Macro-structure (NARM-P+)**: Research signal (ΔIC +35.7–89.5 points in Bull), production gate fails (HR < 0.50)
+- **Capital Flows (B-004 RPM)**: Implementation complete, awaiting market data validation
 
 **Path Forward**:
-1. **Phase B-004**: RPM/RCM validation (UNBLOCKED) — FULL WFV, no pre-filtering to Bull
-2. **Protocol**: Freeze results → measure ΔIC/HR/Stability → test gate criteria → post-hoc regime analysis
-3. **Layer 8**: BLOCKED until alpha independently validated
+1. **Phase B-004 Production WFV**: Integrate real market data → execute full 19-window validation
+2. **Gate Decision**: Measure ΔIC/HR/Stability → freeze results → post-hoc regime analysis
+3. **Layer 8 (Optimizer)**: BLOCKED until B-004 gate passes (alpha independently validated)
 
-**Status**: Phase 2.1 prerequisite complete. B-004 ready to execute.  
-**Next**: RPM/RCM capital rotation (Layer 6) — full-dataset WFV validation
+**Commits**: 8 total (Phase 2.1: 6 + B-004: 2)  
+**Branch**: claude/busy-goodall-jmiaq3 (up to date)  
+**Status**: B-004 architecture validated. Production WFV awaiting real data integration.  
+**Next**: Execute B-004 with market-sourced features (Binance OHLCV + derived signals)
