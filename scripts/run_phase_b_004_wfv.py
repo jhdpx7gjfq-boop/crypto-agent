@@ -15,62 +15,17 @@ from pathlib import Path
 import json
 
 sys.path.insert(0, str(Path(__file__).parent.parent / 'src' / 'research'))
+sys.path.insert(0, str(Path(__file__).parent.parent / 'src' / 'data'))
 
 from phase_b_004_runner import PhaseB004Runner
+from b004_data_loader import B004DataLoader
 
 
-def generate_synthetic_ohlcv_data(start_date: str = '2021-01-01',
-                                   end_date: str = '2024-09-25') -> pd.DataFrame:
-    """
-    Generate synthetic OHLCV data for testing.
-
-    Args:
-        start_date: Start date
-        end_date: End date
-
-    Returns:
-        DataFrame with OHLCV + RPM features
-    """
-    dates = pd.date_range(start_date, end_date, freq='D')
-    n = len(dates)
-
-    # Synthetic price: uptrend with noise
-    price_trend = np.linspace(100, 250, n)
-    price_noise = np.random.normal(0, 5, n)
-    close = price_trend + price_noise
-    close = np.maximum(close, 10)  # Ensure positive
-
-    # OHLCV
-    open_price = close + np.random.normal(0, 1, n)
-    high = np.maximum(close, open_price) + np.random.exponential(2, n)
-    low = np.minimum(close, open_price) - np.random.exponential(2, n)
-    volume = np.random.exponential(1000, n)
-
-    # RPM features (synthetic)
-    btc_dominance = np.linspace(40, 45, n) + np.random.normal(0, 1, n)
-    btc_return = np.random.normal(0.005, 0.02, n)
-    altcoin_return = np.random.normal(0.008, 0.025, n)
-    stablecoin_inflow = np.random.normal(0, 200, n)
-    etf_net_flow = np.random.normal(0, 100, n)
-    funding_rate_8h = np.random.normal(0, 0.0001, n)
-    open_interest = np.linspace(1000, 2000, n) + np.random.normal(0, 50, n)
-
-    df = pd.DataFrame({
-        'open': open_price,
-        'high': high,
-        'low': low,
-        'close': close,
-        'volume': volume,
-        'btc_dominance': btc_dominance,
-        'btc_return': btc_return,
-        'altcoin_return': altcoin_return,
-        'stablecoin_inflow': stablecoin_inflow,
-        'etf_net_flow': etf_net_flow,
-        'funding_rate_8h': funding_rate_8h,
-        'open_interest': open_interest,
-    }, index=dates)
-
-    return df
+def load_data(source: str = 'synthetic', start_date: str = '2021-01-01',
+              end_date: str = '2024-09-25') -> pd.DataFrame:
+    """Load OHLCV + RPM features (synthetic with realistic crypto patterns)."""
+    loader = B004DataLoader(data_source=source)
+    return loader.load(start_date, end_date)
 
 
 def main():
@@ -80,9 +35,9 @@ def main():
     print("=" * 80)
     print()
 
-    # Generate synthetic data
-    print("[1] Generating synthetic OHLCV data (2021-01-01 to 2024-09-25)...")
-    df = generate_synthetic_ohlcv_data()
+    # Load data
+    print("[1] Loading OHLCV + RPM features (2021-01-01 to 2024-09-25)...")
+    df = load_data(source='synthetic')
     print(f"    Data shape: {df.shape}")
     print(f"    Date range: {df.index[0].date()} to {df.index[-1].date()}")
     print()
