@@ -188,6 +188,9 @@ class NARMEngine:
 
         # Media sentiment: 0-25
         sentiment = data.get("media_sentiment", 50)
+        if isinstance(sentiment, str):
+            sentiment_map = {"bullish": 75, "neutral": 50, "bearish": 25}
+            sentiment = sentiment_map.get(sentiment.lower(), 50)
         factors["sentiment"] = min(25.0, sentiment / 100 * 25)
 
         # Community engagement: 0-25
