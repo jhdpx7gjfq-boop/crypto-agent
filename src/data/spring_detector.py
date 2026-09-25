@@ -214,8 +214,46 @@ class SpringStateMachine:
         if len(df) < 50:
             return "NO_SPRING", {"reason": "insufficient_data", "candles": len(df)}, None
 
+        # Step 0.5: Check for regime boundaries in recent data
+        # If lookback window spans different price regimes, use only recent stable regime
+        if len(df) >= self._range_detector.lookback + 5:
+            recent = df.tail(self._range_detector.lookback)
+            # Look for largest jump in low prices (regime boundary indicator)
+            recent_lows = recent["low"].values
+            jumps = [abs(recent_lows[i+1] - recent_lows[i]) for i in range(len(recent_lows)-1)]
+            if len(jumps) > 0:
+                max_jump_size = max(jumps)
+                max_jump_idx = jumps.index(max_jump_size)
+                max_jump_size_pct = max_jump_size / recent_lows[max_jump_idx] * 100 if recent_lows[max_jump_idx] > 0 else 0
+
+                # If there's a significant jump (>2%), and it happens at least 5 candles from the end,
+                # it might indicate a regime boundary. Use data after the jump.
+                if max_jump_size_pct > 2.0 and max_jump_idx < len(recent_lows) - 5:
+                    # Regime boundary detected; use data after the jump
+                    regime_start = max_jump_idx + 1
+                    regime_data = recent.iloc[regime_start:]
+
+                    # Remove very recent anomalies from regime data (last 3 candles excluded from min calculation)
+                    # to avoid treating sweep entries as part of the range
+                    if len(regime_data) > 3:
+                        regime_data_for_range = regime_data.iloc[:-3]  # Exclude last 3 for range detection
+                    else:
+                        regime_data_for_range = regime_data
+
+                    if len(regime_data_for_range) >= 10:  # Ensure enough data for valid range
+                        regime_high = regime_data_for_range["high"].max()
+                        regime_low = regime_data_for_range["low"].min()
+                        if regime_low > 0:
+                            regime_width_pct = (regime_high - regime_low) / regime_low * 100
+                            if self._range_detector.min_width <= regime_width_pct <= self._range_detector.max_width:
+                                # Use this regime-specific range instead of full lookback
+                                range_high, range_low, range_width_pct, is_valid_range = (
+                                    regime_high, regime_low, regime_width_pct, True
+                                )
+
         # Step 1: Detect range
-        range_high, range_low, range_width_pct, is_valid_range = self._range_detector.detect(df)
+        if 'is_valid_range' not in locals() or not is_valid_range:
+            range_high, range_low, range_width_pct, is_valid_range = self._range_detector.detect(df)
 
         if not is_valid_range:
             return "NO_SPRING", {
@@ -249,43 +287,50 @@ class SpringStateMachine:
         # Use earlier data to find the pre-breakdown range
         # Alternatively: check if current range_low is significantly lower than earlier range
         # This catches breakdown situations where prices fell to a new floor
-        if len(df) > self._range_detector.lookback + 30:
-            # Look at an earlier range (skip back 30+ more candles)
-            test_idx = len(df) - self._range_detector.lookback - 30
+        # NOTE: Only look back 35 candles (5 beyond lookback) to avoid using data from different regimes
+        if len(df) > self._range_detector.lookback + 35:
+            # Look at an earlier range (skip back 35 more candles max)
+            test_idx = len(df) - self._range_detector.lookback - 35
             test_data = df.iloc[:test_idx]
             test_high, test_low, test_width, test_valid = self._range_detector.detect(test_data)
 
             if test_valid and test_low is not None and test_low > range_low * 1.02:  # Earlier range is 2%+ higher
-                # Earlier range was notably higher, but check if this is a genuine breakdown or a pullback
-                # Genuine breakdown: price is still declining below the earlier range
-                # Pullback (use earlier range): price has stabilized or is recovering toward earlier range
+                # Check if the earlier range is from the same regime (not a different market/asset)
+                # If earlier is >50% higher, likely a different regime entirely, not a breakdown
+                if test_low > range_low * 1.5:  # Earlier range is >50% higher (different regime)
+                    # This is likely a regime transition, not a breakdown. Don't use the earlier range.
+                    pass
+                else:
+                    # Earlier range was notably higher, but check if this is a genuine breakdown or a pullback
+                    # Genuine breakdown: price is still declining below the earlier range
+                    # Pullback (use earlier range): price has stabilized or is recovering toward earlier range
 
-                # Check if recent prices are continuing to decline below the earlier range
-                current_close = df["close"].iloc[-1]
+                    # Check if recent prices are continuing to decline below the earlier range
+                    current_close = df["close"].iloc[-1]
 
-                # Measure the decline trend in the lookback window
-                if earlier_half_lows > 0 and later_half_lows > 0:
-                    debris_ratio = (later_half_lows - earlier_half_lows) / earlier_half_lows
+                    # Measure the decline trend in the lookback window
+                    if earlier_half_lows > 0 and later_half_lows > 0:
+                        debris_ratio = (later_half_lows - earlier_half_lows) / earlier_half_lows
 
-                    # If debris_ratio < -0.02 (later half >2% lower than earlier half)
-                    # AND current close is below earlier range_low
-                    # Then it's a genuine breakdown - do NOT use the earlier range
-                    # This distinguishes real breakdown (continuing decline) from pullback (stabilization)
-                    if debris_ratio < -0.02 and current_close < test_low:
-                        # Genuine breakdown: price declining and below earlier range
-                        # Keep current range_low (don't override with earlier range)
-                        pass
+                        # If debris_ratio < -0.02 (later half >2% lower than earlier half)
+                        # AND current close is below earlier range_low
+                        # Then it's a genuine breakdown - do NOT use the earlier range
+                        # This distinguishes real breakdown (continuing decline) from pullback (stabilization)
+                        if debris_ratio < -0.02 and current_close < test_low:
+                            # Genuine breakdown: price declining and below earlier range
+                            # Keep current range_low (don't override with earlier range)
+                            pass
+                        else:
+                            # Not a strong breakdown pattern, likely a pullback or range shift
+                            # Use earlier range as the true support
+                            range_low = test_low
+                            range_high = test_high
+                            range_width_pct = test_width
                     else:
-                        # Not a strong breakdown pattern, likely a pullback or range shift
-                        # Use earlier range as the true support
+                        # Cannot assess debris_ratio, use earlier range as fallback
                         range_low = test_low
                         range_high = test_high
                         range_width_pct = test_width
-                else:
-                    # Cannot assess debris_ratio, use earlier range as fallback
-                    range_low = test_low
-                    range_high = test_high
-                    range_width_pct = test_width
 
         if later_half_lows > 0 and earlier_half_lows > 0:
             debris_ratio = (later_half_lows - earlier_half_lows) / earlier_half_lows
