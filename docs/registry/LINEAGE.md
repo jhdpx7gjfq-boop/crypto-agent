@@ -19,7 +19,7 @@ Application CI : `tests/test_lineage.py`.
 │  REAL-DATA-FIXTURE-001   │
 │         LOCKED           │
 └──────┬─────────────┬─────┘
-       │ derived     │ parent
+       │ derived     │ control
        ▼             ▼
  contract.py   REAL-DATA-FULL-001
  (CODE-        PENDING_ACQUISITION
@@ -85,13 +85,14 @@ code de features qui se trouvait à l'intérieur du builder de
 
 ## 3. Types de relations
 
-Cinq types, distincts et non interchangeables. C'est cette distinction qui
+Six types, distincts et non interchangeables. C'est cette distinction qui
 empêche l'erreur « résultat pris pour prédécesseur ».
 
 | Type | Signification |
 |---|---|
 | `contract_dependency` | cet artefact doit satisfaire le contrat cible |
-| `parent` | cet artefact descend de la cible : même code de features et mêmes paramètres, ou la cible est le contrôle auquel il se compare |
+| `parent` | cet artefact descend de la cible : même code de features et mêmes paramètres |
+| `control` | cet artefact utilise la cible comme fixture de référence indépendante pour comparaison ou validation |
 | `derived` | cet artefact a été extrait de la cible |
 | `result_of` | cet artefact est un résultat de recherche calculé sur le dataset cible |
 | `sibling` | les deux partagent un ancêtre et aucun ne dépend de l'autre |

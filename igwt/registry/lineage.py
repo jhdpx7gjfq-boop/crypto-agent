@@ -36,8 +36,12 @@ LINEAGE_PATH = Path("docs/registry/lineage.json")
 #: same way, so that rule 1 has a single form to check.
 CANONICAL_ID = re.compile(r"^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$")
 
-#: Relations that carry ancestry. ``sibling`` deliberately does not.
+#: Relations that carry ancestry. ``sibling`` and ``control`` deliberately do not.
 ANCESTRY_RELATIONS = frozenset({"parent", "derived", "result_of", "contract_dependency"})
+
+#: Relations that can form a shared ancestor basis for sibling claims.
+#: Includes both ancestry and control (independent reference fixtures).
+ANCESTOR_RELATIONS = ANCESTRY_RELATIONS | {"control"}
 
 
 @dataclass(frozen=True)
@@ -288,13 +292,13 @@ def _rule_10_evidence_resolves(graph, artefacts, root) -> list[Finding]:
 
 
 def _check_shared_ancestor(artefact_id, target, evidence, artefacts) -> list[Finding]:
-    """A sibling claim is evidenced by both sides descending from one ancestor."""
+    """A sibling claim is evidenced by both sides connecting to one ancestor via ancestry or control."""
     ancestor = evidence["shared_ancestor"]
     findings = []
     for side in (artefact_id, target):
         relations = artefacts.get(side, {}).get("relations", [])
         if not any(
-            item.get("target") == ancestor and item.get("type") in ANCESTRY_RELATIONS
+            item.get("target") == ancestor and item.get("type") in ANCESTOR_RELATIONS
             for item in relations
         ):
             findings.append(
@@ -302,7 +306,7 @@ def _check_shared_ancestor(artefact_id, target, evidence, artefacts) -> list[Fin
                     10,
                     artefact_id,
                     f"sibling evidence names {ancestor!r} as a shared ancestor, "
-                    f"but {side!r} does not descend from it",
+                    f"but {side!r} does not connect to it",
                 )
             )
     return findings

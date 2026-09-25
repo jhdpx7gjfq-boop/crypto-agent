@@ -64,11 +64,19 @@ class TestCanonicalGraph:
         full = graph["artefacts"]["REAL-DATA-FULL-001"]["relations"]
         assert "MOMENTUM-30D-WFV-001" not in {item["target"] for item in full}
 
-    def test_the_full_dataset_descends_from_the_locked_control(self, graph):
+    def test_the_full_dataset_uses_the_fixture_as_control(self, graph):
         relations = graph["artefacts"]["REAL-DATA-FULL-001"]["relations"]
         by_target = {item["target"]: item["type"] for item in relations}
-        assert by_target["REAL-DATA-FIXTURE-001"] == "parent"
+        assert by_target["REAL-DATA-FIXTURE-001"] == "control"
         assert by_target["WFV-V2-CONTRACT"] == "contract_dependency"
+
+    def test_control_is_a_valid_relation_type(self, graph):
+        relation_types = set(graph["relation_types"])
+        assert "control" in relation_types
+
+    def test_control_targets_dataset_kind(self, graph):
+        allowed = graph["allowed_targets"]
+        assert allowed["control"] == ["dataset"]
 
 
 class TestEachRuleBites:
@@ -100,6 +108,11 @@ class TestEachRuleBites:
 
     def test_rule_5_rejects_a_cycle(self, graph):
         mutated = copy.deepcopy(graph)
+        # Change REAL-DATA-FULL-001's control relation to parent to create ancestry.
+        for relation in mutated["artefacts"]["REAL-DATA-FULL-001"]["relations"]:
+            if relation.get("target") == "REAL-DATA-FIXTURE-001":
+                relation["type"] = "parent"
+        # Then add a parent relation from REAL-DATA-FIXTURE-001 back, creating a cycle.
         mutated["artefacts"]["REAL-DATA-FIXTURE-001"]["relations"].append(
             {
                 "type": "parent",
@@ -108,6 +121,19 @@ class TestEachRuleBites:
             }
         )
         assert 5 in rules_fired(lineage.validate(mutated, root=REPO))
+
+    def test_control_does_not_participate_in_cycle_detection(self, graph):
+        """A control relation cannot create a cycle, since it is not ancestry."""
+        mutated = copy.deepcopy(graph)
+        mutated["artefacts"]["REAL-DATA-FIXTURE-001"]["relations"].append(
+            {
+                "type": "control",
+                "target": "REAL-DATA-FULL-001",
+                "evidence": {"file": "README.md", "contains": "IGWT"},
+            }
+        )
+        findings = lineage.validate(mutated, root=REPO)
+        assert 5 not in rules_fired(findings)
 
     def test_rule_6_rejects_a_sibling_that_is_also_an_ancestor(self, graph):
         """The exact error this lineage exists to prevent."""
@@ -157,6 +183,22 @@ class TestEachRuleBites:
         mutated["artefacts"]["MOMENTUM-30D-WFV-001"]["relations"][0]["type"] = "inspired_by"
         assert 7 in rules_fired(lineage.validate(mutated, root=REPO))
 
+    def test_rule_7_accepts_control_on_a_dataset(self, graph):
+        mutated = copy.deepcopy(graph)
+        mutated["artefacts"]["REAL-DATA-FULL-001"]["relations"][1]["type"] = "control"
+        findings = lineage.validate(mutated, root=REPO)
+        assert 7 not in rules_fired(findings)
+
+    def test_rule_7_rejects_control_on_a_contract(self, graph):
+        mutated = copy.deepcopy(graph)
+        mutated["artefacts"]["REAL-DATA-FULL-001"]["relations"][1] = {
+            "type": "control",
+            "target": "WFV-V2-CONTRACT",
+            "evidence": {"file": "README.md", "contains": "IGWT"},
+        }
+        findings = lineage.validate(mutated, root=REPO)
+        assert 7 in rules_fired(findings)
+
     def test_rule_8_rejects_a_renamed_code_path(self, graph, tmp_path):
         """A rename is indistinguishable from a deletion, and both must fail."""
         shutil.copytree(REPO / "igwt", tmp_path / "igwt")
@@ -200,14 +242,14 @@ class TestEachRuleBites:
         assert 10 in rules_fired(lineage.validate(mutated, root=REPO))
 
     def test_rule_10_rejects_a_sibling_claim_with_no_shared_ancestor(self, graph):
-        """A sibling claim is only as good as the ancestry both sides declare."""
+        """A sibling claim is only as good as the ancestry or control both sides declare."""
         mutated = copy.deepcopy(graph)
         mutated["artefacts"]["MOMENTUM-30D-WFV-001"]["relations"][1]["evidence"] = {
             "shared_ancestor": "WFV-V2-CONTRACT"
         }
         findings = lineage.validate(mutated, root=REPO)
         assert 10 in rules_fired(findings)
-        assert any("does not descend from it" in str(item) for item in findings)
+        assert any("does not connect to it" in str(item) for item in findings)
 
 
 class TestExcludedAncestors:

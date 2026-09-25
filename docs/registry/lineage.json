@@ -6,7 +6,8 @@
   },
   "relation_types": {
     "contract_dependency": "this artefact must satisfy the target contract",
-    "parent": "this artefact descends from the target: same feature code and parameters, or the target is the control it is built against",
+    "parent": "this artefact descends from the target: same feature code and parameters",
+    "control": "this artefact uses the target as an independent reference fixture for comparison or validation",
     "derived": "this artefact was extracted from the target",
     "result_of": "this artefact is a research result computed on the target dataset",
     "sibling": "this artefact and the target share an ancestor and neither depends on the other"
@@ -22,6 +23,7 @@
   "allowed_targets": {
     "contract_dependency": ["contract"],
     "parent": ["dataset"],
+    "control": ["dataset"],
     "derived": ["dataset", "code"],
     "result_of": ["dataset"],
     "sibling": ["contract", "dataset", "result", "code"]
@@ -89,7 +91,7 @@
           }
         },
         {
-          "type": "parent",
+          "type": "control",
           "target": "REAL-DATA-FIXTURE-001",
           "evidence": {
             "file": "igwt/fixtures/real_data_full_001.py",
