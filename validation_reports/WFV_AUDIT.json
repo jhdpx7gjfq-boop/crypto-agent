@@ -1,0 +1,18 @@
+{
+  "stage": 6,
+  "title": "Walk-Forward Validation",
+  "timestamp": "2026-09-25T13:09:33.718854",
+  "results": {
+    "stage": 6,
+    "timestamp": "2026-09-25T13:09:33.686092",
+    "total_predictions": 60,
+    "reviving_signals": 0,
+    "waking_signals": 0,
+    "dormant_signals": 60,
+    "win_rate_reviving_pct": 0.0,
+    "avg_return_reviving": 0.0,
+    "avg_return_waking": 0.0,
+    "avg_return_dormant": 0.35830011911439347,
+    "result": "FAIL"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "stage": 9,
+  "title": "Statistical Validation",
+  "timestamp": "2026-09-25T13:09:33.719389",
+  "results": {
+    "stage": 9,
+    "timestamp": "2026-09-25T13:09:33.717443",
+    "correlation": -0.44538851427236487,
+    "p_value": 2.4312773690329663e-13,
+    "t_stat": -7.754528932420604,
+    "n_samples": 245,
+    "significant_at_95pct": true,
+    "result": "PASS"
+  }
+}
