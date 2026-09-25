@@ -16,32 +16,36 @@
 
 ---
 
-## Chemin 2: B-004 — Real Data Path A
+## Chemin 2: REAL-DATA-FULL-001 — Binance Spot 730j
 
-**Status:** ❓ UNDETERMINED
+**Status:** 🔴 DATA-BLOCKED / ✅ FORMALIZED
 
-### Prérequis requis:
-1. Dataset OHLCV Binance 730 jours
-2. B-004_SPECIFICATION_FROZEN.md
-3. Validation intégrité
-4. Gel "Set A"
+### Artefact formel:
+
+✅ **REAL-DATA-FULL-001.md** (docs/specs/)
+- Objective: Binance Spot OHLCV 730 jours (BTC, ETH, SOL, AVAX)
+- Status: `PENDING ACQUISITION`
+- Control fixture: REAL-DATA-FIXTURE-001 (LOCKED)
+- Contract: WFV-V2-CONTRACT (FROZEN)
+- Registered in lineage.json (10 rules enforced)
 
 ### État actuel:
 
-| Prérequis | État | Détail |
-|-----------|------|--------|
-| REAL-DATA-FULL-001 spec | ✅ | Existe (REAL-DATA-FULL-001.md) |
-| **REAL-DATA-FULL-001 data** | 🔴 | Vide (preflight.json: API blocked) |
-| **B-004_SPECIFICATION_FROZEN.md** | ❌ | N'existe pas |
-| **Dataset figé** | ❌ | Aucune donnée présente |
+| Élément | État | Détail |
+|---------|------|--------|
+| Specification | ✅ | REAL-DATA-FULL-001.md formalisée |
+| **Data** | 🔴 | Vide (preflight.json: API blocked) |
+| **Lineage** | ✅ | Enregistré, 6 relations validées |
 | **Validation intégrité** | ⏳ | En attente de données |
+| **Pipeline** | ✅ | Implémenté (igwt/fixtures/real_data_full_001.py) |
 
-### Analyse:
+### Note sur B-004:
 
-- B-004 n'est **pas une spécification** — c'est un **alias** pour "Real Data Path A"
-- Le chemin réel est **REAL-DATA-FULL-001** (Binance Spot 730j)
-- **B-004_SPECIFICATION_FROZEN.md** doit être créé AVANT d'exécuter B-004
-- Actuellement: **MÊME BLOCAGE QUE PATH-A** (données Binance)
+- **B-004** était une référence conversationnelle (pas un artefact repository formel)
+- Correspond au besoin "Real Data Path A" formalisé par **REAL-DATA-FULL-001**
+- Si B-004 doit devenir artefact formel: créer `B-004_SPECIFICATION_FROZEN.md` avec lineage explicite
+- **Actuellement**: REAL-DATA-FULL-001 est le chemin formel pour acquisition Binance
+- Voir TRACEABILITY-CORRECTION.md pour clarification
 
 ### Dépendances:
 
@@ -50,7 +54,7 @@ PATH-A (Liquidation Alpha)
     ↓
 Binance OHLCV 730j ← GATE COMMUNE
     ↓
-REAL-DATA-FULL-001 (B-004)
+REAL-DATA-FULL-001 (Binance Spot validation)
     ↓
 WFV validation (comparaison vs REAL-DATA-FIXTURE-001)
 ```
