@@ -239,6 +239,54 @@ class SpringStateMachine:
         earlier_half_lows = recent["low"].iloc[:mid].mean()
         later_half_lows = recent["low"].iloc[mid:].mean()
 
+        # Check for sudden BREAKDOWN: a sharp drop in lows at the start of the lookback
+        # This detects cases where the entire lookback window is a breakdown (lows stable but very low)
+        first_candle_low = recent["low"].iloc[0]
+        rest_lows_mean = recent["low"].iloc[1:].mean() if len(recent) > 1 else 0
+        sudden_breakdown_ratio = (rest_lows_mean - first_candle_low) / first_candle_low if first_candle_low > 0 else 0
+
+        # If first candle is significantly lower than the rest, it's a breakdown entry point
+        # Use earlier data to find the pre-breakdown range
+        # Alternatively: check if current range_low is significantly lower than earlier range
+        # This catches breakdown situations where prices fell to a new floor
+        if len(df) > self._range_detector.lookback + 30:
+            # Look at an earlier range (skip back 30+ more candles)
+            test_idx = len(df) - self._range_detector.lookback - 30
+            test_data = df.iloc[:test_idx]
+            test_high, test_low, test_width, test_valid = self._range_detector.detect(test_data)
+
+            if test_valid and test_low is not None and test_low > range_low * 1.02:  # Earlier range is 2%+ higher
+                # Earlier range was notably higher, but check if this is a genuine breakdown or a pullback
+                # Genuine breakdown: price is still declining below the earlier range
+                # Pullback (use earlier range): price has stabilized or is recovering toward earlier range
+
+                # Check if recent prices are continuing to decline below the earlier range
+                current_close = df["close"].iloc[-1]
+
+                # Measure the decline trend in the lookback window
+                if earlier_half_lows > 0 and later_half_lows > 0:
+                    debris_ratio = (later_half_lows - earlier_half_lows) / earlier_half_lows
+
+                    # If debris_ratio < -0.02 (later half >2% lower than earlier half)
+                    # AND current close is below earlier range_low
+                    # Then it's a genuine breakdown - do NOT use the earlier range
+                    # This distinguishes real breakdown (continuing decline) from pullback (stabilization)
+                    if debris_ratio < -0.02 and current_close < test_low:
+                        # Genuine breakdown: price declining and below earlier range
+                        # Keep current range_low (don't override with earlier range)
+                        pass
+                    else:
+                        # Not a strong breakdown pattern, likely a pullback or range shift
+                        # Use earlier range as the true support
+                        range_low = test_low
+                        range_high = test_high
+                        range_width_pct = test_width
+                else:
+                    # Cannot assess debris_ratio, use earlier range as fallback
+                    range_low = test_low
+                    range_high = test_high
+                    range_width_pct = test_width
+
         if later_half_lows > 0 and earlier_half_lows > 0:
             debris_ratio = (later_half_lows - earlier_half_lows) / earlier_half_lows
 
@@ -352,30 +400,39 @@ class SpringStateMachine:
 
                 # Pattern 2a: OLD_DEBRIS (debris_ratio > 0.02, later much higher than earlier)
                 if debris_ratio > 0.02:
-                    # Try detecting range from a more recent slice (skip old debris)
-                    if len(df) >= 50:
-                        test_lookback = 20
-                        alt_recent = df.tail(test_lookback)
-                        alt_range_high = alt_recent["high"].max()
-                        alt_range_low = alt_recent["low"].min()
-                        alt_range_width = (alt_range_high - alt_range_low) / alt_range_low * 100
+                    # Check if later_half is stable (not a recent dip within current range)
+                    # If later_half has variation, it might be a recent sweep, not old debris
+                    later_half_min = recent["low"].iloc[mid:].min()
+                    later_half_max = recent["low"].iloc[mid:].max()
+                    later_half_spread_pct = (later_half_max - later_half_min) / later_half_min * 100 if later_half_min > 0 else 0
 
-                        if (
-                            self._range_detector.min_width <= alt_range_width <= self._range_detector.max_width
-                            and alt_range_high > alt_range_low
-                        ):
-                            alt_sweep_idx, alt_sweep_low, alt_sweep_depth, alt_sweep_candles = (
-                                self._sweep_detector.detect(df, alt_range_low, lookback=test_lookback)
-                            )
-                            if alt_sweep_idx is not None:
-                                range_low = alt_range_low
-                                range_high = alt_range_high
-                                range_width_pct = alt_range_width
-                                sweep_idx = alt_sweep_idx
-                                sweep_low = alt_sweep_low
-                                sweep_depth_pct = alt_sweep_depth
-                                sweep_candles = alt_sweep_candles
-                                contamination_fixed = True
+                    # Only apply OLD_DEBRIS correction if later_half is stable (spread < 2%)
+                    # If spread >= 2%, the later_half might have a significant dip (recent sweep), not old debris
+                    if later_half_spread_pct < 2.0:
+                        # Try detecting range from a more recent slice (skip old debris)
+                        if len(df) >= 50:
+                            test_lookback = 20
+                            alt_recent = df.tail(test_lookback)
+                            alt_range_high = alt_recent["high"].max()
+                            alt_range_low = alt_recent["low"].min()
+                            alt_range_width = (alt_range_high - alt_range_low) / alt_range_low * 100
+
+                            if (
+                                self._range_detector.min_width <= alt_range_width <= self._range_detector.max_width
+                                and alt_range_high > alt_range_low
+                            ):
+                                alt_sweep_idx, alt_sweep_low, alt_sweep_depth, alt_sweep_candles = (
+                                    self._sweep_detector.detect(df, alt_range_low, lookback=test_lookback)
+                                )
+                                if alt_sweep_idx is not None:
+                                    range_low = alt_range_low
+                                    range_high = alt_range_high
+                                    range_width_pct = alt_range_width
+                                    sweep_idx = alt_sweep_idx
+                                    sweep_low = alt_sweep_low
+                                    sweep_depth_pct = alt_sweep_depth
+                                    sweep_candles = alt_sweep_candles
+                                    contamination_fixed = True
 
                 # Pattern 2b: RECENT_SWEEP (debris_ratio < 0, recent dips but earlier stable)
                 # Recent dips indicate sweep/wick events within the range, use earlier_half as range
