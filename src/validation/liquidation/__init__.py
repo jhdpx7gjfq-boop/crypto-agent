@@ -12,12 +12,17 @@ Week 2 Implementation:
 Week 3 Implementation:
 - LiquidationFeatureEngine: F001-F006 feature computation (4-hour rolling window)
 
+Week 4 Implementation:
+- LiquidationLabelEngine: Target computation (RETURN[T→T+1m])
+- Label computation with PIT compliance (future prices not at T)
+
 PIT Compliance:
 - All events timestamped (UTC, millisecond precision)
 - No future peeking
 - Source tracking + deduplication
 - Audit trail for all operations
 - Feature computation strictly before observation time
+- Label computation separates observation time from label availability
 """
 
 from src.validation.liquidation.collector import BinanceLiquidationCollector
@@ -27,6 +32,7 @@ from src.validation.liquidation.contracts import (
     LiquidationQAReport,
 )
 from src.validation.liquidation.features import LiquidationFeatureEngine
+from src.validation.liquidation.labels import LiquidationLabelEngine
 from src.validation.liquidation.persistence import LiquidationStore
 from src.validation.liquidation.qa import LiquidationQA
 
@@ -38,4 +44,5 @@ __all__ = [
     "LiquidationStore",
     "LiquidationQA",
     "LiquidationFeatureEngine",
+    "LiquidationLabelEngine",
 ]
