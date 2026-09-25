@@ -357,11 +357,24 @@ All 6 layers tested across micro/macro/alt signal classes (real/synthetic data):
 
 **Key Finding**: Baseline contrarian IC ≈ -0.121 persists across all tests. Real data (RPM) shows negative ΔIC + inverted stability (σ >> mean), indicating non-predictive layer. No independent alpha validated on 1D BTC.
 
-### Phase B-004-DATA-RETRY: REAL DATA VALIDATION (BLOCKING / REQUIRED)
+### Phase B-004-DATA-RETRY: REAL DATA VALIDATION (BLOCKED BY INFRASTRUCTURE)
 
-**Status**: 🔴 BLOCKED INDEFINITELY until real-data validation completes
+**Status**: 🔴 BLOCKED — Data acquisition failed (network access issue)
+
+**Execution Attempt** (2026-09-25):
+- Script: `run_phase_b_004_real_data_wfv_strict.py` (protocol correct)
+- Binance: 451 error (API unavailable)
+- Crypto.com: 404 error (endpoint not found)
+- CoinGecko: 401 error (rate-limited / auth required)
+- Glassnode/CryptoQuant: No API keys in environment
+- **Result**: DATA UNAVAILABLE (per governance, no synthetic fallback)
 
 **Reason**: B-004 WFV executed on **synthetic data only**. Cannot unlock Layer 8 or evaluate RPM/RCM empirically without real market data validation.
+
+**Infrastructure Requirement**: Real data acquisition requires:
+1. **Local environment** with unrestricted network access (not cloud sandbox)
+2. **API credentials** for Binance, CryptoQuant, or Glassnode
+3. **Alternative**: Manual CSV download of BTC/USDT 1D 2021-01-01 to 2024-09-25
 
 **Scope**: Execute identical B-004_SPEC v1.0 on real BTC OHLCV — **exact scope matters** for interpretation
 
