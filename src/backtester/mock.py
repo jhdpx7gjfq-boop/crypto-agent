@@ -34,8 +34,16 @@ class MockBacktester(Backtester):
     def _update_equity_curve_event(self) -> None:
         """Update equity curve at trade event.
 
+        LIMITATION (Documented):
         Equity = cash + mark-to-market value of positions (at last observed price).
-        This is event-driven (updates on LONG/EXIT), not observation-driven.
+        This is EVENT-DRIVEN (updates only on LONG/EXIT), NOT observation-driven.
+
+        This is NOT a complete daily/continuous mark-to-market equity curve.
+        It only reflects portfolio state after trade execution events.
+        Gaps between events mean equity is stale (positions priced at last trade price).
+
+        Acceptable for mock/backtester foundation. Phase 3+ will require
+        observation-based equity recalculation (full mark-to-market at each price update).
         """
         marked_value = sum(
             qty * self.last_price.get(asset, 0.0)
@@ -185,6 +193,13 @@ class MockBacktester(Backtester):
                         "signal_timestamp": signal.timestamp.isoformat(),
                         "price_timestamp": signal.metadata.get("price_timestamp"),
                         "confidence": signal.confidence,
+                        "feature_source": signal.metadata.get("feature_source", "unknown"),
+                        "feature_name": signal.metadata.get("feature_name", "raw_price"),
+                        "snapshot_ref": {
+                            "asset": signal.asset,
+                            "timestamp": signal.metadata.get("price_timestamp"),
+                            "feature": signal.metadata.get("feature_name", "raw_price"),
+                        },
                     },
                 }
             )
@@ -245,11 +260,19 @@ class MockBacktester(Backtester):
         return float(np.min(drawdown) * 100) if len(drawdown) > 0 else 0.0
 
     def _calculate_sharpe(self, returns: np.ndarray[Any, np.dtype[np.floating[Any]]], risk_free_rate: float = 0.02) -> float:
-        """Calculate annualized Sharpe ratio."""
+        """Calculate Sharpe ratio (event-period, not annualized).
+
+        LIMITATION: Returns are calculated between equity_curve events (LONG/EXIT only),
+        not daily observations. Without knowing the true inter-event frequency,
+        annualization (√252) cannot be correctly applied.
+
+        Sharpe here = mean(returns) / std(returns), normalized for event scale.
+        For annual Sharpe, Phase 3+ needs observation-based equity updates.
+        """
         if len(returns) == 0 or np.std(returns) == 0:
             return 0.0
-        excess_returns = returns - (risk_free_rate / 252)
-        return float((np.mean(excess_returns) / np.std(excess_returns)) * np.sqrt(252))
+        excess_returns = returns - (risk_free_rate / len(returns))
+        return float(np.mean(excess_returns) / np.std(excess_returns))
 
     def _calculate_profit_factor(self) -> float:
         """Calculate profit factor from trade_log."""

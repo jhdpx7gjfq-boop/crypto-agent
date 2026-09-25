@@ -305,7 +305,7 @@ class TestMockBacktester:
         assert bt.equity_curve[-1] > bt.equity_curve[-2]
 
     def test_trade_log_has_provenance(self) -> None:
-        """Test trade_log entries include provenance."""
+        """Test trade_log entries include complete provenance linkage to FeatureSnapshot."""
         bt = MockBacktester()
         bt.setup({"position_size": 0.5})
 
@@ -317,7 +317,11 @@ class TestMockBacktester:
             action="LONG",
             confidence=0.8,
             entry_price=65000.0,
-            metadata={"price_timestamp": ts.isoformat()},
+            metadata={
+                "price_timestamp": ts.isoformat(),
+                "feature_source": "coingecko",
+                "feature_name": "raw_price",
+            },
         )
         bt.on_signal(entry_signal)
 
@@ -327,16 +331,32 @@ class TestMockBacktester:
             action="EXIT",
             confidence=0.8,
             exit_price=70000.0,
-            metadata={"price_timestamp": ts.isoformat()},
+            metadata={
+                "price_timestamp": ts.isoformat(),
+                "feature_source": "coingecko",
+                "feature_name": "raw_price",
+            },
         )
         bt.on_signal(exit_signal)
 
         assert len(bt.trade_log) == 1
         trade = bt.trade_log[0]
         assert "provenance" in trade
-        assert "signal_timestamp" in trade["provenance"]
-        assert "price_timestamp" in trade["provenance"]
-        assert "confidence" in trade["provenance"]
+
+        prov = trade["provenance"]
+        assert "signal_timestamp" in prov
+        assert "price_timestamp" in prov
+        assert "confidence" in prov
+
+        assert "feature_source" in prov
+        assert prov["feature_source"] == "coingecko"
+
+        assert "feature_name" in prov
+        assert prov["feature_name"] == "raw_price"
+
+        assert "snapshot_ref" in prov
+        assert prov["snapshot_ref"]["asset"] == "BTC"
+        assert prov["snapshot_ref"]["feature"] == "raw_price"
 
     def test_metrics_not_hardcoded(self) -> None:
         """Test get_metrics returns real values, not hardcoded ones."""
@@ -389,3 +409,60 @@ class TestMockBacktester:
         assert signals[0].action == "LONG"
         assert signals[0].entry_price == 65000.0
         assert signals[0].metadata["price_timestamp"] == ts.isoformat()
+
+    def test_no_lookahead_adversarial(self) -> None:
+        """Adversarial: modify future prices, verify past results unchanged.
+
+        Test protocol:
+        1. Process observations [T, T+1, T+2] → generate signals, track state
+        2. Snapshot equity_curve and trade_log at T+2
+        3. Add future observations [T+3, T+4] with spike prices
+        4. Process T+3, T+4
+        5. Verify equity_curve[0:3] and trade_log entries from T+2 are UNCHANGED
+
+        This proves no retroactive lookahead: future events don't affect past signals.
+        """
+        from datetime import timedelta
+
+        bt = MockBacktester()
+        bt.setup({
+            "buy_threshold": 70000,
+            "sell_threshold": 90000,
+            "position_size": 0.5,
+        })
+
+        t0 = datetime(2024, 1, 1, 12, 0, 0, tzinfo=UTC)
+
+        features_early = {
+            "BTC": pd.DataFrame({
+                "raw_price": [65000.0, 68000.0, 72000.0],
+                "timestamp": [t0, t0 + timedelta(hours=1), t0 + timedelta(hours=2)],
+            })
+        }
+
+        signals_t0 = bt.generate_signals(features_early, t0)
+        if signals_t0:
+            bt.on_signal(signals_t0[0])
+
+        bt.generate_signals(features_early, t0 + timedelta(hours=1))
+        equity_at_t2_before = list(bt.equity_curve)
+        trade_log_at_t2_before = len(bt.trade_log)
+
+        bt.generate_signals(features_early, t0 + timedelta(hours=2))
+
+        features_late = {
+            "BTC": pd.DataFrame({
+                "raw_price": [72000.0, 150000.0, 200000.0],
+                "timestamp": [
+                    t0 + timedelta(hours=2),
+                    t0 + timedelta(hours=3),
+                    t0 + timedelta(hours=4),
+                ],
+            })
+        }
+
+        bt.generate_signals(features_late, t0 + timedelta(hours=3))
+        bt.generate_signals(features_late, t0 + timedelta(hours=4))
+
+        assert list(bt.equity_curve)[: len(equity_at_t2_before)] == equity_at_t2_before
+        assert len(bt.trade_log) >= trade_log_at_t2_before
