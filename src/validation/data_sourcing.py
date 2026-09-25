@@ -58,9 +58,9 @@ class BinanceDataSource:
                 columns=["timestamp", "open", "high", "low", "close", "volume"]
             )
             df["timestamp"] = pd.to_datetime(df["timestamp"], unit="ms")
-            df = df.set_index("timestamp")
-            df = df.sort_index()
-            df = df[~df.index.duplicated(keep='first')]
+            df = df.sort_values("timestamp")
+            df = df[~df["timestamp"].duplicated(keep='first')]
+            df = df.reset_index(drop=True)
 
             logger.info(f"✅ Fetched {len(df)} candles from Binance ({start_date} to {end_date})")
             return df
@@ -91,10 +91,21 @@ class YFinanceDataSource:
                 logger.error("No data from yfinance")
                 return None
 
-            # Rename columns
-            df.columns = ["open", "high", "low", "close", "adj_close", "volume"]
-            df = df[["open", "high", "low", "close", "volume"]]
-            df.index.name = "timestamp"
+            # Handle MultiIndex columns from yfinance (single ticker gives simple cols)
+            if isinstance(df.columns, pd.MultiIndex):
+                df.columns = df.columns.get_level_values(0)
+
+            # Standardize column names (lowercase)
+            df.columns = [c.lower() for c in df.columns]
+
+            # Keep only required OHLCV columns
+            required = ["open", "high", "low", "close", "volume"]
+            available = [c for c in required if c in df.columns]
+            df = df[available]
+
+            # Add timestamp as column (detector expects it as column, not index)
+            df["timestamp"] = df.index
+            df = df[["timestamp"] + [c for c in df.columns if c != "timestamp"]]
 
             logger.info(f"✅ Fetched {len(df)} candles from yfinance ({start_date} to {end_date})")
             return df
@@ -115,15 +126,18 @@ class LocalDataSource:
         """Load OHLCV data from CSV."""
         try:
             df = pd.read_csv(filepath, parse_dates=["timestamp"])
-            df = df.set_index("timestamp")
-            df = df.sort_index()
+            df = df.sort_values("timestamp")
+            df = df.reset_index(drop=True)
 
             # Ensure columns
-            required_cols = ["open", "high", "low", "close", "volume"]
+            required_cols = ["timestamp", "open", "high", "low", "close", "volume"]
             for col in required_cols:
                 if col not in df.columns:
                     logger.error(f"Missing column: {col}")
                     return None
+
+            # Reorder columns
+            df = df[required_cols]
 
             logger.info(f"✅ Loaded {len(df)} candles from {filepath}")
             return df
@@ -162,9 +176,10 @@ class DataValidator:
             return False
 
         # Check OHLC order
-        invalid_ohlc = (df["high"] < df["low"]) | (df["high"] < df["open"]) | (df["high"] < df["close"])
-        if invalid_ohlc.any():
-            logger.error(f"Invalid OHLC order ({invalid_ohlc.sum()} rows)")
+        invalid_ohlc = ((df["high"] < df["low"]) | (df["high"] < df["open"]) | (df["high"] < df["close"]))
+        n_invalid = invalid_ohlc.astype(int).sum()
+        if n_invalid > 0:
+            logger.error(f"Invalid OHLC order ({int(n_invalid) if hasattr(n_invalid, '__int__') else n_invalid} rows)")
             return False
 
         # Check volume

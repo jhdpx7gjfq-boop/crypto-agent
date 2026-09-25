@@ -234,8 +234,8 @@ class ICCalculator:
 
             # Target : prix monte-t-il dans les 5 prochains candles ?
             # (simplifié : utiliser recovery_pct du candle suivant)
-            next_recovery = predictions[i + 1].get("recovery_pct", 0)
-            targets.append(1 if next_recovery > 0 else -1)
+            next_recovery = predictions[i + 1].get("recovery_pct")
+            targets.append(1 if next_recovery and next_recovery > 0 else -1)
 
         return np.array(signals), np.array(targets)
 

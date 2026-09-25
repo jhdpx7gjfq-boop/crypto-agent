@@ -1,0 +1,4938 @@
+{
+  "validation_date": "2026-09-25T13:02:36.228171",
+  "component": "Spring Detector",
+  "level": 4,
+  "summary": {
+    "ic_mean": 0.0,
+    "ic_std": 0.0,
+    "ic_min": 0.0,
+    "ic_max": 0.0,
+    "hit_rate_mean": 0.8711850950981386,
+    "hit_rate_std": 0.232889767830794,
+    "n_windows": 18,
+    "stability": 1.0
+  },
+  "window_results": [
+    {
+      "window_id": 0,
+      "regime": "bull_2021",
+      "train_period": "2021-01-01 to 2021-06-30",
+      "test_period": "2021-06-30 to 2021-07-30",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2021-06-30 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 35040.8359375
+        },
+        {
+          "timestamp": "2021-07-01 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 33572.1171875
+        },
+        {
+          "timestamp": "2021-07-02 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 33897.046875
+        },
+        {
+          "timestamp": "2021-07-03 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 34668.546875
+        },
+        {
+          "timestamp": "2021-07-04 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 35287.78125
+        },
+        {
+          "timestamp": "2021-07-05 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 33746.00390625
+        },
+        {
+          "timestamp": "2021-07-06 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 34235.1953125
+        },
+        {
+          "timestamp": "2021-07-07 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 33855.328125
+        },
+        {
+          "timestamp": "2021-07-08 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 32877.37109375
+        },
+        {
+          "timestamp": "2021-07-09 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 33798.01171875
+        },
+        {
+          "timestamp": "2021-07-10 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 33520.51953125
+        },
+        {
+          "timestamp": "2021-07-11 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 34240.1875
+        },
+        {
+          "timestamp": "2021-07-12 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 33155.84765625
+        },
+        {
+          "timestamp": "2021-07-13 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 32702.025390625
+        },
+        {
+          "timestamp": "2021-07-14 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 32822.34765625
+        },
+        {
+          "timestamp": "2021-07-15 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 31780.73046875
+        },
+        {
+          "timestamp": "2021-07-16 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 31421.5390625
+        },
+        {
+          "timestamp": "2021-07-17 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 31533.068359375
+        },
+        {
+          "timestamp": "2021-07-18 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 31796.810546875
+        },
+        {
+          "timestamp": "2021-07-19 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30817.83203125
+        },
+        {
+          "timestamp": "2021-07-20 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 29807.34765625
+        },
+        {
+          "timestamp": "2021-07-21 00:00:00",
+          "state": "SWEEP",
+          "range_low": 30184.501953125,
+          "sweep_low": 29360.955078125,
+          "recovery_pct": 1.5203612312243173,
+          "next_close": 32110.693359375
+        },
+        {
+          "timestamp": "2021-07-22 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 30184.501953125,
+          "sweep_low": 29526.18359375,
+          "recovery_pct": 8.7532808207969,
+          "next_close": 32313.10546875
+        },
+        {
+          "timestamp": "2021-07-23 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 29360.955078125,
+          "sweep_low": 28893.62109375,
+          "recovery_pct": 16.71443753737275,
+          "next_close": 33581.55078125
+        },
+        {
+          "timestamp": "2021-07-24 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 29360.955078125,
+          "sweep_low": 28893.62109375,
+          "recovery_pct": 16.71443753737275,
+          "next_close": 34292.4453125
+        },
+        {
+          "timestamp": "2021-07-25 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 29360.955078125,
+          "sweep_low": 28893.62109375,
+          "recovery_pct": 16.71443753737275,
+          "next_close": 35350.1875
+        },
+        {
+          "timestamp": "2021-07-26 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 29360.955078125,
+          "sweep_low": 28893.62109375,
+          "recovery_pct": 16.71443753737275,
+          "next_close": 37337.53515625
+        },
+        {
+          "timestamp": "2021-07-27 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 39406.94140625
+        },
+        {
+          "timestamp": "2021-07-28 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 39995.90625
+        },
+        {
+          "timestamp": "2021-07-29 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 40008.421875
+        },
+        {
+          "timestamp": "2021-07-30 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 42235.546875
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 1,
+      "regime": "bull_2021",
+      "train_period": "2021-01-31 to 2021-07-30",
+      "test_period": "2021-07-30 to 2021-08-29",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2021-07-30 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 42235.546875
+        },
+        {
+          "timestamp": "2021-07-31 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 41626.1953125
+        },
+        {
+          "timestamp": "2021-08-01 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 39974.89453125
+        },
+        {
+          "timestamp": "2021-08-02 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 39201.9453125
+        },
+        {
+          "timestamp": "2021-08-03 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 38152.98046875
+        },
+        {
+          "timestamp": "2021-08-04 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 39747.50390625
+        },
+        {
+          "timestamp": "2021-08-05 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 40869.5546875
+        },
+        {
+          "timestamp": "2021-08-06 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 42816.5
+        },
+        {
+          "timestamp": "2021-08-07 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 44555.80078125
+        },
+        {
+          "timestamp": "2021-08-08 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43798.1171875
+        },
+        {
+          "timestamp": "2021-08-09 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 46365.40234375
+        },
+        {
+          "timestamp": "2021-08-10 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 45585.03125
+        },
+        {
+          "timestamp": "2021-08-11 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 45593.63671875
+        },
+        {
+          "timestamp": "2021-08-12 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 44428.2890625
+        },
+        {
+          "timestamp": "2021-08-13 00:00:00",
+          "state": "SWEEP",
+          "range_low": 37458.00390625,
+          "sweep_low": 36441.7265625,
+          "recovery_pct": 21.915982730133578,
+          "next_close": 47793.3203125
+        },
+        {
+          "timestamp": "2021-08-14 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 47096.9453125
+        },
+        {
+          "timestamp": "2021-08-15 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 47047.00390625
+        },
+        {
+          "timestamp": "2021-08-16 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 46004.484375
+        },
+        {
+          "timestamp": "2021-08-17 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 44695.359375
+        },
+        {
+          "timestamp": "2021-08-18 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 44801.1875
+        },
+        {
+          "timestamp": "2021-08-19 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 46717.578125
+        },
+        {
+          "timestamp": "2021-08-20 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 49339.17578125
+        },
+        {
+          "timestamp": "2021-08-21 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 48905.4921875
+        },
+        {
+          "timestamp": "2021-08-22 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 49321.65234375
+        },
+        {
+          "timestamp": "2021-08-23 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 49546.1484375
+        },
+        {
+          "timestamp": "2021-08-24 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 47706.1171875
+        },
+        {
+          "timestamp": "2021-08-25 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 48960.7890625
+        },
+        {
+          "timestamp": "2021-08-26 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 46942.21875
+        },
+        {
+          "timestamp": "2021-08-27 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 49058.66796875
+        },
+        {
+          "timestamp": "2021-08-28 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 48902.40234375
+        },
+        {
+          "timestamp": "2021-08-29 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 48829.83203125
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 2,
+      "regime": "bull_2021",
+      "train_period": "2021-03-02 to 2021-08-29",
+      "test_period": "2021-08-29 to 2021-09-28",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2021-08-29 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 48829.83203125
+        },
+        {
+          "timestamp": "2021-08-30 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 47054.984375
+        },
+        {
+          "timestamp": "2021-08-31 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 47166.6875
+        },
+        {
+          "timestamp": "2021-09-01 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 48847.02734375
+        },
+        {
+          "timestamp": "2021-09-02 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 49327.72265625
+        },
+        {
+          "timestamp": "2021-09-03 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 50025.375
+        },
+        {
+          "timestamp": "2021-09-04 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 49944.625
+        },
+        {
+          "timestamp": "2021-09-05 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 51753.41015625
+        },
+        {
+          "timestamp": "2021-09-06 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 39932.1796875,
+          "recovery_pct": null,
+          "next_close": 52633.53515625
+        },
+        {
+          "timestamp": "2021-09-07 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 42618.56640625,
+          "recovery_pct": null,
+          "next_close": 46811.12890625
+        },
+        {
+          "timestamp": "2021-09-08 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 42618.56640625,
+          "recovery_pct": null,
+          "next_close": 46091.390625
+        },
+        {
+          "timestamp": "2021-09-09 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 42848.6875,
+          "recovery_pct": 6.386062000148779,
+          "next_close": 46391.421875
+        },
+        {
+          "timestamp": "2021-09-10 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 42848.6875,
+          "recovery_pct": 6.386062000148779,
+          "next_close": 44883.91015625
+        },
+        {
+          "timestamp": "2021-09-11 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 42848.6875,
+          "recovery_pct": 6.386062000148779,
+          "next_close": 45201.45703125
+        },
+        {
+          "timestamp": "2021-09-12 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 42848.6875,
+          "recovery_pct": 6.386062000148779,
+          "next_close": 46063.26953125
+        },
+        {
+          "timestamp": "2021-09-13 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 42848.6875,
+          "recovery_pct": 6.386062000148779,
+          "next_close": 44963.07421875
+        },
+        {
+          "timestamp": "2021-09-14 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 42848.6875,
+          "recovery_pct": 6.386062000148779,
+          "next_close": 47092.4921875
+        },
+        {
+          "timestamp": "2021-09-15 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 42848.6875,
+          "recovery_pct": 6.386062000148779,
+          "next_close": 48176.34765625
+        },
+        {
+          "timestamp": "2021-09-16 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 42848.6875,
+          "recovery_pct": 6.386062000148779,
+          "next_close": 47783.359375
+        },
+        {
+          "timestamp": "2021-09-17 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 42848.6875,
+          "recovery_pct": 6.386062000148779,
+          "next_close": 47267.51953125
+        },
+        {
+          "timestamp": "2021-09-18 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 42848.6875,
+          "recovery_pct": 6.386062000148779,
+          "next_close": 48278.36328125
+        },
+        {
+          "timestamp": "2021-09-19 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 42848.6875,
+          "recovery_pct": 6.386062000148779,
+          "next_close": 47260.21875
+        },
+        {
+          "timestamp": "2021-09-20 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 42848.6875,
+          "recovery_pct": 6.386062000148779,
+          "next_close": 42843.80078125
+        },
+        {
+          "timestamp": "2021-09-21 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 39932.1796875,
+          "recovery_pct": null,
+          "next_close": 40693.67578125
+        },
+        {
+          "timestamp": "2021-09-22 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43574.5078125
+        },
+        {
+          "timestamp": "2021-09-23 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 44895.09765625
+        },
+        {
+          "timestamp": "2021-09-24 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 42839.75
+        },
+        {
+          "timestamp": "2021-09-25 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 42716.59375
+        },
+        {
+          "timestamp": "2021-09-26 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43208.5390625
+        },
+        {
+          "timestamp": "2021-09-27 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 42235.73046875
+        },
+        {
+          "timestamp": "2021-09-28 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 41034.54296875
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 3,
+      "regime": "bull_2021",
+      "train_period": "2021-04-01 to 2021-09-28",
+      "test_period": "2021-09-28 to 2021-10-28",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2021-09-28 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 41034.54296875
+        },
+        {
+          "timestamp": "2021-09-29 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 41564.36328125
+        },
+        {
+          "timestamp": "2021-09-30 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43790.89453125
+        },
+        {
+          "timestamp": "2021-10-01 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 48116.94140625
+        },
+        {
+          "timestamp": "2021-10-02 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 47711.48828125
+        },
+        {
+          "timestamp": "2021-10-03 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 48199.953125
+        },
+        {
+          "timestamp": "2021-10-04 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 49112.90234375
+        },
+        {
+          "timestamp": "2021-10-05 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 51514.8125
+        },
+        {
+          "timestamp": "2021-10-06 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 55361.44921875
+        },
+        {
+          "timestamp": "2021-10-07 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 53805.984375
+        },
+        {
+          "timestamp": "2021-10-08 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 53967.84765625
+        },
+        {
+          "timestamp": "2021-10-09 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 54968.22265625
+        },
+        {
+          "timestamp": "2021-10-10 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 54771.578125
+        },
+        {
+          "timestamp": "2021-10-11 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 57484.7890625
+        },
+        {
+          "timestamp": "2021-10-12 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 56041.05859375
+        },
+        {
+          "timestamp": "2021-10-13 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 57401.09765625
+        },
+        {
+          "timestamp": "2021-10-14 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 57321.5234375
+        },
+        {
+          "timestamp": "2021-10-15 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 61593.94921875
+        },
+        {
+          "timestamp": "2021-10-16 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 60892.1796875
+        },
+        {
+          "timestamp": "2021-10-17 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 61553.6171875
+        },
+        {
+          "timestamp": "2021-10-18 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 62026.078125
+        },
+        {
+          "timestamp": "2021-10-19 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 64261.9921875
+        },
+        {
+          "timestamp": "2021-10-20 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 65992.8359375
+        },
+        {
+          "timestamp": "2021-10-21 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 62210.171875
+        },
+        {
+          "timestamp": "2021-10-22 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 60692.265625
+        },
+        {
+          "timestamp": "2021-10-23 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 61393.6171875
+        },
+        {
+          "timestamp": "2021-10-24 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 60930.8359375
+        },
+        {
+          "timestamp": "2021-10-25 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 63039.82421875
+        },
+        {
+          "timestamp": "2021-10-26 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 60363.79296875
+        },
+        {
+          "timestamp": "2021-10-27 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 58482.38671875
+        },
+        {
+          "timestamp": "2021-10-28 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 60622.13671875
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 4,
+      "regime": "bull_2021",
+      "train_period": "2021-05-01 to 2021-10-28",
+      "test_period": "2021-10-28 to 2021-11-27",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2021-10-28 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 60622.13671875
+        },
+        {
+          "timestamp": "2021-10-29 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 62227.96484375
+        },
+        {
+          "timestamp": "2021-10-30 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 61888.83203125
+        },
+        {
+          "timestamp": "2021-10-31 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 61318.95703125
+        },
+        {
+          "timestamp": "2021-11-01 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 61004.40625
+        },
+        {
+          "timestamp": "2021-11-02 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 63226.40234375
+        },
+        {
+          "timestamp": "2021-11-03 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 62970.046875
+        },
+        {
+          "timestamp": "2021-11-04 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 61452.23046875
+        },
+        {
+          "timestamp": "2021-11-05 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 61125.67578125
+        },
+        {
+          "timestamp": "2021-11-06 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 61527.48046875
+        },
+        {
+          "timestamp": "2021-11-07 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 63326.98828125
+        },
+        {
+          "timestamp": "2021-11-08 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 67566.828125
+        },
+        {
+          "timestamp": "2021-11-09 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 66971.828125
+        },
+        {
+          "timestamp": "2021-11-10 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 64995.23046875
+        },
+        {
+          "timestamp": "2021-11-11 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 64949.9609375
+        },
+        {
+          "timestamp": "2021-11-12 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 64155.94140625
+        },
+        {
+          "timestamp": "2021-11-13 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 64469.52734375
+        },
+        {
+          "timestamp": "2021-11-14 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 65466.83984375
+        },
+        {
+          "timestamp": "2021-11-15 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 63557.87109375
+        },
+        {
+          "timestamp": "2021-11-16 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 60161.24609375
+        },
+        {
+          "timestamp": "2021-11-17 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 60368.01171875
+        },
+        {
+          "timestamp": "2021-11-18 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 56942.13671875
+        },
+        {
+          "timestamp": "2021-11-19 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 58119.578125
+        },
+        {
+          "timestamp": "2021-11-20 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 59697.1953125
+        },
+        {
+          "timestamp": "2021-11-21 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 58730.4765625
+        },
+        {
+          "timestamp": "2021-11-22 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 56289.2890625
+        },
+        {
+          "timestamp": "2021-11-23 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 57569.07421875
+        },
+        {
+          "timestamp": "2021-11-24 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 56280.42578125
+        },
+        {
+          "timestamp": "2021-11-25 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 57274.6796875
+        },
+        {
+          "timestamp": "2021-11-26 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 43285.20703125,
+          "sweep_low": 41444.58203125,
+          "recovery_pct": 5.139214046468114,
+          "next_close": 53569.765625
+        },
+        {
+          "timestamp": "2021-11-27 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 54815.078125
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 0,
+      "regime": "bear_2022",
+      "train_period": "2022-01-01 to 2022-06-30",
+      "test_period": "2022-06-30 to 2022-07-30",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2022-06-30 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 19784.7265625
+        },
+        {
+          "timestamp": "2022-07-01 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 19269.3671875
+        },
+        {
+          "timestamp": "2022-07-02 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 19242.255859375
+        },
+        {
+          "timestamp": "2022-07-03 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 19297.076171875
+        },
+        {
+          "timestamp": "2022-07-04 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 20231.26171875
+        },
+        {
+          "timestamp": "2022-07-05 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 20190.115234375
+        },
+        {
+          "timestamp": "2022-07-06 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 20548.24609375
+        },
+        {
+          "timestamp": "2022-07-07 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 21637.587890625
+        },
+        {
+          "timestamp": "2022-07-08 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 21731.1171875
+        },
+        {
+          "timestamp": "2022-07-09 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 21592.20703125
+        },
+        {
+          "timestamp": "2022-07-10 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 20860.44921875
+        },
+        {
+          "timestamp": "2022-07-11 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 19970.556640625
+        },
+        {
+          "timestamp": "2022-07-12 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 19323.9140625
+        },
+        {
+          "timestamp": "2022-07-13 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 20212.07421875
+        },
+        {
+          "timestamp": "2022-07-14 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 20569.919921875
+        },
+        {
+          "timestamp": "2022-07-15 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 20836.328125
+        },
+        {
+          "timestamp": "2022-07-16 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 21190.31640625
+        },
+        {
+          "timestamp": "2022-07-17 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 20779.34375
+        },
+        {
+          "timestamp": "2022-07-18 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18729.65625,
+          "sweep_low": 18067.15234375,
+          "recovery_pct": 13.760437136542036,
+          "next_close": 22485.689453125
+        },
+        {
+          "timestamp": "2022-07-19 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23389.43359375
+        },
+        {
+          "timestamp": "2022-07-20 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23231.732421875
+        },
+        {
+          "timestamp": "2022-07-21 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23164.62890625
+        },
+        {
+          "timestamp": "2022-07-22 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 22714.978515625
+        },
+        {
+          "timestamp": "2022-07-23 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 22465.478515625
+        },
+        {
+          "timestamp": "2022-07-24 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 22609.1640625
+        },
+        {
+          "timestamp": "2022-07-25 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 21361.701171875
+        },
+        {
+          "timestamp": "2022-07-26 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 21239.75390625
+        },
+        {
+          "timestamp": "2022-07-27 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 22930.548828125
+        },
+        {
+          "timestamp": "2022-07-28 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23843.88671875
+        },
+        {
+          "timestamp": "2022-07-29 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23804.6328125
+        },
+        {
+          "timestamp": "2022-07-30 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23656.20703125
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 1,
+      "regime": "bear_2022",
+      "train_period": "2022-01-31 to 2022-07-30",
+      "test_period": "2022-07-30 to 2022-08-29",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2022-07-30 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23656.20703125
+        },
+        {
+          "timestamp": "2022-07-31 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23336.896484375
+        },
+        {
+          "timestamp": "2022-08-01 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23314.19921875
+        },
+        {
+          "timestamp": "2022-08-02 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 22978.1171875
+        },
+        {
+          "timestamp": "2022-08-03 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 22846.5078125
+        },
+        {
+          "timestamp": "2022-08-04 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 22630.95703125
+        },
+        {
+          "timestamp": "2022-08-05 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23289.314453125
+        },
+        {
+          "timestamp": "2022-08-06 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 22961.279296875
+        },
+        {
+          "timestamp": "2022-08-07 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23175.890625
+        },
+        {
+          "timestamp": "2022-08-08 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23809.486328125
+        },
+        {
+          "timestamp": "2022-08-09 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23164.318359375
+        },
+        {
+          "timestamp": "2022-08-10 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 22485.701171875,
+          "sweep_low": 21070.806640625,
+          "recovery_pct": 7.300894778793193,
+          "next_close": 23947.642578125
+        },
+        {
+          "timestamp": "2022-08-11 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 22485.701171875,
+          "sweep_low": 21070.806640625,
+          "recovery_pct": 7.300894778793193,
+          "next_close": 23957.529296875
+        },
+        {
+          "timestamp": "2022-08-12 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 22485.701171875,
+          "sweep_low": 21070.806640625,
+          "recovery_pct": 7.300894778793193,
+          "next_close": 24402.818359375
+        },
+        {
+          "timestamp": "2022-08-13 00:00:00",
+          "state": "SWEEP",
+          "range_low": 26350.490234375,
+          "sweep_low": 23657.265625,
+          "recovery_pct": 3.151474672487641,
+          "next_close": 24424.068359375
+        },
+        {
+          "timestamp": "2022-08-14 00:00:00",
+          "state": "SWEEP",
+          "range_low": 26350.490234375,
+          "sweep_low": 24346.115234375,
+          "recovery_pct": 0.32018711917511866,
+          "next_close": 24319.333984375
+        },
+        {
+          "timestamp": "2022-08-15 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 24136.97265625
+        },
+        {
+          "timestamp": "2022-08-16 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23883.291015625
+        },
+        {
+          "timestamp": "2022-08-17 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23335.998046875
+        },
+        {
+          "timestamp": "2022-08-18 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 23212.73828125
+        },
+        {
+          "timestamp": "2022-08-19 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 20877.552734375
+        },
+        {
+          "timestamp": "2022-08-20 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 20776.81640625,
+          "sweep_low": 20518.8984375,
+          "recovery_pct": 1.547011348912721,
+          "next_close": 21166.060546875
+        },
+        {
+          "timestamp": "2022-08-21 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 20776.81640625,
+          "sweep_low": 20518.8984375,
+          "recovery_pct": 1.547011348912721,
+          "next_close": 21534.12109375
+        },
+        {
+          "timestamp": "2022-08-22 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 20776.81640625,
+          "sweep_low": 20518.8984375,
+          "recovery_pct": 1.547011348912721,
+          "next_close": 21398.908203125
+        },
+        {
+          "timestamp": "2022-08-23 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 20776.81640625,
+          "sweep_low": 20518.8984375,
+          "recovery_pct": 1.547011348912721,
+          "next_close": 21528.087890625
+        },
+        {
+          "timestamp": "2022-08-24 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 20776.81640625,
+          "sweep_low": 20518.8984375,
+          "recovery_pct": 1.547011348912721,
+          "next_close": 21395.01953125
+        },
+        {
+          "timestamp": "2022-08-25 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 20776.81640625,
+          "sweep_low": 20518.8984375,
+          "recovery_pct": 1.547011348912721,
+          "next_close": 21600.904296875
+        },
+        {
+          "timestamp": "2022-08-26 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 20856.73046875,
+          "sweep_low": 20776.81640625,
+          "recovery_pct": 10.36603673904113,
+          "next_close": 20260.01953125
+        },
+        {
+          "timestamp": "2022-08-27 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 20199.482421875,
+          "sweep_low": 19689.2578125,
+          "recovery_pct": 2.655338313047446,
+          "next_close": 20041.73828125
+        },
+        {
+          "timestamp": "2022-08-28 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 19616.814453125
+        },
+        {
+          "timestamp": "2022-08-29 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 20297.994140625
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 2,
+      "regime": "bear_2022",
+      "train_period": "2022-03-02 to 2022-08-29",
+      "test_period": "2022-08-29 to 2022-09-28",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2022-08-29 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 20297.994140625
+        },
+        {
+          "timestamp": "2022-08-30 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 19796.80859375
+        },
+        {
+          "timestamp": "2022-08-31 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 20049.763671875
+        },
+        {
+          "timestamp": "2022-09-01 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 19799.58203125,
+          "recovery_pct": 1.263570312899203,
+          "next_close": 20127.140625
+        },
+        {
+          "timestamp": "2022-09-02 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 19600.78515625,
+          "sweep_low": 18999.953125,
+          "recovery_pct": 6.3796004430931985,
+          "next_close": 19969.771484375
+        },
+        {
+          "timestamp": "2022-09-03 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 19600.78515625,
+          "sweep_low": 18999.953125,
+          "recovery_pct": 6.3796004430931985,
+          "next_close": 19832.087890625
+        },
+        {
+          "timestamp": "2022-09-04 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 19600.78515625,
+          "sweep_low": 18999.953125,
+          "recovery_pct": 6.3796004430931985,
+          "next_close": 19986.712890625
+        },
+        {
+          "timestamp": "2022-09-05 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 19600.78515625,
+          "sweep_low": 18999.953125,
+          "recovery_pct": 6.3796004430931985,
+          "next_close": 19812.37109375
+        },
+        {
+          "timestamp": "2022-09-06 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 19600.78515625,
+          "sweep_low": 18999.953125,
+          "recovery_pct": 6.3796004430931985,
+          "next_close": 18837.66796875
+        },
+        {
+          "timestamp": "2022-09-07 00:00:00",
+          "state": "SWEEP",
+          "range_low": 19600.78515625,
+          "sweep_low": 18800.171875,
+          "recovery_pct": 0.1994454837929507,
+          "next_close": 19290.32421875
+        },
+        {
+          "timestamp": "2022-09-08 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 20199.482421875,
+          "sweep_low": 18644.466796875,
+          "recovery_pct": 8.868729590202857,
+          "next_close": 19329.833984375
+        },
+        {
+          "timestamp": "2022-09-09 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 20199.482421875,
+          "sweep_low": 19076.71484375,
+          "recovery_pct": 6.4019371620220085,
+          "next_close": 21381.15234375
+        },
+        {
+          "timestamp": "2022-09-10 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18800.171875,
+          "sweep_low": 18644.466796875,
+          "recovery_pct": 3.675981699915786,
+          "next_close": 21680.5390625
+        },
+        {
+          "timestamp": "2022-09-11 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 21168.72265625,
+          "recovery_pct": null,
+          "next_close": 21769.255859375
+        },
+        {
+          "timestamp": "2022-09-12 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 21406.9453125,
+          "recovery_pct": null,
+          "next_close": 22370.44921875
+        },
+        {
+          "timestamp": "2022-09-13 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 21603.896484375,
+          "recovery_pct": null,
+          "next_close": 20296.70703125
+        },
+        {
+          "timestamp": "2022-09-14 00:00:00",
+          "state": "SWEEP",
+          "range_low": 21372.158723958335,
+          "sweep_low": 20062.669921875,
+          "recovery_pct": 1.1665302289593147,
+          "next_close": 20241.08984375
+        },
+        {
+          "timestamp": "2022-09-15 00:00:00",
+          "state": "SWEEP",
+          "range_low": 21090.683072916665,
+          "sweep_low": 19793.396484375,
+          "recovery_pct": 2.2618319181774145,
+          "next_close": 19701.2109375
+        },
+        {
+          "timestamp": "2022-09-16 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20828.421875,
+          "sweep_low": 19636.734375,
+          "recovery_pct": 0.3283466653298863,
+          "next_close": 19772.583984375
+        },
+        {
+          "timestamp": "2022-09-17 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20589.129557291668,
+          "sweep_low": 19400.076171875,
+          "recovery_pct": 1.9201358242089697,
+          "next_close": 20127.576171875
+        },
+        {
+          "timestamp": "2022-09-18 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20364.940494791666,
+          "sweep_low": 19777.033203125,
+          "recovery_pct": 1.7724749973854024,
+          "next_close": 19419.505859375
+        },
+        {
+          "timestamp": "2022-09-19 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20286.907682291665,
+          "sweep_low": 19387.4921875,
+          "recovery_pct": 0.16512538891255193,
+          "next_close": 19544.12890625
+        },
+        {
+          "timestamp": "2022-09-20 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 20205.580078125,
+          "sweep_low": 18390.318359375,
+          "recovery_pct": 10.063836026152941,
+          "next_close": 18890.7890625
+        },
+        {
+          "timestamp": "2022-09-21 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 20110.23671875,
+          "sweep_low": 18813.455078125,
+          "recovery_pct": 7.588370980750665,
+          "next_close": 18547.400390625
+        },
+        {
+          "timestamp": "2022-09-22 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 19967.6359375,
+          "sweep_low": 18290.314453125,
+          "recovery_pct": 10.044997987643093,
+          "next_close": 19413.55078125
+        },
+        {
+          "timestamp": "2022-09-23 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18390.318359375,
+          "sweep_low": 18290.314453125,
+          "recovery_pct": 6.141153729224643,
+          "next_close": 19297.638671875
+        },
+        {
+          "timestamp": "2022-09-24 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18390.318359375,
+          "sweep_low": 18290.314453125,
+          "recovery_pct": 6.141153729224643,
+          "next_close": 18937.01171875
+        },
+        {
+          "timestamp": "2022-09-25 00:00:00",
+          "state": "RANGE",
+          "range_low": 18290.314453125,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 18802.09765625
+        },
+        {
+          "timestamp": "2022-09-26 00:00:00",
+          "state": "SWEEP",
+          "range_low": 19600.222526041667,
+          "sweep_low": 18696.46875,
+          "recovery_pct": 0.5649671478738465,
+          "next_close": 19222.671875
+        },
+        {
+          "timestamp": "2022-09-27 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 18721.28515625,
+          "recovery_pct": 2.6781639965705812,
+          "next_close": 19110.546875
+        },
+        {
+          "timestamp": "2022-09-28 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 18915.66796875,
+          "recovery_pct": 1.0302512529399095,
+          "next_close": 19426.720703125
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 3,
+      "regime": "bear_2022",
+      "train_period": "2022-04-01 to 2022-09-28",
+      "test_period": "2022-09-28 to 2022-10-28",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2022-09-28 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 18915.66796875,
+          "recovery_pct": 1.0302512529399095,
+          "next_close": 19426.720703125
+        },
+        {
+          "timestamp": "2022-09-29 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 18553.296875,
+          "recovery_pct": 4.707647562638378,
+          "next_close": 19573.05078125
+        },
+        {
+          "timestamp": "2022-09-30 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 18924.353515625,
+          "recovery_pct": 3.4278437310389465,
+          "next_close": 19431.7890625
+        },
+        {
+          "timestamp": "2022-10-01 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 19265.662109375,
+          "recovery_pct": 0.8622955815474403,
+          "next_close": 19312.095703125
+        },
+        {
+          "timestamp": "2022-10-02 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 19231.08203125,
+          "recovery_pct": 0.4212642416238198,
+          "next_close": 19044.107421875
+        },
+        {
+          "timestamp": "2022-10-03 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20397.0,
+          "sweep_low": 18970.62109375,
+          "recovery_pct": 0.38736912071482243,
+          "next_close": 19623.580078125
+        },
+        {
+          "timestamp": "2022-10-04 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20518.8984375,
+          "sweep_low": 19025.2265625,
+          "recovery_pct": 3.1450532988889344,
+          "next_close": 20336.84375
+        },
+        {
+          "timestamp": "2022-10-05 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 19523.83984375,
+          "recovery_pct": 4.164159882259329,
+          "next_close": 20160.716796875
+        },
+        {
+          "timestamp": "2022-10-06 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 19801.80078125,
+          "recovery_pct": 1.8125423015307358,
+          "next_close": 19955.443359375
+        },
+        {
+          "timestamp": "2022-10-07 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 19900.087890625,
+          "recovery_pct": 0.27816695611720466,
+          "next_close": 19546.849609375
+        },
+        {
+          "timestamp": "2022-10-08 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 19395.79296875,
+          "recovery_pct": 0.7788113683641528,
+          "next_close": 19416.568359375
+        },
+        {
+          "timestamp": "2022-10-09 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 19299.4140625,
+          "recovery_pct": 0.6070355115217634,
+          "next_close": 19446.42578125
+        },
+        {
+          "timestamp": "2022-10-10 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 19349.259765625,
+          "recovery_pct": 0.5021691620349252,
+          "next_close": 19141.484375
+        },
+        {
+          "timestamp": "2022-10-11 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 19410.261328125,
+          "sweep_low": 19102.978515625,
+          "recovery_pct": 1.6415756500668406,
+          "next_close": 19051.41796875
+        },
+        {
+          "timestamp": "2022-10-12 00:00:00",
+          "state": "SWEEP",
+          "range_low": 19231.217317708335,
+          "sweep_low": 18925.603515625,
+          "recovery_pct": 0.6647843648480084,
+          "next_close": 19157.4453125
+        },
+        {
+          "timestamp": "2022-10-13 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18644.466796875,
+          "sweep_low": 18553.296875,
+          "recovery_pct": 5.496348778982172,
+          "next_close": 19382.904296875
+        },
+        {
+          "timestamp": "2022-10-14 00:00:00",
+          "state": "SWEEP",
+          "range_low": 18644.466796875,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 5.802905813364515,
+          "next_close": 19185.65625
+        },
+        {
+          "timestamp": "2022-10-15 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18644.466796875,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 19067.634765625
+        },
+        {
+          "timestamp": "2022-10-16 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18644.466796875,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 19268.09375
+        },
+        {
+          "timestamp": "2022-10-17 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18644.466796875,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 19550.7578125
+        },
+        {
+          "timestamp": "2022-10-18 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20397.0,
+          "sweep_low": 19173.333984375,
+          "recovery_pct": 1.968483042294968,
+          "next_close": 19334.416015625
+        },
+        {
+          "timestamp": "2022-10-19 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20518.8984375,
+          "sweep_low": 19144.76953125,
+          "recovery_pct": 0.9905916290370594,
+          "next_close": 19139.53515625
+        },
+        {
+          "timestamp": "2022-10-20 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 19127.6875,
+          "recovery_pct": 0.061939825449364966,
+          "next_close": 19053.740234375
+        },
+        {
+          "timestamp": "2022-10-21 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 18971.458984375,
+          "recovery_pct": 0.4337107128543319,
+          "next_close": 19172.46875
+        },
+        {
+          "timestamp": "2022-10-22 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 18770.970703125,
+          "recovery_pct": 2.138930656410637,
+          "next_close": 19208.189453125
+        },
+        {
+          "timestamp": "2022-10-23 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 19132.244140625,
+          "recovery_pct": 0.39694931729801286,
+          "next_close": 19567.0078125
+        },
+        {
+          "timestamp": "2022-10-24 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 19124.197265625,
+          "recovery_pct": 2.315446451030573,
+          "next_close": 19345.572265625
+        },
+        {
+          "timestamp": "2022-10-25 00:00:00",
+          "state": "SWEEP",
+          "range_low": 20776.81640625,
+          "sweep_low": 19206.32421875,
+          "recovery_pct": 0.7250114352389218,
+          "next_close": 20095.857421875
+        },
+        {
+          "timestamp": "2022-10-26 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18290.314453125,
+          "sweep_low": 19261.447265625,
+          "recovery_pct": 4.4966969216053645,
+          "next_close": 20770.44140625
+        },
+        {
+          "timestamp": "2022-10-27 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18290.314453125,
+          "sweep_low": 20076.1171875,
+          "recovery_pct": -3.270609162083524,
+          "next_close": 20285.8359375
+        },
+        {
+          "timestamp": "2022-10-28 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18644.466796875,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 20595.3515625
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 4,
+      "regime": "bear_2022",
+      "train_period": "2022-05-01 to 2022-10-28",
+      "test_period": "2022-10-28 to 2022-11-27",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2022-10-28 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18644.466796875,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 20595.3515625
+        },
+        {
+          "timestamp": "2022-10-29 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18644.466796875,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 20818.4765625
+        },
+        {
+          "timestamp": "2022-10-30 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18390.318359375,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 20635.603515625
+        },
+        {
+          "timestamp": "2022-10-31 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 20199.482421875,
+          "sweep_low": 20086.068359375,
+          "recovery_pct": 3.6463492507390316,
+          "next_close": 20495.7734375
+        },
+        {
+          "timestamp": "2022-11-01 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18390.318359375,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 20485.2734375
+        },
+        {
+          "timestamp": "2022-11-02 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18390.318359375,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 20159.50390625
+        },
+        {
+          "timestamp": "2022-11-03 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18390.318359375,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 20209.98828125
+        },
+        {
+          "timestamp": "2022-11-04 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18390.318359375,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 21147.23046875
+        },
+        {
+          "timestamp": "2022-11-05 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18390.318359375,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 21282.69140625
+        },
+        {
+          "timestamp": "2022-11-06 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18390.318359375,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 20926.486328125
+        },
+        {
+          "timestamp": "2022-11-07 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18390.318359375,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 20602.81640625
+        },
+        {
+          "timestamp": "2022-11-08 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 18390.318359375,
+          "sweep_low": 18319.822265625,
+          "recovery_pct": 4.7262138890923415,
+          "next_close": 18541.271484375
+        },
+        {
+          "timestamp": "2022-11-09 00:00:00",
+          "state": "RANGE",
+          "range_low": 17603.544921875,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 15880.7802734375
+        },
+        {
+          "timestamp": "2022-11-10 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 17586.771484375
+        },
+        {
+          "timestamp": "2022-11-11 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 17034.29296875
+        },
+        {
+          "timestamp": "2022-11-12 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16799.185546875
+        },
+        {
+          "timestamp": "2022-11-13 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16353.365234375
+        },
+        {
+          "timestamp": "2022-11-14 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16618.19921875
+        },
+        {
+          "timestamp": "2022-11-15 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16884.61328125
+        },
+        {
+          "timestamp": "2022-11-16 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16669.439453125
+        },
+        {
+          "timestamp": "2022-11-17 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16687.517578125
+        },
+        {
+          "timestamp": "2022-11-18 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16697.77734375
+        },
+        {
+          "timestamp": "2022-11-19 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16711.546875
+        },
+        {
+          "timestamp": "2022-11-20 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16291.83203125
+        },
+        {
+          "timestamp": "2022-11-21 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 15787.2841796875
+        },
+        {
+          "timestamp": "2022-11-22 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16189.76953125
+        },
+        {
+          "timestamp": "2022-11-23 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16610.70703125
+        },
+        {
+          "timestamp": "2022-11-24 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16604.46484375
+        },
+        {
+          "timestamp": "2022-11-25 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16521.841796875
+        },
+        {
+          "timestamp": "2022-11-26 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16464.28125
+        },
+        {
+          "timestamp": "2022-11-27 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16444.626953125
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 5,
+      "regime": "bear_2022",
+      "train_period": "2022-05-31 to 2022-11-27",
+      "test_period": "2022-11-27 to 2022-12-27",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2022-11-27 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16444.626953125
+        },
+        {
+          "timestamp": "2022-11-28 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16217.322265625
+        },
+        {
+          "timestamp": "2022-11-29 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16444.982421875
+        },
+        {
+          "timestamp": "2022-11-30 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 17168.56640625
+        },
+        {
+          "timestamp": "2022-12-01 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16967.1328125
+        },
+        {
+          "timestamp": "2022-12-02 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 17088.66015625
+        },
+        {
+          "timestamp": "2022-12-03 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16908.236328125
+        },
+        {
+          "timestamp": "2022-12-04 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 17130.486328125
+        },
+        {
+          "timestamp": "2022-12-05 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16974.826171875
+        },
+        {
+          "timestamp": "2022-12-06 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 17089.50390625
+        },
+        {
+          "timestamp": "2022-12-07 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 16848.126953125
+        },
+        {
+          "timestamp": "2022-12-08 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 16750.55859375,
+          "recovery_pct": null,
+          "next_close": 17233.474609375
+        },
+        {
+          "timestamp": "2022-12-09 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 16788.783203125,
+          "recovery_pct": null,
+          "next_close": 17133.15234375
+        },
+        {
+          "timestamp": "2022-12-10 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 17100.8359375,
+          "recovery_pct": null,
+          "next_close": 17128.724609375
+        },
+        {
+          "timestamp": "2022-12-11 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 17120.68359375,
+          "recovery_pct": null,
+          "next_close": 17104.193359375
+        },
+        {
+          "timestamp": "2022-12-12 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 17091.8203125,
+          "recovery_pct": null,
+          "next_close": 17206.4375
+        },
+        {
+          "timestamp": "2022-12-13 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 16899.39453125,
+          "recovery_pct": null,
+          "next_close": 17781.318359375
+        },
+        {
+          "timestamp": "2022-12-14 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 17815.650390625
+        },
+        {
+          "timestamp": "2022-12-15 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 17739.513671875,
+          "recovery_pct": null,
+          "next_close": 17364.865234375
+        },
+        {
+          "timestamp": "2022-12-16 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 17322.58984375,
+          "recovery_pct": null,
+          "next_close": 16647.484375
+        },
+        {
+          "timestamp": "2022-12-17 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 16584.701171875,
+          "recovery_pct": null,
+          "next_close": 16795.091796875
+        },
+        {
+          "timestamp": "2022-12-18 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 16614.029296875,
+          "recovery_pct": null,
+          "next_close": 16757.9765625
+        },
+        {
+          "timestamp": "2022-12-19 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 16697.8203125,
+          "recovery_pct": null,
+          "next_close": 16439.6796875
+        },
+        {
+          "timestamp": "2022-12-20 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 16398.13671875,
+          "recovery_pct": null,
+          "next_close": 16906.3046875
+        },
+        {
+          "timestamp": "2022-12-21 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 16427.8671875,
+          "recovery_pct": null,
+          "next_close": 16817.53515625
+        },
+        {
+          "timestamp": "2022-12-22 00:00:00",
+          "state": "SWEEP",
+          "range_low": 18319.822265625,
+          "sweep_low": 16755.912109375,
+          "recovery_pct": 0.36776897892966187,
+          "next_close": 16830.341796875
+        },
+        {
+          "timestamp": "2022-12-23 00:00:00",
+          "state": "SWEEP",
+          "range_low": 18319.822265625,
+          "sweep_low": 16592.408203125,
+          "recovery_pct": 1.4339907193531305,
+          "next_close": 16796.953125
+        },
+        {
+          "timestamp": "2022-12-24 00:00:00",
+          "state": "SWEEP",
+          "range_low": 18319.822265625,
+          "sweep_low": 16794.458984375,
+          "recovery_pct": 0.014850973331861802,
+          "next_close": 16847.755859375
+        },
+        {
+          "timestamp": "2022-12-25 00:00:00",
+          "state": "SWEEP",
+          "range_low": 18319.822265625,
+          "sweep_low": 16793.52734375,
+          "recovery_pct": 0.32291319455993905,
+          "next_close": 16841.986328125
+        },
+        {
+          "timestamp": "2022-12-26 00:00:00",
+          "state": "SWEEP",
+          "range_low": 18319.822265625,
+          "sweep_low": 16755.25390625,
+          "recovery_pct": 0.5176431366560629,
+          "next_close": 16919.8046875
+        },
+        {
+          "timestamp": "2022-12-27 00:00:00",
+          "state": "SWEEP",
+          "range_low": 18319.822265625,
+          "sweep_low": 16812.369140625,
+          "recovery_pct": 0.6390268139865866,
+          "next_close": 16717.173828125
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 0,
+      "regime": "recovery_2023",
+      "train_period": "2023-01-01 to 2023-06-30",
+      "test_period": "2023-06-30 to 2023-07-30",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2023-06-30 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30477.251953125
+        },
+        {
+          "timestamp": "2023-07-01 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30590.078125
+        },
+        {
+          "timestamp": "2023-07-02 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30620.76953125
+        },
+        {
+          "timestamp": "2023-07-03 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 31156.439453125
+        },
+        {
+          "timestamp": "2023-07-04 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30777.58203125
+        },
+        {
+          "timestamp": "2023-07-05 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30514.166015625
+        },
+        {
+          "timestamp": "2023-07-06 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 29909.337890625
+        },
+        {
+          "timestamp": "2023-07-07 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30342.265625
+        },
+        {
+          "timestamp": "2023-07-08 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30292.541015625
+        },
+        {
+          "timestamp": "2023-07-09 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30171.234375
+        },
+        {
+          "timestamp": "2023-07-10 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30414.470703125
+        },
+        {
+          "timestamp": "2023-07-11 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30620.951171875
+        },
+        {
+          "timestamp": "2023-07-12 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30391.646484375
+        },
+        {
+          "timestamp": "2023-07-13 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 31476.048828125
+        },
+        {
+          "timestamp": "2023-07-14 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30334.068359375
+        },
+        {
+          "timestamp": "2023-07-15 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30295.806640625
+        },
+        {
+          "timestamp": "2023-07-16 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30249.1328125
+        },
+        {
+          "timestamp": "2023-07-17 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 30145.888671875
+        },
+        {
+          "timestamp": "2023-07-18 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 29856.5625
+        },
+        {
+          "timestamp": "2023-07-19 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 29913.923828125
+        },
+        {
+          "timestamp": "2023-07-20 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 29792.015625
+        },
+        {
+          "timestamp": "2023-07-21 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 29600.275390625,
+          "sweep_low": 29556.427734375,
+          "recovery_pct": 1.2095375563069872,
+          "next_close": 29908.744140625
+        },
+        {
+          "timestamp": "2023-07-22 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29771.802734375
+        },
+        {
+          "timestamp": "2023-07-23 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 30084.5390625
+        },
+        {
+          "timestamp": "2023-07-24 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29176.916015625
+        },
+        {
+          "timestamp": "2023-07-25 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29227.390625
+        },
+        {
+          "timestamp": "2023-07-26 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29354.97265625
+        },
+        {
+          "timestamp": "2023-07-27 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29210.689453125
+        },
+        {
+          "timestamp": "2023-07-28 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29319.24609375
+        },
+        {
+          "timestamp": "2023-07-29 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29356.91796875
+        },
+        {
+          "timestamp": "2023-07-30 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29275.30859375
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 1,
+      "regime": "recovery_2023",
+      "train_period": "2023-01-31 to 2023-07-30",
+      "test_period": "2023-07-30 to 2023-08-29",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2023-07-30 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29275.30859375
+        },
+        {
+          "timestamp": "2023-07-31 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29230.111328125
+        },
+        {
+          "timestamp": "2023-08-01 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29675.732421875
+        },
+        {
+          "timestamp": "2023-08-02 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29151.958984375
+        },
+        {
+          "timestamp": "2023-08-03 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29178.6796875
+        },
+        {
+          "timestamp": "2023-08-04 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29074.091796875
+        },
+        {
+          "timestamp": "2023-08-05 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29042.126953125
+        },
+        {
+          "timestamp": "2023-08-06 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29041.85546875
+        },
+        {
+          "timestamp": "2023-08-07 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29180.578125
+        },
+        {
+          "timestamp": "2023-08-08 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29765.4921875
+        },
+        {
+          "timestamp": "2023-08-09 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29561.494140625
+        },
+        {
+          "timestamp": "2023-08-10 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29429.591796875
+        },
+        {
+          "timestamp": "2023-08-11 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29397.71484375
+        },
+        {
+          "timestamp": "2023-08-12 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29415.96484375
+        },
+        {
+          "timestamp": "2023-08-13 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29282.9140625
+        },
+        {
+          "timestamp": "2023-08-14 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29408.443359375
+        },
+        {
+          "timestamp": "2023-08-15 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 29170.34765625
+        },
+        {
+          "timestamp": "2023-08-16 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 28701.779296875
+        },
+        {
+          "timestamp": "2023-08-17 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 28283.41015625,
+          "recovery_pct": null,
+          "next_close": 26664.55078125
+        },
+        {
+          "timestamp": "2023-08-18 00:00:00",
+          "state": "SWEEP",
+          "range_low": 29264.432161458335,
+          "sweep_low": 25409.111328125,
+          "recovery_pct": 4.940902642806603,
+          "next_close": 26049.556640625
+        },
+        {
+          "timestamp": "2023-08-19 00:00:00",
+          "state": "SWEEP",
+          "range_low": 29208.780078125,
+          "sweep_low": 25668.921875,
+          "recovery_pct": 1.4828623012628963,
+          "next_close": 26096.205078125
+        },
+        {
+          "timestamp": "2023-08-20 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 29158.59609375,
+          "sweep_low": 25802.408203125,
+          "recovery_pct": 13.05281052300033,
+          "next_close": 26189.583984375
+        },
+        {
+          "timestamp": "2023-08-21 00:00:00",
+          "state": "SWEEP",
+          "range_low": 29106.859114583334,
+          "sweep_low": 26004.314453125,
+          "recovery_pct": 0.7124568947355416,
+          "next_close": 26124.140625
+        },
+        {
+          "timestamp": "2023-08-22 00:00:00",
+          "state": "SWEEP",
+          "range_low": 29060.173307291665,
+          "sweep_low": 25846.087890625,
+          "recovery_pct": 1.0758020151895267,
+          "next_close": 26031.65625
+        },
+        {
+          "timestamp": "2023-08-23 00:00:00",
+          "state": "SWEEP",
+          "range_low": 28992.347526041667,
+          "sweep_low": 25520.728515625,
+          "recovery_pct": 2.0020107735646566,
+          "next_close": 26431.640625
+        },
+        {
+          "timestamp": "2023-08-24 00:00:00",
+          "state": "SWEEP",
+          "range_low": 29004.315494791666,
+          "sweep_low": 25804.998046875,
+          "recovery_pct": 2.428376770215981,
+          "next_close": 26162.373046875
+        },
+        {
+          "timestamp": "2023-08-25 00:00:00",
+          "state": "SWEEP",
+          "range_low": 29025.273307291667,
+          "sweep_low": 25914.92578125,
+          "recovery_pct": 0.9548445853703095,
+          "next_close": 26047.66796875
+        },
+        {
+          "timestamp": "2023-08-26 00:00:00",
+          "state": "SWEEP",
+          "range_low": 28657.0234375,
+          "sweep_low": 25786.8125,
+          "recovery_pct": 1.011584773224686,
+          "next_close": 26008.462890625
+        },
+        {
+          "timestamp": "2023-08-27 00:00:00",
+          "state": "SWEEP",
+          "range_low": 28657.0234375,
+          "sweep_low": 25983.87890625,
+          "recovery_pct": 0.09461244975663245,
+          "next_close": 26089.693359375
+        },
+        {
+          "timestamp": "2023-08-28 00:00:00",
+          "state": "SWEEP",
+          "range_low": 28657.0234375,
+          "sweep_low": 25965.09765625,
+          "recovery_pct": 0.4798584036713949,
+          "next_close": 26106.150390625
+        },
+        {
+          "timestamp": "2023-08-29 00:00:00",
+          "state": "SWEEP",
+          "range_low": 28657.0234375,
+          "sweep_low": 25880.599609375,
+          "recovery_pct": 0.87150523811008,
+          "next_close": 27727.392578125
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 2,
+      "regime": "recovery_2023",
+      "train_period": "2023-03-02 to 2023-08-29",
+      "test_period": "2023-08-29 to 2023-09-28",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2023-08-29 00:00:00",
+          "state": "SWEEP",
+          "range_low": 28657.0234375,
+          "sweep_low": 25880.599609375,
+          "recovery_pct": 0.87150523811008,
+          "next_close": 27727.392578125
+        },
+        {
+          "timestamp": "2023-08-30 00:00:00",
+          "state": "SWEEP",
+          "range_low": 28657.0234375,
+          "sweep_low": 25912.62890625,
+          "recovery_pct": 7.003394670763366,
+          "next_close": 27297.265625
+        },
+        {
+          "timestamp": "2023-08-31 00:00:00",
+          "state": "SWEEP",
+          "range_low": 28934.294921875,
+          "sweep_low": 27069.20703125,
+          "recovery_pct": 0.842501937669316,
+          "next_close": 25931.47265625
+        },
+        {
+          "timestamp": "2023-09-01 00:00:00",
+          "state": "SWEEP",
+          "range_low": 28934.294921875,
+          "sweep_low": 25752.9296875,
+          "recovery_pct": 0.6932918736490842,
+          "next_close": 25800.724609375
+        },
+        {
+          "timestamp": "2023-09-02 00:00:00",
+          "state": "SWEEP",
+          "range_low": 25409.111328125,
+          "sweep_low": 25362.609375,
+          "recovery_pct": 1.7274059931974173,
+          "next_close": 25868.798828125
+        },
+        {
+          "timestamp": "2023-09-03 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25409.111328125,
+          "sweep_low": 25362.609375,
+          "recovery_pct": 1.9958098381783715,
+          "next_close": 25969.56640625
+        },
+        {
+          "timestamp": "2023-09-04 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25409.111328125,
+          "sweep_low": 25362.609375,
+          "recovery_pct": 1.9958098381783715,
+          "next_close": 25812.416015625
+        },
+        {
+          "timestamp": "2023-09-05 00:00:00",
+          "state": "SWEEP",
+          "range_low": 26174.4921875,
+          "sweep_low": 25657.025390625,
+          "recovery_pct": 0.6056455206096466,
+          "next_close": 25779.982421875
+        },
+        {
+          "timestamp": "2023-09-06 00:00:00",
+          "state": "SWEEP",
+          "range_low": 26312.83203125,
+          "sweep_low": 25589.98828125,
+          "recovery_pct": 0.7424549731592113,
+          "next_close": 25753.236328125
+        },
+        {
+          "timestamp": "2023-09-07 00:00:00",
+          "state": "SWEEP",
+          "range_low": 26312.83203125,
+          "sweep_low": 25404.359375,
+          "recovery_pct": 1.373295614249277,
+          "next_close": 26240.1953125
+        },
+        {
+          "timestamp": "2023-09-08 00:00:00",
+          "state": "SWEEP",
+          "range_low": 26668.791015625,
+          "sweep_low": 25608.201171875,
+          "recovery_pct": 2.467936487936947,
+          "next_close": 25905.654296875
+        },
+        {
+          "timestamp": "2023-09-09 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 25677.48046875,
+          "recovery_pct": null,
+          "next_close": 25895.677734375
+        },
+        {
+          "timestamp": "2023-09-10 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 29556.427734375,
+          "sweep_low": 25810.494140625,
+          "recovery_pct": 15.323217081109435,
+          "next_close": 25832.2265625
+        },
+        {
+          "timestamp": "2023-09-11 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 29556.427734375,
+          "sweep_low": 25640.26171875,
+          "recovery_pct": 16.08887816356935,
+          "next_close": 25162.654296875
+        },
+        {
+          "timestamp": "2023-09-12 00:00:00",
+          "state": "SWEEP",
+          "range_low": 25362.609375,
+          "sweep_low": 24930.296875,
+          "recovery_pct": 0.932028298900873,
+          "next_close": 25833.34375
+        },
+        {
+          "timestamp": "2023-09-13 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25409.111328125,
+          "sweep_low": 25133.078125,
+          "recovery_pct": 2.7862310438745754,
+          "next_close": 26228.32421875
+        },
+        {
+          "timestamp": "2023-09-14 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25409.111328125,
+          "sweep_low": 25133.078125,
+          "recovery_pct": 2.7862310438745754,
+          "next_close": 26539.673828125
+        },
+        {
+          "timestamp": "2023-09-15 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 26084.766666666666,
+          "sweep_low": 25781.123046875,
+          "recovery_pct": 1.7806527077595458,
+          "next_close": 26608.693359375
+        },
+        {
+          "timestamp": "2023-09-16 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25888.176692708334,
+          "sweep_low": 25781.123046875,
+          "recovery_pct": 0.7309354174850103,
+          "next_close": 26568.28125
+        },
+        {
+          "timestamp": "2023-09-17 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25885.0765625,
+          "sweep_low": 25781.123046875,
+          "recovery_pct": 0.7309354174850103,
+          "next_close": 26534.1875
+        },
+        {
+          "timestamp": "2023-09-18 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25890.688020833335,
+          "sweep_low": 25781.123046875,
+          "recovery_pct": 0.7309354174850103,
+          "next_close": 26754.28125
+        },
+        {
+          "timestamp": "2023-09-19 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25891.662890625,
+          "sweep_low": 25781.123046875,
+          "recovery_pct": 0.7309354174850103,
+          "next_close": 27211.1171875
+        },
+        {
+          "timestamp": "2023-09-20 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 26174.4921875,
+          "sweep_low": 26171.451171875,
+          "recovery_pct": 0.2626684327649187,
+          "next_close": 27132.0078125
+        },
+        {
+          "timestamp": "2023-09-21 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 26240.701171875,
+          "recovery_pct": null,
+          "next_close": 26567.6328125
+        },
+        {
+          "timestamp": "2023-09-22 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 26240.701171875,
+          "recovery_pct": null,
+          "next_close": 26579.568359375
+        },
+        {
+          "timestamp": "2023-09-23 00:00:00",
+          "state": "SWEEP",
+          "range_low": 26668.791015625,
+          "sweep_low": 26495.533203125,
+          "recovery_pct": 0.31716725836673676,
+          "next_close": 26579.390625
+        },
+        {
+          "timestamp": "2023-09-24 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 26520.51953125,
+          "recovery_pct": null,
+          "next_close": 26256.826171875
+        },
+        {
+          "timestamp": "2023-09-25 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 26221.05078125,
+          "recovery_pct": null,
+          "next_close": 26298.48046875
+        },
+        {
+          "timestamp": "2023-09-26 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 26011.46875,
+          "recovery_pct": null,
+          "next_close": 26217.25
+        },
+        {
+          "timestamp": "2023-09-27 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 26090.712890625,
+          "recovery_pct": null,
+          "next_close": 26352.716796875
+        },
+        {
+          "timestamp": "2023-09-28 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 26111.46484375,
+          "recovery_pct": null,
+          "next_close": 27021.546875
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 3,
+      "regime": "recovery_2023",
+      "train_period": "2023-04-01 to 2023-09-28",
+      "test_period": "2023-09-28 to 2023-10-28",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2023-09-28 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 26111.46484375,
+          "recovery_pct": null,
+          "next_close": 27021.546875
+        },
+        {
+          "timestamp": "2023-09-29 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 26327.322265625,
+          "recovery_pct": null,
+          "next_close": 26911.720703125
+        },
+        {
+          "timestamp": "2023-09-30 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 26721.763671875,
+          "recovery_pct": null,
+          "next_close": 26967.916015625
+        },
+        {
+          "timestamp": "2023-10-01 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 26888.96875,
+          "recovery_pct": null,
+          "next_close": 27983.75
+        },
+        {
+          "timestamp": "2023-10-02 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 26965.09375,
+          "recovery_pct": null,
+          "next_close": 27530.78515625
+        },
+        {
+          "timestamp": "2023-10-03 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 27347.787109375,
+          "recovery_pct": null,
+          "next_close": 27429.978515625
+        },
+        {
+          "timestamp": "2023-10-04 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 27216.001953125,
+          "recovery_pct": null,
+          "next_close": 27799.39453125
+        },
+        {
+          "timestamp": "2023-10-05 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 27248.10546875,
+          "recovery_pct": null,
+          "next_close": 27415.912109375
+        },
+        {
+          "timestamp": "2023-10-06 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 27375.6015625,
+          "recovery_pct": null,
+          "next_close": 27946.59765625
+        },
+        {
+          "timestamp": "2023-10-07 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25409.111328125,
+          "sweep_low": 25133.078125,
+          "recovery_pct": 2.7862310438745754,
+          "next_close": 27968.83984375
+        },
+        {
+          "timestamp": "2023-10-08 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25409.111328125,
+          "sweep_low": 25133.078125,
+          "recovery_pct": 2.7862310438745754,
+          "next_close": 27935.08984375
+        },
+        {
+          "timestamp": "2023-10-09 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25409.111328125,
+          "sweep_low": 25133.078125,
+          "recovery_pct": 2.7862310438745754,
+          "next_close": 27583.677734375
+        },
+        {
+          "timestamp": "2023-10-10 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25409.111328125,
+          "sweep_low": 25133.078125,
+          "recovery_pct": 2.7862310438745754,
+          "next_close": 27391.01953125
+        },
+        {
+          "timestamp": "2023-10-11 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25409.111328125,
+          "sweep_low": 25133.078125,
+          "recovery_pct": 2.7862310438745754,
+          "next_close": 26873.3203125
+        },
+        {
+          "timestamp": "2023-10-12 00:00:00",
+          "state": "SWEEP",
+          "range_low": 28657.0234375,
+          "sweep_low": 26561.099609375,
+          "recovery_pct": 1.1754810897015673,
+          "next_close": 26756.798828125
+        },
+        {
+          "timestamp": "2023-10-13 00:00:00",
+          "state": "SWEEP",
+          "range_low": 28657.0234375,
+          "sweep_low": 26558.3203125,
+          "recovery_pct": 0.7473308299982497,
+          "next_close": 26862.375
+        },
+        {
+          "timestamp": "2023-10-14 00:00:00",
+          "state": "SWEEP",
+          "range_low": 28657.0234375,
+          "sweep_low": 26686.322265625,
+          "recovery_pct": 0.6597114904880537,
+          "next_close": 26861.70703125
+        },
+        {
+          "timestamp": "2023-10-15 00:00:00",
+          "state": "SWEEP",
+          "range_low": 28657.0234375,
+          "sweep_low": 26814.5859375,
+          "recovery_pct": 0.17572933574223684,
+          "next_close": 27159.65234375
+        },
+        {
+          "timestamp": "2023-10-16 00:00:00",
+          "state": "SWEEP",
+          "range_low": 28657.0234375,
+          "sweep_low": 26817.89453125,
+          "recovery_pct": 1.2743648167523405,
+          "next_close": 28519.466796875
+        },
+        {
+          "timestamp": "2023-10-17 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25409.111328125,
+          "sweep_low": 25133.078125,
+          "recovery_pct": 2.7862310438745754,
+          "next_close": 28415.748046875
+        },
+        {
+          "timestamp": "2023-10-18 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25409.111328125,
+          "sweep_low": 25133.078125,
+          "recovery_pct": 2.7862310438745754,
+          "next_close": 28328.341796875
+        },
+        {
+          "timestamp": "2023-10-19 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25409.111328125,
+          "sweep_low": 25133.078125,
+          "recovery_pct": 2.7862310438745754,
+          "next_close": 28719.806640625
+        },
+        {
+          "timestamp": "2023-10-20 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25409.111328125,
+          "sweep_low": 25133.078125,
+          "recovery_pct": 2.7862310438745754,
+          "next_close": 29682.94921875
+        },
+        {
+          "timestamp": "2023-10-21 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 25409.111328125,
+          "sweep_low": 25133.078125,
+          "recovery_pct": 2.7862310438745754,
+          "next_close": 29918.412109375
+        },
+        {
+          "timestamp": "2023-10-22 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 26011.46875,
+          "sweep_low": 25781.123046875,
+          "recovery_pct": 1.7806527077595458,
+          "next_close": 29993.896484375
+        },
+        {
+          "timestamp": "2023-10-23 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 26011.46875,
+          "sweep_low": 25781.123046875,
+          "recovery_pct": 1.7806527077595458,
+          "next_close": 33086.234375
+        },
+        {
+          "timestamp": "2023-10-24 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 33901.52734375
+        },
+        {
+          "timestamp": "2023-10-25 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 34502.8203125
+        },
+        {
+          "timestamp": "2023-10-26 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 34156.6484375
+        },
+        {
+          "timestamp": "2023-10-27 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 33909.80078125
+        },
+        {
+          "timestamp": "2023-10-28 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 34089.57421875
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 4,
+      "regime": "recovery_2023",
+      "train_period": "2023-05-01 to 2023-10-28",
+      "test_period": "2023-10-28 to 2023-11-27",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2023-10-28 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 34089.57421875
+        },
+        {
+          "timestamp": "2023-10-29 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 34538.48046875
+        },
+        {
+          "timestamp": "2023-10-30 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 34502.36328125
+        },
+        {
+          "timestamp": "2023-10-31 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 34667.78125
+        },
+        {
+          "timestamp": "2023-11-01 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 35437.25390625
+        },
+        {
+          "timestamp": "2023-11-02 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 34938.2421875
+        },
+        {
+          "timestamp": "2023-11-03 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 34732.32421875
+        },
+        {
+          "timestamp": "2023-11-04 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 35082.1953125
+        },
+        {
+          "timestamp": "2023-11-05 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 35049.35546875
+        },
+        {
+          "timestamp": "2023-11-06 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 35037.37109375
+        },
+        {
+          "timestamp": "2023-11-07 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 35443.5625
+        },
+        {
+          "timestamp": "2023-11-08 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 35655.27734375
+        },
+        {
+          "timestamp": "2023-11-09 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 36693.125
+        },
+        {
+          "timestamp": "2023-11-10 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 37313.96875
+        },
+        {
+          "timestamp": "2023-11-11 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 37138.05078125
+        },
+        {
+          "timestamp": "2023-11-12 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 37054.51953125
+        },
+        {
+          "timestamp": "2023-11-13 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 36502.35546875
+        },
+        {
+          "timestamp": "2023-11-14 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 35537.640625
+        },
+        {
+          "timestamp": "2023-11-15 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 37880.58203125
+        },
+        {
+          "timestamp": "2023-11-16 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 36154.76953125
+        },
+        {
+          "timestamp": "2023-11-17 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 36596.68359375
+        },
+        {
+          "timestamp": "2023-11-18 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 36585.703125
+        },
+        {
+          "timestamp": "2023-11-19 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 37386.546875
+        },
+        {
+          "timestamp": "2023-11-20 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 37476.95703125
+        },
+        {
+          "timestamp": "2023-11-21 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 35813.8125
+        },
+        {
+          "timestamp": "2023-11-22 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 37432.33984375
+        },
+        {
+          "timestamp": "2023-11-23 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 24930.296875,
+          "sweep_low": 30097.828125,
+          "recovery_pct": -11.59264632362904,
+          "next_close": 37289.62109375
+        },
+        {
+          "timestamp": "2023-11-24 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 24930.296875,
+          "sweep_low": 32880.76171875,
+          "recovery_pct": -19.19809681644436,
+          "next_close": 37720.28125
+        },
+        {
+          "timestamp": "2023-11-25 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 24930.296875,
+          "sweep_low": 32880.76171875,
+          "recovery_pct": -19.19809681644436,
+          "next_close": 37796.79296875
+        },
+        {
+          "timestamp": "2023-11-26 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 24930.296875,
+          "sweep_low": 32880.76171875,
+          "recovery_pct": -19.19809681644436,
+          "next_close": 37479.12109375
+        },
+        {
+          "timestamp": "2023-11-27 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 37254.16796875
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 5,
+      "regime": "recovery_2023",
+      "train_period": "2023-05-31 to 2023-11-27",
+      "test_period": "2023-11-27 to 2023-12-27",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2023-11-27 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 37254.16796875
+        },
+        {
+          "timestamp": "2023-11-28 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 24930.296875,
+          "sweep_low": 33874.8046875,
+          "recovery_pct": -19.90505019055691,
+          "next_close": 37831.0859375
+        },
+        {
+          "timestamp": "2023-11-29 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 24930.296875,
+          "sweep_low": 33947.56640625,
+          "recovery_pct": -21.739212482669448,
+          "next_close": 37858.4921875
+        },
+        {
+          "timestamp": "2023-11-30 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 24930.296875,
+          "sweep_low": 33947.56640625,
+          "recovery_pct": -21.739212482669448,
+          "next_close": 37712.74609375
+        },
+        {
+          "timestamp": "2023-12-01 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 24930.296875,
+          "sweep_low": 34083.30859375,
+          "recovery_pct": -22.016401219117633,
+          "next_close": 38688.75
+        },
+        {
+          "timestamp": "2023-12-02 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 24930.296875,
+          "sweep_low": 34083.30859375,
+          "recovery_pct": -22.016401219117633,
+          "next_close": 39476.33203125
+        },
+        {
+          "timestamp": "2023-12-03 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 24930.296875,
+          "sweep_low": 34083.30859375,
+          "recovery_pct": -22.016401219117633,
+          "next_close": 39978.390625
+        },
+        {
+          "timestamp": "2023-12-04 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 24930.296875,
+          "sweep_low": 34133.44140625,
+          "recovery_pct": -23.191893580354037,
+          "next_close": 41980.09765625
+        },
+        {
+          "timestamp": "2023-12-05 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 24930.296875,
+          "sweep_low": 34133.44140625,
+          "recovery_pct": -23.191893580354037,
+          "next_close": 44080.6484375
+        },
+        {
+          "timestamp": "2023-12-06 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43746.4453125
+        },
+        {
+          "timestamp": "2023-12-07 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43292.6640625
+        },
+        {
+          "timestamp": "2023-12-08 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 44166.6015625
+        },
+        {
+          "timestamp": "2023-12-09 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43725.984375
+        },
+        {
+          "timestamp": "2023-12-10 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43779.69921875
+        },
+        {
+          "timestamp": "2023-12-11 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 41243.83203125
+        },
+        {
+          "timestamp": "2023-12-12 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 41450.22265625
+        },
+        {
+          "timestamp": "2023-12-13 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 42890.7421875
+        },
+        {
+          "timestamp": "2023-12-14 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43023.97265625
+        },
+        {
+          "timestamp": "2023-12-15 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 41929.7578125
+        },
+        {
+          "timestamp": "2023-12-16 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 42240.1171875
+        },
+        {
+          "timestamp": "2023-12-17 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 41364.6640625
+        },
+        {
+          "timestamp": "2023-12-18 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 42623.5390625
+        },
+        {
+          "timestamp": "2023-12-19 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 42270.52734375
+        },
+        {
+          "timestamp": "2023-12-20 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43652.25
+        },
+        {
+          "timestamp": "2023-12-21 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43869.15234375
+        },
+        {
+          "timestamp": "2023-12-22 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43997.90234375
+        },
+        {
+          "timestamp": "2023-12-23 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 36750.12890625,
+          "sweep_low": 35670.97265625,
+          "recovery_pct": 4.937816539161251,
+          "next_close": 43739.54296875
+        },
+        {
+          "timestamp": "2023-12-24 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43016.1171875
+        },
+        {
+          "timestamp": "2023-12-25 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43613.140625
+        },
+        {
+          "timestamp": "2023-12-26 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 42520.40234375
+        },
+        {
+          "timestamp": "2023-12-27 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 43442.85546875
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 0,
+      "regime": "bull_2024_partial",
+      "train_period": "2024-01-01 to 2024-06-29",
+      "test_period": "2024-06-29 to 2024-07-29",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2024-06-29 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 58601.69921875,
+          "sweep_low": 56937.203125,
+          "recovery_pct": 3.8397222707802263,
+          "next_close": 60887.37890625
+        },
+        {
+          "timestamp": "2024-06-30 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 58601.69921875,
+          "sweep_low": 56937.203125,
+          "recovery_pct": 3.8397222707802263,
+          "next_close": 62678.29296875
+        },
+        {
+          "timestamp": "2024-07-01 00:00:00",
+          "state": "SWEEP",
+          "range_low": 65056.89453125,
+          "sweep_low": 60632.94921875,
+          "recovery_pct": 3.3733205729789937,
+          "next_close": 62851.98046875
+        },
+        {
+          "timestamp": "2024-07-02 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 67757.90911458334,
+          "sweep_low": 62495.51171875,
+          "recovery_pct": 9.193741475559714,
+          "next_close": 62029.015625
+        },
+        {
+          "timestamp": "2024-07-03 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 67609.871875,
+          "sweep_low": 61752.74609375,
+          "recovery_pct": 10.507130154826744,
+          "next_close": 60173.921875
+        },
+        {
+          "timestamp": "2024-07-04 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 67375.01328125,
+          "sweep_low": 59419.38671875,
+          "recovery_pct": 14.846670873609419,
+          "next_close": 56977.703125
+        },
+        {
+          "timestamp": "2024-07-05 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 56662.375
+        },
+        {
+          "timestamp": "2024-07-06 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 58303.5390625
+        },
+        {
+          "timestamp": "2024-07-07 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 56038.9609375,
+          "recovery_pct": null,
+          "next_close": 55849.109375
+        },
+        {
+          "timestamp": "2024-07-08 00:00:00",
+          "state": "SWEEP",
+          "range_low": 58601.69921875,
+          "sweep_low": 55793.32421875,
+          "recovery_pct": 0.09998536031171404,
+          "next_close": 56705.09765625
+        },
+        {
+          "timestamp": "2024-07-09 00:00:00",
+          "state": "SWEEP",
+          "range_low": 58601.69921875,
+          "sweep_low": 54321.01953125,
+          "recovery_pct": 4.388868518250985,
+          "next_close": 58009.2265625
+        },
+        {
+          "timestamp": "2024-07-10 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 56316.875,
+          "recovery_pct": null,
+          "next_close": 57742.49609375
+        },
+        {
+          "timestamp": "2024-07-11 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 57178.4140625,
+          "recovery_pct": null,
+          "next_close": 57344.9140625
+        },
+        {
+          "timestamp": "2024-07-12 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 57120.37890625,
+          "recovery_pct": null,
+          "next_close": 57899.46484375
+        },
+        {
+          "timestamp": "2024-07-13 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 56590.17578125,
+          "recovery_pct": null,
+          "next_close": 59231.953125
+        },
+        {
+          "timestamp": "2024-07-14 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 57796.44140625,
+          "recovery_pct": null,
+          "next_close": 60787.79296875
+        },
+        {
+          "timestamp": "2024-07-15 00:00:00",
+          "state": "BREAKDOWN",
+          "range_low": null,
+          "sweep_low": 59225.25,
+          "recovery_pct": null,
+          "next_close": 64870.15234375
+        },
+        {
+          "timestamp": "2024-07-16 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 65097.1484375
+        },
+        {
+          "timestamp": "2024-07-17 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 64118.79296875
+        },
+        {
+          "timestamp": "2024-07-18 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 63974.06640625
+        },
+        {
+          "timestamp": "2024-07-19 00:00:00",
+          "state": "SPRING_CANDIDATE",
+          "range_low": 58601.69921875,
+          "sweep_low": 57796.44140625,
+          "recovery_pct": 2.4837372056521914,
+          "next_close": 66710.15625
+        },
+        {
+          "timestamp": "2024-07-20 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 67163.6484375
+        },
+        {
+          "timestamp": "2024-07-21 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 68154.5234375
+        },
+        {
+          "timestamp": "2024-07-22 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 67585.25
+        },
+        {
+          "timestamp": "2024-07-23 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 65927.671875
+        },
+        {
+          "timestamp": "2024-07-24 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 65372.1328125
+        },
+        {
+          "timestamp": "2024-07-25 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 65777.2265625
+        },
+        {
+          "timestamp": "2024-07-26 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 67912.0625
+        },
+        {
+          "timestamp": "2024-07-27 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 67813.3359375
+        },
+        {
+          "timestamp": "2024-07-28 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 68255.8671875
+        },
+        {
+          "timestamp": "2024-07-29 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 66819.9140625
+        }
+      ],
+      "n_predictions": 31
+    },
+    {
+      "window_id": 1,
+      "regime": "bull_2024_partial",
+      "train_period": "2024-01-31 to 2024-07-29",
+      "test_period": "2024-07-29 to 2024-08-28",
+      "train_size": 181,
+      "test_size": 31,
+      "predictions": [
+        {
+          "timestamp": "2024-07-29 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 66819.9140625
+        },
+        {
+          "timestamp": "2024-07-30 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 66201.015625
+        },
+        {
+          "timestamp": "2024-07-31 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 64619.25
+        },
+        {
+          "timestamp": "2024-08-01 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 65357.5
+        },
+        {
+          "timestamp": "2024-08-02 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 61415.06640625
+        },
+        {
+          "timestamp": "2024-08-03 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 60680.09375
+        },
+        {
+          "timestamp": "2024-08-04 00:00:00",
+          "state": "SWEEP",
+          "range_low": 63473.47265625,
+          "sweep_low": 59836.52734375,
+          "recovery_pct": 1.4097850321491152,
+          "next_close": 58116.9765625
+        },
+        {
+          "timestamp": "2024-08-05 00:00:00",
+          "state": "SWEEP",
+          "range_low": 62248.94140625,
+          "sweep_low": 57210.8046875,
+          "recovery_pct": 1.5839173735621124,
+          "next_close": 53991.45703125
+        },
+        {
+          "timestamp": "2024-08-06 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 56034.31640625
+        },
+        {
+          "timestamp": "2024-08-07 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 55027.4609375
+        },
+        {
+          "timestamp": "2024-08-08 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 61710.13671875
+        },
+        {
+          "timestamp": "2024-08-09 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 60880.11328125
+        },
+        {
+          "timestamp": "2024-08-10 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 60945.8125
+        },
+        {
+          "timestamp": "2024-08-11 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 58719.484375
+        },
+        {
+          "timestamp": "2024-08-12 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 59354.515625
+        },
+        {
+          "timestamp": "2024-08-13 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 60609.56640625
+        },
+        {
+          "timestamp": "2024-08-14 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 58737.26953125
+        },
+        {
+          "timestamp": "2024-08-15 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 57560.09765625
+        },
+        {
+          "timestamp": "2024-08-16 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 58894.10546875
+        },
+        {
+          "timestamp": "2024-08-17 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 59478.97265625
+        },
+        {
+          "timestamp": "2024-08-18 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 58483.96484375
+        },
+        {
+          "timestamp": "2024-08-19 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 59493.453125
+        },
+        {
+          "timestamp": "2024-08-20 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 59012.79296875
+        },
+        {
+          "timestamp": "2024-08-21 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 61175.19140625
+        },
+        {
+          "timestamp": "2024-08-22 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 60381.9140625
+        },
+        {
+          "timestamp": "2024-08-23 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 64094.35546875
+        },
+        {
+          "timestamp": "2024-08-24 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 64178.9921875
+        },
+        {
+          "timestamp": "2024-08-25 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 64333.54296875
+        },
+        {
+          "timestamp": "2024-08-26 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 62880.66015625
+        },
+        {
+          "timestamp": "2024-08-27 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 59504.1328125
+        },
+        {
+          "timestamp": "2024-08-28 00:00:00",
+          "state": "NO_SPRING",
+          "range_low": null,
+          "sweep_low": null,
+          "recovery_pct": null,
+          "next_close": 59027.625
+        }
+      ],
+      "n_predictions": 31
+    }
+  ]
+}

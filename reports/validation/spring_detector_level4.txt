@@ -1,0 +1,23 @@
+============================================================
+SPRING DETECTOR - LEVEL 4 VALIDATION REPORT
+============================================================
+
+SUMMARY OOS/WFV
+------------------------------------------------------------
+ic_mean                  : 0.000000
+ic_std                   : 0.000000
+ic_min                   : 0.000000
+ic_max                   : 0.000000
+hit_rate_mean            : 0.871185
+hit_rate_std             : 0.232890
+n_windows                : 18
+stability                : 1.000000
+
+
+CRITERIA CHECK
+------------------------------------------------------------
+✅ IC_OOS > 0.01        : False
+✅ Hit rate > 52%      : True
+✅ Stability > 0.75    : True
+
+📊 GATE STATUS: ❌ REJECT
