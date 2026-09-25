@@ -1,0 +1,44 @@
+{
+  "stage": 2,
+  "title": "Look-ahead Audit - Code Review",
+  "timestamp": "2026-09-25T13:03:08.278286",
+  "results": {
+    "stage": 2,
+    "timestamp": "2026-09-25T13:03:06.693951",
+    "total_functions_checked": 6,
+    "functions_verified": {
+      "_detect_dormancy": {
+        "data_window": "ohlcv[-90:]",
+        "verified": true,
+        "lookahead_risk": "LOW"
+      },
+      "_detect_volume_breakout": {
+        "data_window": "ohlcv[-10:] and ohlcv[-90:-10]",
+        "verified": true,
+        "lookahead_risk": "LOW"
+      },
+      "_detect_price_momentum": {
+        "data_window": "ohlcv[-90:]",
+        "verified": true,
+        "lookahead_risk": "LOW"
+      },
+      "_detect_structure_recovery": {
+        "data_window": "ohlcv[-90:]",
+        "verified": true,
+        "lookahead_risk": "LOW"
+      },
+      "_detect_sentiment_shift": {
+        "data_window": "ohlcv[-30:]",
+        "verified": true,
+        "lookahead_risk": "LOW"
+      },
+      "_detect_exhaustion_recovery": {
+        "data_window": "ohlcv[-20:]",
+        "verified": true,
+        "lookahead_risk": "LOW"
+      }
+    },
+    "lookahead_detected": false,
+    "result": "PASS"
+  }
+}

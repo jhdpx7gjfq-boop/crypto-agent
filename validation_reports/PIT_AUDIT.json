@@ -1,0 +1,27 @@
+{
+  "stage": 1,
+  "title": "PIT Audit - Signal Independence Test",
+  "timestamp": "2026-09-25T13:03:08.278281",
+  "results": {
+    "stage": 1,
+    "result": "FAIL",
+    "timestamp": "2026-09-25T13:03:06.692823",
+    "signals_tested": 6,
+    "correlation_with_price": {
+      "volume_breakout": 0.18663723758013598,
+      "price_momentum": 0.8785186669589381,
+      "structure_recovery": 0.308719672796272,
+      "sentiment_shift": 0.8591765739178042,
+      "exhaustion_recovery": -0.8342432093098298
+    },
+    "correlation_with_volume": {
+      "volume_breakout": 0.42280601631447234,
+      "price_momentum": 0.851051651522126,
+      "structure_recovery": 0.43420289392550265,
+      "sentiment_shift": 0.8978949802983262,
+      "exhaustion_recovery": -0.8980837531999368
+    },
+    "independent_signals": 0,
+    "reason": "Less than 3 signals show independent information"
+  }
+}
