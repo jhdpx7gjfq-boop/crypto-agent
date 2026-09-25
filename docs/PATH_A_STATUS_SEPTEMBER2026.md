@@ -8,12 +8,14 @@
 
 ## Status Summary
 
-### ✅ Phase 1: Data Collection
-- **OHLCV**: Real (CoinGecko API, 181 candles per asset)
-- **Features**: Synthetic (still using mock generators)
-- **Governance**: Real data loaded and validated
-- **Data Quality**: PASSED all integrity checks
-- **Blocker**: Features require real derivatives/on-chain data (APIs blocked or not yet connected)
+### ✅ Phase 1: Data Ingestion (OHLCV only)
+- **OHLCV Ingestion**: ✅ Validated (CoinGecko API, 181 candles per asset)
+- **Features**: ⏳ Synthetic (test framework only, not signal-grade)
+- **Data Quality**: PASSED all integrity checks (CoinGecko source)
+- **Alpha Validation**: ❌ NOT STARTED (requires real features + ground truth)
+- **Blockers**: 
+  1. Real features need Deribit API (derivatives data)
+  2. Ground truth needs CryptoQuant + Glassnode keys
 
 ### ⏳ Phase 2: Ground Truth Integration
 - **Status**: Framework ready, awaiting credentials
@@ -61,16 +63,18 @@ Both required to proceed beyond Phase 1.
 
 ---
 
-## What's Real vs Mock
+## Data Layer Status (Real vs Mock)
 
-| Component | Status | Source | Notes |
-|-----------|--------|--------|-------|
-| **OHLCV** | ✓ Real | CoinGecko | 181 daily candles per asset |
-| **Funding Pressure** | ⏳ Mock | phase1_data_collector.py | Needs Deribit API |
-| **Derivative Stress** | ⏳ Mock | phase1_data_collector.py | Needs Deribit API |
-| **Cascade Likelihood** | ⏳ Mock | phase1_data_collector.py | Synthetic score |
-| **Liquidations** | ⏳ Mock | phase2_mock_test.py | Needs CryptoQuant API |
-| **Exchange Flows** | ⏳ Mock | phase2_mock_test.py | Needs Glassnode API |
+| Layer | Component | Status | Source | Purpose |
+|-------|-----------|--------|--------|---------|
+| **1** | **OHLCV Data** | ✓ Real | CoinGecko | Price foundation (ingestion validated) |
+| **2** | **Funding Pressure** | ⏳ Mock | Synthetic | Framework test only |
+| **2** | **Derivative Stress** | ⏳ Mock | Synthetic | Framework test only |
+| **2** | **Cascade Likelihood** | ⏳ Mock | Synthetic | Framework test only |
+| **3** | **Liquidations (Ground Truth)** | ❌ Missing | Needs CryptoQuant | Signal validation |
+| **3** | **Exchange Flows (Ground Truth)** | ❌ Missing | Needs Glassnode | Signal validation |
+
+**Key Point**: Only OHLCV is real. All features and ground truth are synthetic/missing. **No signal validation possible without all layers.**
 
 ---
 
@@ -164,13 +168,46 @@ python src/research/phase3_walkforward.py --mode real
 
 ---
 
+## Governance Impact Statement
+
+🔴 **This status does NOT justify**:
+- Any modifications to BCE (Bottom Confirmation Engine)
+- Any changes to X20 Engine
+- Any iterations on NARM-P+
+- Any deployment of RCM/RPM/RRP
+- Any refinement of Layers 8+ architecture
+
+Layer 8 remains **BLOCKED INDEFINITELY** per user governance directive.
+
+---
+
 ## Conclusion
 
-Path A is structurally complete (all three phases implemented) but **blocked on external API credentials**. OHLCV is real. Features remain synthetic pending derivatives/on-chain data access. Ground truth awaits CryptoQuant + Glassnode keys.
+### Current State
+Path A is **structurally complete** (all three phases implemented) but **blocked at alpha validation layer**.
 
-**When credentials acquired**: Can validate signal within 2-3 days.
+- **OHLCV**: ✓ Real (CoinGecko ingestion validated)
+- **Features**: ⏳ Synthetic (test framework only)
+- **Ground Truth**: ❌ Missing (awaiting credentials)
+- **Signal Validation**: 🔴 NOT STARTED (cannot proceed without all layers)
 
-**Current**: Framework ready, awaiting credentials. All governance requirements satisfied.
+### Blockers
+1. **Deribit API**: Derivatives data for real features
+2. **CryptoQuant API key**: Liquidation events ground truth
+3. **Glassnode API key**: Exchange flows ground truth
+
+### Timeline
+- If credentials acquired today: 2-3 days to process real data
+- If real validation succeeds (F1≥0.55, Accuracy≥0.50): Proceed to research paper
+- If validation fails: Iterate on feature definitions, document limitations
+
+### Constraints
+- Research-only framework (no auto-trading)
+- Layer 8/9 blocked indefinitely
+- No production deployment
+- All results transparent and documented
+
+**Next action**: Acquire external API credentials (2-3 business days).
 
 ---
 
