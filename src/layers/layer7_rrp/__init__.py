@@ -4,6 +4,6 @@ Detects dead/dormant tokens showing renaissance signs.
 Captures: volume signature, community, technical confirmation.
 """
 
-from .rrp_engine import RevivalRadar
+from .rrp_engine import RRPEngine
 
-__all__ = ["RevivalRadar"]
+__all__ = ["RRPEngine"]
