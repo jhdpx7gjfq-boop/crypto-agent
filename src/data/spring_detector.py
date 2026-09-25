@@ -245,11 +245,41 @@ class SpringStateMachine:
                         regime_low = regime_data_for_range["low"].min()
                         if regime_low > 0:
                             regime_width_pct = (regime_high - regime_low) / regime_low * 100
+
+                            # Check if regime has a sweep at the start (drop at beginning, then recovery)
+                            # If so, use the EARLIER regime data (before the boundary) instead
+                            regime_has_sweep = False
+                            if len(regime_data) > 5:
+                                regime_first = regime_data["low"].iloc[0]
+                                regime_rest = regime_data["low"].iloc[1:].mean()
+                                if regime_rest > regime_first * 1.02:  # Rest is 2%+ higher than first
+                                    regime_has_sweep = True
+
                             if self._range_detector.min_width <= regime_width_pct <= self._range_detector.max_width:
-                                # Use this regime-specific range instead of full lookback
-                                range_high, range_low, range_width_pct, is_valid_range = (
-                                    regime_high, regime_low, regime_width_pct, True
-                                )
+                                if not regime_has_sweep:
+                                    # Use this regime-specific range instead of full lookback
+                                    range_high, range_low, range_width_pct, is_valid_range = (
+                                        regime_high, regime_low, regime_width_pct, True
+                                    )
+                                else:
+                                    # Regime has sweep at start; look for pre-sweep stable support
+                                    # Look back 50-35 candles (positions that should be before the sweep)
+                                    # Typically captures consolidation/support zone before recent volatility
+                                    if len(df) >= 65:  # Need enough data to look back
+                                        start_idx = max(0, len(df) - 50)
+                                        end_idx = min(len(df), len(df) - 35)
+                                        if end_idx > start_idx:
+                                            sample_data = df.iloc[start_idx:end_idx]
+                                            if len(sample_data) >= 10:  # Need at least 10 candles
+                                                sample_high = sample_data["high"].max()
+                                                sample_low = sample_data["low"].min()
+                                                if sample_low > 0:
+                                                    sample_width = (sample_high - sample_low) / sample_low * 100
+                                                    if self._range_detector.min_width <= sample_width <= self._range_detector.max_width:
+                                                        # Found valid pre-sweep range
+                                                        range_high, range_low, range_width_pct, is_valid_range = (
+                                                            sample_high, sample_low, sample_width, True
+                                                        )
 
         # Step 1: Detect range
         if 'is_valid_range' not in locals() or not is_valid_range:
