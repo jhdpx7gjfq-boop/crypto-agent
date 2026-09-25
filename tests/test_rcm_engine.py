@@ -1,274 +1,178 @@
-from unittest.mock import Mock, patch
+"""
+Unit tests for RCM Engine (narrative, fundamental, derivatives metrics)
+"""
 
 import pytest
-import requests
-
-from rcm_engine import RCMEngine
-
-
-class TestGetOhlcv:
-    @patch("rcm_engine.requests.get")
-    def test_returns_parsed_ohlcv(self, mock_get):
-        mock_get.return_value = Mock(
-            json=lambda: [
-                [1000, "95000", "96000", "94000", "95500", 0, "100000", 1000, "95500000"],
-                [2000, "95500", "96500", "95000", "96000", 0, "110000", 1000, "105500000"],
-            ]
-        )
-        engine = RCMEngine()
-        ohlcv = engine.get_ohlcv()
-        assert len(ohlcv) == 2
-        assert ohlcv[0]["quote_asset_volume"] == 95500000.0
-
-    @patch("rcm_engine.requests.get")
-    def test_returns_none_on_http_error(self, mock_get):
-        mock_response = Mock()
-        mock_response.raise_for_status.side_effect = requests.HTTPError("404")
-        mock_get.return_value = mock_response
-        engine = RCMEngine()
-        assert engine.get_ohlcv() is None
+from rcm_engine import (
+    RCMEngine,
+    NarrativeAccelerationMetric,
+    FundamentalConfirmationMetric,
+    DerivativesStructureMetric,
+)
 
 
-class TestGetFundingRate:
-    @patch("rcm_engine.requests.get")
-    def test_returns_funding_rate(self, mock_get):
-        mock_get.return_value = Mock(json=lambda: [{"fundingRate": "0.00075"}])
-        engine = RCMEngine()
-        rate = engine.get_funding_rate()
-        assert rate == 0.00075
-
-    @patch("rcm_engine.requests.get")
-    def test_returns_none_on_error(self, mock_get):
-        mock_response = Mock()
-        mock_response.raise_for_status.side_effect = requests.HTTPError("500")
-        mock_get.return_value = mock_response
-        engine = RCMEngine()
-        assert engine.get_funding_rate() is None
+@pytest.fixture
+def engine():
+    return RCMEngine()
 
 
-class TestCalculateCapitalFlow:
-    def test_returns_higher_score_on_volume_acceleration(self):
-        engine = RCMEngine()
-        ohlcv = [
-            {"volume": 1000, "quote_asset_volume": 100000 + i * 5000} for i in range(20)
-        ]
-        capital = engine._calculate_capital_flow(ohlcv)
-        assert capital > 0
+def test_narrative_acceleration_growth(engine):
+    """Test narrative_acceleration with positive growth."""
+    narrative_data = {
+        "current_mentions": 1000,
+        "prior_mentions": 500,
+        "timestamp": 1000,
+    }
 
-    def test_returns_zero_on_declining_volume(self):
-        engine = RCMEngine()
-        ohlcv = [
-            {"volume": 1000, "quote_asset_volume": 200000 - i * 5000} for i in range(20)
-        ]
-        capital = engine._calculate_capital_flow(ohlcv)
-        assert capital == 0
+    metric = engine.calculate_narrative_acceleration(narrative_data, "SOL")
+
+    assert isinstance(metric, NarrativeAccelerationMetric)
+    assert -1.0 <= metric.value <= 1.0
+    assert metric.growth_rate > 0  # 100% growth
+    assert metric.value > 0  # Positive signal
 
 
-class TestCalculateRelativeStrength:
-    def test_returns_higher_score_on_high_rsi(self):
-        engine = RCMEngine()
-        ohlcv = [
-            {"close": 100 + i * 1.5} for i in range(14)
-        ]
-        rs = engine._calculate_relative_strength(ohlcv)
-        assert rs >= 18
+def test_narrative_acceleration_decay(engine):
+    """Test narrative_acceleration with negative growth."""
+    narrative_data = {
+        "current_mentions": 250,
+        "prior_mentions": 500,
+        "timestamp": 1000,
+    }
 
-    def test_returns_zero_on_low_rsi(self):
-        engine = RCMEngine()
-        ohlcv = [
-            {"close": 100 - i * 1.5} for i in range(14)
-        ]
-        rs = engine._calculate_relative_strength(ohlcv)
-        assert rs == 0
+    metric = engine.calculate_narrative_acceleration(narrative_data, "SOL")
+
+    assert metric.growth_rate < 0  # -50% decay
+    assert metric.value < 0  # Negative signal
 
 
-class TestCalculateNarrativeAcceleration:
-    def test_returns_score_on_volume_and_price_growth(self):
-        engine = RCMEngine()
-        ohlcv = [
-            {"close": 100 + i * 0.5, "volume": 1000 + i * 50} for i in range(20)
-        ]
-        narrative = engine._calculate_narrative_acceleration(ohlcv)
-        assert narrative >= 0
+def test_narrative_acceleration_zero_prior(engine):
+    """Test narrative_acceleration with zero prior mentions."""
+    narrative_data = {
+        "current_mentions": 100,
+        "prior_mentions": 0,
+        "timestamp": 1000,
+    }
 
-    def test_returns_zero_on_flat_data(self):
-        engine = RCMEngine()
-        ohlcv = [
-            {"close": 100.0, "volume": 1000.0} for _ in range(20)
-        ]
-        narrative = engine._calculate_narrative_acceleration(ohlcv)
-        assert narrative < 5
+    metric = engine.calculate_narrative_acceleration(narrative_data, "SOL")
+    assert metric.value == 0.0
 
 
-class TestCalculateFundamentalConfirmation:
-    def test_returns_higher_score_with_support_hold(self):
-        engine = RCMEngine()
-        ohlcv = [
-            {"close": 100 + (i % 5) * 0.2, "high": 101, "low": 99} for i in range(30)
-        ]
-        fundamental = engine._calculate_fundamental_confirmation(ohlcv)
-        assert fundamental > 5
+def test_fundamental_confirmation_positive(engine):
+    """Test fundamental_confirmation with positive metrics."""
+    on_chain_metrics = {
+        "market_cap_growth": 0.5,  # 50% growth
+        "active_addresses_growth": 0.3,  # 30% growth
+        "revenue_multiple": 25,  # P/E of 25
+        "developer_activity": 0.2,  # 20% commit growth
+        "timestamp": 1000,
+    }
 
-    def test_returns_lower_score_below_support(self):
-        engine = RCMEngine()
-        ohlcv = [
-            {"close": 90 + i * 0.5, "high": 92, "low": 88 + i * 0.5} for i in range(30)
-        ]
-        fundamental = engine._calculate_fundamental_confirmation(ohlcv)
-        assert fundamental <= 10
+    metric = engine.calculate_fundamental_confirmation(on_chain_metrics, "AVAX")
 
-
-class TestCalculateDerivativesStructure:
-    def test_returns_score_on_positive_funding(self):
-        engine = RCMEngine()
-        ohlcv = [{"close": 100}, {"close": 101}]
-        derivatives = engine._calculate_derivatives_structure(ohlcv, funding_rate=0.0002)
-        assert derivatives > 0
-
-    def test_returns_low_score_on_negative_funding(self):
-        engine = RCMEngine()
-        ohlcv = [{"close": 100}]
-        derivatives = engine._calculate_derivatives_structure(ohlcv, funding_rate=-0.0002)
-        assert derivatives == 0
-
-    def test_returns_zero_on_no_data(self):
-        engine = RCMEngine()
-        derivatives = engine._calculate_derivatives_structure(None, funding_rate=None)
-        assert derivatives == 0.0
+    assert isinstance(metric, FundamentalConfirmationMetric)
+    assert -1.0 <= metric.value <= 1.0
+    assert len(metric.components) == 4
 
 
-class TestScoreRCM:
-    def test_returns_confirmed_on_strong_rotation(self):
-        engine = RCMEngine()
-        ohlcv = [
-            {
-                "timestamp": i * 14400000,
-                "close": 100 + i * 1.0,
-                "open": 99.5 + i * 1.0,
-                "high": 102 + i,
-                "low": 98 + i,
-                "volume": 5000 + i * 100,
-                "quote_asset_volume": 500000 + i * 10000,
-            }
-            for i in range(100)
-        ]
-        result = engine.score_rcm(ohlcv, funding_rate=0.0002)
-        assert result["rcm_score"] >= 0
-        assert "verdict" in result
+def test_fundamental_confirmation_components(engine):
+    """Test that fundamental_confirmation computes all components."""
+    on_chain_metrics = {
+        "market_cap_growth": 0.5,
+        "active_addresses_growth": 0.3,
+        "revenue_multiple": 25,
+        "developer_activity": 0.2,
+        "timestamp": 1000,
+    }
 
-    def test_returns_zero_on_no_data(self):
-        engine = RCMEngine()
-        result = engine.score_rcm(None)
-        assert result["rcm_score"] == 0
-        assert result["current_price"] is None
+    metric = engine.calculate_fundamental_confirmation(on_chain_metrics, "AVAX")
 
-    def test_result_has_all_components(self):
-        engine = RCMEngine()
-        ohlcv = [
-            {
-                "timestamp": 1000,
-                "close": 100,
-                "open": 99,
-                "high": 101,
-                "low": 99,
-                "volume": 1000,
-                "quote_asset_volume": 100000,
-            }
-        ]
-        result = engine.score_rcm(ohlcv)
-        assert "rcm_score" in result
-        assert "capital_flow" in result
-        assert "relative_strength" in result
-        assert "narrative_accel" in result
-        assert "fundamental" in result
-        assert "derivatives" in result
-        assert "verdict" in result
+    assert "market_cap_growth" in metric.components
+    assert "active_addresses" in metric.components
+    assert "revenue_multiple" in metric.components
+    assert "developer_activity" in metric.components
 
-    def test_verdict_confirmed_on_high_score(self):
-        engine = RCMEngine()
-        ohlcv = [
-            {
-                "timestamp": i * 14400000,
-                "close": 100 + i * 1.5,
-                "open": 99.5 + i * 1.5,
-                "high": 105 + i,
-                "low": 95 + i,
-                "volume": 10000 + i * 200,
-                "quote_asset_volume": 1000000 + i * 20000,
-            }
-            for i in range(100)
-        ]
-        result = engine.score_rcm(ohlcv, funding_rate=0.0003)
-        if result["rcm_score"] >= 70:
-            assert result["verdict"] == "CONFIRMED"
-
-    def test_verdict_building_on_medium_score(self):
-        engine = RCMEngine()
-        ohlcv = [
-            {
-                "timestamp": i * 14400000,
-                "close": 100 + i * 0.8,
-                "open": 99.8 + i * 0.8,
-                "high": 102 + i,
-                "low": 98 + i,
-                "volume": 5000 + i * 50,
-                "quote_asset_volume": 500000 + i * 5000,
-            }
-            for i in range(100)
-        ]
-        result = engine.score_rcm(ohlcv, funding_rate=0.0001)
-        if 50 <= result["rcm_score"] < 70:
-            assert result["verdict"] == "BUILDING"
+    for value in metric.components.values():
+        assert -1.0 <= value <= 1.0
 
 
-class TestReport:
-    def test_returns_readable_string_when_data_available(self):
-        engine = RCMEngine()
-        with patch.object(engine, "get_ohlcv") as mock_ohlcv:
-            with patch.object(engine, "get_funding_rate") as mock_funding:
-                mock_ohlcv.return_value = [
-                    {
-                        "timestamp": 1000,
-                        "close": 95000,
-                        "open": 94000,
-                        "high": 96000,
-                        "low": 94000,
-                        "volume": 5000000,
-                        "quote_asset_volume": 475000000000,
-                    }
-                ]
-                mock_funding.return_value = 0.00075
-                report = engine.report()
-                assert "RCM:" in report
-                assert "95,000" in report
-                assert "/100" in report
+def test_derivatives_structure_long_bias(engine):
+    """Test derivatives_structure with long bias."""
+    derivatives_data = {
+        "funding_rate": 0.00015,  # Positive (longs paying)
+        "oi_change": 0.1,  # 10% OI increase
+        "ls_ratio": 1.3,  # More longs
+        "timestamp": 1000,
+    }
 
-    def test_returns_unavailable_on_no_price(self):
-        engine = RCMEngine()
-        with patch.object(engine, "get_ohlcv", return_value=None):
-            report = engine.report()
-            assert "unavailable" in report.lower()
+    metric = engine.calculate_derivatives_structure(derivatives_data, "BTC")
 
-    def test_report_includes_all_components(self):
-        engine = RCMEngine()
-        with patch.object(engine, "get_ohlcv") as mock_ohlcv:
-            with patch.object(engine, "get_funding_rate") as mock_funding:
-                mock_ohlcv.return_value = [
-                    {
-                        "timestamp": i * 14400000,
-                        "close": 100 + i * 1.0,
-                        "open": 99.5 + i * 1.0,
-                        "high": 102 + i,
-                        "low": 98 + i,
-                        "volume": 5000 + i * 100,
-                        "quote_asset_volume": 500000 + i * 10000,
-                    }
-                    for i in range(100)
-                ]
-                mock_funding.return_value = 0.0002
-                report = engine.report()
-                assert "Cap=" in report
-                assert "RS=" in report
-                assert "Narr=" in report
-                assert "Fund=" in report
-                assert "Deriv=" in report
+    assert isinstance(metric, DerivativesStructureMetric)
+    assert -1.0 <= metric.value <= 1.0
+    assert metric.funding_rate > 0
+    assert metric.ls_ratio > 0
+
+
+def test_derivatives_structure_short_bias(engine):
+    """Test derivatives_structure with short bias."""
+    derivatives_data = {
+        "funding_rate": -0.00015,  # Negative (shorts paying)
+        "oi_change": -0.1,  # 10% OI decrease
+        "ls_ratio": 0.7,  # More shorts
+        "timestamp": 1000,
+    }
+
+    metric = engine.calculate_derivatives_structure(derivatives_data, "BTC")
+
+    assert metric.funding_rate < 0
+    assert metric.oi_change < 0
+    assert metric.ls_ratio < 0
+
+
+def test_score_rcm_full_calculation(engine):
+    """Test full RPM/RCM score calculation with all 5 components."""
+    score_dict = engine.score_rcm_full(
+        capital_flow=0.5,
+        relative_strength=0.3,
+        narrative_accel=0.2,
+        fundamental_confirm=0.4,
+        derivatives_struct=0.1,
+    )
+
+    # Expected: 0.25*0.5 + 0.25*0.3 + 0.20*0.2 + 0.20*0.4 + 0.10*0.1
+    #         = 0.125 + 0.075 + 0.04 + 0.08 + 0.01 = 0.33
+    expected = 0.125 + 0.075 + 0.04 + 0.08 + 0.01
+
+    assert "rpm_score" in score_dict
+    assert abs(score_dict["rpm_score"] - expected) < 0.01
+
+    # Verify all components present
+    assert score_dict["capital_flow"] == 0.5
+    assert score_dict["relative_strength"] == 0.3
+    assert score_dict["narrative_acceleration"] == 0.2
+    assert score_dict["fundamental_confirmation"] == 0.4
+    assert score_dict["derivatives_structure"] == 0.1
+
+
+def test_score_rcm_full_range(engine):
+    """Test RPM score stays in [-1, 1] range."""
+    # Test extreme case: all negative
+    score_dict = engine.score_rcm_full(
+        capital_flow=-1.0,
+        relative_strength=-1.0,
+        narrative_accel=-1.0,
+        fundamental_confirm=-1.0,
+        derivatives_struct=-1.0,
+    )
+    assert -1.0 <= score_dict["rpm_score"] <= 1.0
+
+    # Test extreme case: all positive
+    score_dict = engine.score_rcm_full(
+        capital_flow=1.0,
+        relative_strength=1.0,
+        narrative_accel=1.0,
+        fundamental_confirm=1.0,
+        derivatives_struct=1.0,
+    )
+    assert -1.0 <= score_dict["rpm_score"] <= 1.0
+    assert abs(score_dict["rpm_score"] - 1.0) < 0.001
