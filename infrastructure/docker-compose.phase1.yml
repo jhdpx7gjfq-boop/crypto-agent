@@ -1,0 +1,154 @@
+version: '3.8'
+
+services:
+  # DuckDB for data warehouse
+  duckdb:
+    image: duckdb:latest
+    container_name: igwt-duckdb
+    environment:
+      DUCKDB_DATA_PATH: /data/duckdb
+    volumes:
+      - ./data/duckdb:/data/duckdb
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "duckdb", ":memory:", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Redis cache for real-time updates
+  redis:
+    image: redis:7-alpine
+    container_name: igwt-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # PostgreSQL for metadata (optional)
+  postgres:
+    image: postgres:15-alpine
+    container_name: igwt-postgres
+    environment:
+      POSTGRES_DB: igwt_phase1
+      POSTGRES_USER: igwt_user
+      POSTGRES_PASSWORD: changeme
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U igwt_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Minio for S3-compatible local backup
+  minio:
+    image: minio/minio:latest
+    container_name: igwt-minio
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - ./data/minio:/minio_data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /minio_data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Data collection worker
+  collector:
+    build:
+      context: ..
+      dockerfile: infrastructure/Dockerfile.collector
+    container_name: igwt-collector
+    environment:
+      PROJECT_DIR: /app
+      COINGECKO_API_URL: https://api.coingecko.com/api/v3
+      GLASSNODE_API_KEY: ${GLASSNODE_API_KEY:-your_key_here}
+      DUCKDB_PATH: /app/data/duckdb
+      REDIS_URL: redis://redis:6379
+    volumes:
+      - ..:/app
+      - ./data/raw/phase_1:/app/data/raw/phase_1
+    depends_on:
+      duckdb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - igwt_network
+
+  # Quality assurance worker
+  qa_worker:
+    build:
+      context: ..
+      dockerfile: infrastructure/Dockerfile.qa
+    container_name: igwt-qa
+    environment:
+      PROJECT_DIR: /app
+      DUCKDB_PATH: /app/data/duckdb
+    volumes:
+      - ..:/app
+      - ./data/raw/phase_1:/app/data/raw/phase_1
+      - ./data/qa/phase_1:/app/data/qa/phase_1
+    depends_on:
+      - duckdb
+    networks:
+      - igwt_network
+    profiles:
+      - qa
+
+  # Monitoring and logging
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: igwt-prometheus
+    volumes:
+      - ./infrastructure/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./data/prometheus:/prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/-/healthy"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: igwt-grafana
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_SECURITY_ADMIN_USER: admin
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+      - ./infrastructure/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./infrastructure/grafana/datasources:/etc/grafana/provisioning/datasources
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+networks:
+  igwt_network:
+    driver: bridge
