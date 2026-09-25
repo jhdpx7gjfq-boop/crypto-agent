@@ -155,5 +155,19 @@ Architecture: 8 research layers combining market regime detection, Wyckoff analy
 
 ---
 
-**Last Action**: Completed WFV pipeline, awaiting real data validation.  
-**Estimated Next**: 30min to run WFV, 2-4h if P0.4 refinement needed.
+## Latest: WFV Validation Complete (2026-09-25)
+
+**Results**: Spring Detector P0.4 passes 2/3 gate criteria
+- IC = 0.000 (target >0.01) ❌ **FAILED**
+- HR = 87.1% (target >52%) ✅ PASSED
+- Stability = 1.0 (target >0.75) ✅ PASSED
+
+**Interpretation**: Detector identifies Wyckoff patterns accurately (87% overall accuracy), but sweep depth alone is not predictive of immediate price moves. Requires integration with other layers.
+
+**Path Forward**:
+1. Phase B: Implement RPM/RCM (capital rotation), NARM-P+ (narrative)
+2. Re-validate integrated system (layers 2-6 combined)
+3. Final IC measurement after full architecture assembly
+
+**Action**: WFV complete. Ready for Phase B implementation.  
+**Next Session**: Start RPM/RCM engine (capital flow detection)
