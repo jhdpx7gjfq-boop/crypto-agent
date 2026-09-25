@@ -9,15 +9,21 @@
 
 ## Executive Summary
 
-Phase 1 end-to-end test with **real CoinGecko data passed all validation checks**. System is ready to accept Phase 2 ground truth data once credentials are obtained.
+Phase 1 OHLCV **ingestion pipeline validated** with real CoinGecko data. This test confirms data source integrity and PIT compliance, **NOT** alpha signal validation.
 
-| Check | Result | Status |
-|-------|--------|--------|
-| **Data Loaded** | 362 real daily candles | ✅ PASS |
-| **Data Integrity** | All validation passed | ✅ PASS |
-| **PIT Compliance** | No lookahead bias | ✅ PASS |
-| **Field Completeness** | All required fields present | ✅ PASS |
-| **Readiness** | Ready for Phase 2 | ✅ PASS |
+⚠️ **Critical Distinction**: This test validates OHLCV ingestion only. It does NOT validate:
+- Real derivative features (still synthetic)
+- Ground truth liquidation events (awaiting credentials)
+- Signal detection capability (not yet tested)
+- Path A gate readiness (blocked on real ground truth)
+
+| Check | Result | Status | Scope |
+|-------|--------|--------|-------|
+| **CoinGecko OHLCV Ingestion** | 362 real daily candles | ✅ PASS | Data layer only |
+| **Data Integrity** | All validation passed | ✅ PASS | Pipeline framework |
+| **PIT Compliance** | No lookahead bias | ✅ PASS | Framework enforced |
+| **Field Completeness** | All required fields present | ✅ PASS | Schema validation |
+| **Alpha Validation** | Not yet tested | 🔴 BLOCKED | Awaiting real features + ground truth |
 
 ---
 
@@ -117,22 +123,33 @@ Source: CoinGecko API (free, no auth required)
 
 ## Phase 1 Readiness Assessment
 
-### ✅ Ready for Phase 2
+### ✅ Data Ingestion Layer (VALIDATED)
 
-- [x] Real OHLCV data loaded from API
-- [x] Data integrity validated (0 anomalies)
-- [x] PIT compliance confirmed (no lookahead)
-- [x] All required fields present
+- [x] Real OHLCV data loaded from CoinGecko API
+- [x] Data integrity validated (0 anomalies in sample)
+- [x] PIT compliance confirmed (no lookahead in pipeline)
+- [x] All required fields present (schema correct)
 - [x] Source verified (CoinGecko immutable historical)
-- [x] No issues blocking Phase 2 integration
+- [x] Framework pipeline operational
 
-### ⏳ Blocked at Phase 2
+**Status**: ✅ **OHLCV INGESTION VALIDATED** (CoinGecko source)
 
-**Required**: CryptoQuant API key + Glassnode API key
+### 🔴 Alpha Validation Layer (BLOCKED)
 
-**Timeline**: 2-3 business days to acquire
+- ❌ Real derivative features missing (still synthetic)
+- ❌ Real ground truth liquidations absent (CryptoQuant API)
+- ❌ Real exchange flows absent (Glassnode API)
+- ❌ Signal validation not yet possible
+- ❌ Path A gate NOT satisfied
 
-**Impact**: Cannot compute real ground truth (liquidations + exchange flows) without credentials
+**Blockers**:
+1. **Derivatives data**: Requires Deribit API (funding, options skew)
+2. **Ground truth**: Requires CryptoQuant API key (liquidation events)
+3. **Exchange data**: Requires Glassnode API key (on-chain flows)
+
+**Timeline to unblock**: 2-3 business days (credentials) + 1-2 days (real data processing)
+
+**Impact**: Cannot validate alpha signal without ALL three data sources
 
 ---
 
@@ -307,15 +324,80 @@ scripts/test_phase1_real.py
 
 ## Conclusion
 
-Phase 1 **successfully transitioned from 100% mock to 100% real OHLCV data**. All validation checks passed. System is operationally ready to accept Phase 2 ground truth data.
+### What This Test Validates
+✅ CoinGecko OHLCV ingestion pipeline works correctly  
+✅ Data integrity checks function as designed  
+✅ PIT compliance enforced in pipeline  
+✅ Framework operational and testable  
 
-**Blocker for progress**: CryptoQuant + Glassnode API credentials (external, 2-3 business days).
+### What This Test Does NOT Validate
+❌ Real derivative features (still synthetic)  
+❌ Ground truth liquidation events (not yet obtained)  
+❌ Signal detection capability (not yet tested)  
+❌ Path A alpha readiness (blocked on real data)  
 
-**Current status**: ✅ Phase 1 COMPLETE with real data. Awaiting credentials to proceed to Phase 2.
+### Status Classification
+
+| Layer | Status | Meaning |
+|-------|--------|---------|
+| **OHLCV Ingestion** | ✅ VALIDATED (CoinGecko) | Pipeline framework proven |
+| **Features** | ⏳ SYNTHETIC (test-only) | Framework validated, data awaiting real sources |
+| **Ground Truth** | 🔴 ABSENT | Blocked on CryptoQuant + Glassnode credentials |
+| **Signal Validation** | 🔴 NOT STARTED | Cannot proceed without all data layers |
+| **Alpha Readiness** | 🔴 BLOCKED | No changes to BCE/X20/RRP justified by this test |
+
+### Clear Statement on Implications
+**This test does NOT justify any modification to:**
+- BCE (Bottom Confirmation Engine)
+- X20 Engine
+- NARM-P+ 
+- RCM/RPM
+- RRP Revival Radar
+
+These remain Layer 8+ BLOCKED INDEFINITELY per governance.
+
+**Current blocker**: CryptoQuant + Glassnode API credentials (external, 2-3 business days)
+
+---
+
+## Important Technical Notes
+
+### CoinGecko vs Binance OHLCV
+
+⚠️ **This test uses CoinGecko, not Binance** (as originally specified for Path A).
+
+| Source | Status | Reason |
+|--------|--------|--------|
+| **Binance** | ❌ Blocked | Cloud proxy 451 (geographic restriction) |
+| **CoinGecko** | ✅ Working | Free public API, no auth required |
+
+**Impact**: This test validates the ingestion pipeline CAN work with real OHLCV, but does not prove Binance-specific data is accessible in current environment.
+
+### Features Status
+
+All Phase 1 features (`funding_pressure`, `derivative_stress`, `cascade_likelihood`) currently use **synthetic generation**. They are useful for:
+- Testing pipeline framework
+- Validating Phase 2/3 computations
+- Framework integration testing
+
+They are **NOT** useful for:
+- Signal validation
+- Alpha assessment
+- Gate readiness decisions
+
+### Next Real Data Sources Needed
+
+1. **Deribit**: Funding rates, options skew → derivative stress features
+2. **Blockscout**: On-chain transactions → whale activity features
+3. **CryptoQuant**: Liquidation events → ground truth
+4. **Glassnode**: Exchange flows → complementary signal
+
+All remain external dependencies.
 
 ---
 
 **Generated**: 2026-09-25T22:54:08  
-**Test Coverage**: Real OHLCV validation  
-**Status**: ✅ ALL TESTS PASSED  
-**Next Blocker**: CryptoQuant + Glassnode API keys
+**Test Coverage**: OHLCV ingestion validation (CoinGecko)  
+**Status**: ✅ Framework operational (NOT alpha validation)  
+**Next Blocker**: Real derivatives + ground truth API credentials  
+**Implications**: No changes to Layer 8+ authorized by this result
