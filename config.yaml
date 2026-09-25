@@ -1,0 +1,24 @@
+# IGWT-PF26 Configuration Template
+# Copy to config.local.yaml for local overrides (will be gitignored)
+# Environment variables override YAML values
+
+data_sources:
+  coingecko:
+    provider: coingecko
+    enabled: true
+    timeout_seconds: 10
+    retry_max: 3
+
+alerts:
+  telegram_bot_token: ${BOT_TOKEN}  # Or set BOT_TOKEN env var
+  telegram_chat_id: ${CHAT_ID}      # Or set CHAT_ID env var
+  high_threshold: 70000
+  low_threshold: 55000
+
+persistence:
+  db_path: data/igwt.db
+  parquet_dir: data/parquet
+
+polling:
+  interval_seconds: 60
+  enabled: true
