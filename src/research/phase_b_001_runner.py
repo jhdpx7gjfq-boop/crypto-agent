@@ -254,3 +254,4 @@ if __name__ == "__main__":
     logger.info("\n" + "=" * 60)
     logger.info("PHASE B-001 COMPLETE")
     logger.info("=" * 60)
+    logger.info(f"Gate Status: {'PASS ✅' if report['gate']['passed'] else 'FAIL ❌'}")

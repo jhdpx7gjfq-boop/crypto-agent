@@ -1,7 +1,7 @@
 # IGWT-PF26: Crypto Intelligence OS — Project Context
 
-**Version**: 0.1.0  
-**Status**: Phase A Validation (Spring Detector Level 4 in progress)  
+**Version**: 0.2.0  
+**Status**: Phase B-001 (Ablation Study: Spring + Context Validation)  
 **Last Updated**: 2026-09-25
 
 ## Project Mission
@@ -10,67 +10,60 @@ IGWT-PF26 is a quantitative research infrastructure for cryptocurrency investmen
 
 Architecture: 8 research layers combining market regime detection, Wyckoff analysis, narrative signals, and statistical validation.
 
-## Current Work: Spring Detector P0.4 Validation
+## Current Work: Phase B-001 (Incremental Alpha Research)
 
-### Completed
+### Phase A: CLOSED ✅
 
-✅ **Spring Detector P0.4** (40/41 tests passing)
-- 5-state classifier: NO_SPRING, RANGE, SWEEP, SPRING_CANDIDATE, BREAKDOWN
-- Detects Wyckoff spring patterns (range → sweep → reclaim)
-- Handles regime boundaries with smart contamination detection
-- PIT-compliant (no look-ahead in normal flow)
-- Location: `src/data/spring_detector.py`
+Spring Detector P0.4 WFV Results:
+- IC = 0.000 (target >0.01) ❌ **REJECTED as standalone alpha**
+- HR = 87.1% (target >52%) ✅
+- Stability = 1.0 (target >0.75) ✅
+- Status: **Frozen. Retained as structural feature, NOT modified.**
 
-⚠️ **Known Issue**: `test_look_ahead_c_sweep_not_confirmed_early` 
-- Test checks `df[:54]` (close=93.5, no reclaim) but expects SPRING_CANDIDATE
-- Reclaim only appears at `df[:56]` (close=99.0)
-- Appears to be test data/assertion mismatch, not detector bug
-- Do NOT modify test expectations per user guidance
+### Phase B-001: IN PROGRESS 🔄
 
-✅ **Level 4 WFV Pipeline** (runnable, awaiting data)
-- Walk-forward validation across 4 market regimes (2021-2024)
-- PIT methodology (no look-ahead)
-- Metrics: IC (Spearman), hit_rate, stability
-- Gate criteria: IC > 0.01 AND HR > 52% AND Stability > 0.75
-- Location: `src/validation/level_4_oos_wfv.py`
+**Objective**: Determine if Spring becomes predictive when conditioned on market context.
 
-✅ **Data Layer**
-- Binance source (requires `pip install ccxt`)
-- yfinance fallback
-- CSV loader
-- OHLC integrity validation
-- Location: `src/validation/data_sourcing.py`
+**Framework**:
+- Ablation matrix: 7 models (A=Baseline, B=+Spring, C=+Regime, D=+Flow, E=+Spring+Regime, F=+Spring+Flow, G=Full)
+- PIT validation across 4 market regimes (2021-2024), 18 WFV windows
+- Metrics: Incremental IC, HR, Expectancy, MFE/MAE per window + per regime
 
-✅ **Documentation**
-- VALIDATION-WFV-GUIDE.md: Step-by-step user guide
-- ITWT-PREDICTIVE-INFORMATION-001.md: Full validation specification
+**Gate Criteria**:
+- Spring incremental IC: IC(B) - IC(A) > 0.005
+- Spring + Regime synergy: IC(E) - IC(C) > 0.003
 
-### Next Steps (Immediate)
+**Status**: 
+- Framework built ✅ (spec + 6 modules)
+- WFV running (30-45 min) 🔄
+- Output: `reports/research/phase_b_001_ablation.json`
 
-1. **Run WFV on Real Data** (blocking Phase B)
-   ```bash
-   pip install ccxt  # or yfinance
-   python src/validation/level_4_oos_wfv.py --source binance --start 2021-01-01
-   ```
-   Expected runtime: 10-30 minutes
-   Output: `reports/validation/spring_detector_level4.json`
+**Key Files**:
+- `docs/SPRING-PHASE-B-001-SPEC.md`: Full protocol
+- `src/research/market_regime_detector.py`: Trend/Vol classification (PIT-safe)
+- `src/research/baseline_predictor.py`: Model A (momentum only)
+- `src/research/spring_context_predictor.py`: Models B-G
+- `src/research/ablation_framework.py`: IC/HR measurement engine
+- `src/research/phase_b_001_runner.py`: WFV orchestration
 
-2. **Interpret Results**
-   - If PASS (IC>0.01, HR>52%, Stability>0.75): Proceed to Phase B
-   - If FAIL: Investigate low IC/HR/Stability; refactor Spring Detector P0.5
+### Constraints (FROZEN)
 
-3. **Phase B (if P0.4 passes WFV)**
-   - RPM/RCM: Capital rotation engine
-   - NARM-P+: Narrative adoption scoring
-   - RRP: Dead token revival detection
-   - Dashboard: Market monitoring UI
-   - Agent: Autonomous research assistant
+**No modifications to**:
+- Spring Detector P0.4 logic
+- BCE/X20/RPM parameters
+- Phase A validation results
 
-### Known Limitations
+### Next Steps (Conditional on Phase B-001 Gate)
 
-- **test_look_ahead_c**: May require temporal architecture redesign (P0.5)
-- **Data dependencies**: ccxt/yfinance not pre-installed
-- **P0.5 (abandoned)**: Temporal model passes 0/3 critical tests; needs rethinking
+**If Phase B-001 PASS**:
+1. Phase B-002: Capital Flow layer (OI, funding, liquidations)
+2. Re-validate integrated system (Layers 2-6 combined)
+3. Final IC measurement after full architecture assembly
+
+**If Phase B-001 FAIL**:
+1. Archive Spring P0.4 as non-predictive structural feature
+2. Pivot to Regime-only model (C) for Phase B gates
+3. Investigate alternative entry signals (X20, NARM-P+)
 
 ## Architecture Overview
 

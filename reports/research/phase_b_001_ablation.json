@@ -1,0 +1,1387 @@
+{
+  "phase": "B-001",
+  "frozen": "Spring P0.4 (Phase A IC=0.000 REJECTED)",
+  "timestamp": "2026-09-25T13:13:16.286975",
+  "models": {
+    "A": {
+      "model": "A",
+      "ic_mean": -0.12078956096488769,
+      "ic_std": 0.15136463965854646,
+      "ic_min": -0.3544170044502355,
+      "ic_max": 0.1299038105676658,
+      "hr_mean": 0.43633276740237686,
+      "hr_std": 0.0785768181012301,
+      "expectancy_mean": -0.0010374411526847763,
+      "expectancy_std": 0.0031039360169768508,
+      "n_windows": 19,
+      "per_window": [
+        {
+          "window_id": 0,
+          "regime": "bull_2021",
+          "ic": 0.10870706918483408,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": 0.0029090392788220626,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bull_2021",
+          "ic": -0.1928791874526149,
+          "hit_rate": 0.3548387096774194,
+          "expectancy": -0.004079008202409967,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "bull_2021",
+          "ic": 0.05797710356524484,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": 0.0004346513477234096,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "bull_2021",
+          "ic": -0.1978141420187361,
+          "hit_rate": 0.4838709677419355,
+          "expectancy": 0.0018478976325276173,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "bull_2021",
+          "ic": -0.24120907566221086,
+          "hit_rate": 0.25806451612903225,
+          "expectancy": -0.0023023763103507426,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "bear_2022",
+          "ic": -0.11595420713048968,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.001774582817896418,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bear_2022",
+          "ic": 0.1299038105676658,
+          "hit_rate": 0.5483870967741935,
+          "expectancy": 0.0022997554065334424,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "bear_2022",
+          "ic": -0.007945521577046602,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": -0.0037296851409279698,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "bear_2022",
+          "ic": -0.3333683455001578,
+          "hit_rate": 0.2903225806451613,
+          "expectancy": -0.004314594700702897,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "bear_2022",
+          "ic": 0.028867513459481287,
+          "hit_rate": 0.4838709677419355,
+          "expectancy": -0.0010291530523450119,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 5,
+          "regime": "bear_2022",
+          "ic": -0.2939735609633195,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.006280158919666935,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "recovery_2023",
+          "ic": -0.19567272453270135,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": -0.0022110248807488838,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "recovery_2023",
+          "ic": -0.3544170044502355,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.001359116409658906,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "recovery_2023",
+          "ic": -0.3103257696894238,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.005952191681261826,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "recovery_2023",
+          "ic": -0.017251638983558856,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": 0.0062487660723594355,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "recovery_2023",
+          "ic": -0.18274699627207186,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.0017739519978567542,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 5,
+          "regime": "recovery_2023",
+          "ic": -0.15075567228888181,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.0009679532152121877,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "bull_2024_partial",
+          "ic": -0.10552897060221726,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": 0.001306448818181624,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bull_2024_partial",
+          "ic": 0.07938566201357355,
+          "hit_rate": 0.5483870967741935,
+          "expectancy": 0.0010158568718801543,
+          "n_predictions": 31
+        }
+      ]
+    },
+    "B": {
+      "model": "B",
+      "ic_mean": -0.12078956096488769,
+      "ic_std": 0.15136463965854646,
+      "ic_min": -0.3544170044502355,
+      "ic_max": 0.1299038105676658,
+      "hr_mean": 0.43633276740237686,
+      "hr_std": 0.0785768181012301,
+      "expectancy_mean": -0.0010374411526847763,
+      "expectancy_std": 0.0031039360169768508,
+      "n_windows": 19,
+      "per_window": [
+        {
+          "window_id": 0,
+          "regime": "bull_2021",
+          "ic": 0.10870706918483408,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": 0.0029090392788220626,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bull_2021",
+          "ic": -0.1928791874526149,
+          "hit_rate": 0.3548387096774194,
+          "expectancy": -0.004079008202409967,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "bull_2021",
+          "ic": 0.05797710356524484,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": 0.0004346513477234096,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "bull_2021",
+          "ic": -0.1978141420187361,
+          "hit_rate": 0.4838709677419355,
+          "expectancy": 0.0018478976325276173,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "bull_2021",
+          "ic": -0.24120907566221086,
+          "hit_rate": 0.25806451612903225,
+          "expectancy": -0.0023023763103507426,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "bear_2022",
+          "ic": -0.11595420713048968,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.001774582817896418,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bear_2022",
+          "ic": 0.1299038105676658,
+          "hit_rate": 0.5483870967741935,
+          "expectancy": 0.0022997554065334424,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "bear_2022",
+          "ic": -0.007945521577046602,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": -0.0037296851409279698,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "bear_2022",
+          "ic": -0.3333683455001578,
+          "hit_rate": 0.2903225806451613,
+          "expectancy": -0.004314594700702897,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "bear_2022",
+          "ic": 0.028867513459481287,
+          "hit_rate": 0.4838709677419355,
+          "expectancy": -0.0010291530523450119,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 5,
+          "regime": "bear_2022",
+          "ic": -0.2939735609633195,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.006280158919666935,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "recovery_2023",
+          "ic": -0.19567272453270135,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": -0.0022110248807488838,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "recovery_2023",
+          "ic": -0.3544170044502355,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.001359116409658906,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "recovery_2023",
+          "ic": -0.3103257696894238,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.005952191681261826,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "recovery_2023",
+          "ic": -0.017251638983558856,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": 0.0062487660723594355,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "recovery_2023",
+          "ic": -0.18274699627207186,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.0017739519978567542,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 5,
+          "regime": "recovery_2023",
+          "ic": -0.15075567228888181,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.0009679532152121877,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "bull_2024_partial",
+          "ic": -0.10552897060221726,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": 0.001306448818181624,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bull_2024_partial",
+          "ic": 0.07938566201357355,
+          "hit_rate": 0.5483870967741935,
+          "expectancy": 0.0010158568718801543,
+          "n_predictions": 31
+        }
+      ]
+    },
+    "C": {
+      "model": "C",
+      "ic_mean": -0.10018555021986982,
+      "ic_std": 0.16457168715569648,
+      "ic_min": -0.33697716953858736,
+      "ic_max": 0.2294945171493305,
+      "hr_mean": 0.43633276740237686,
+      "hr_std": 0.0785768181012301,
+      "expectancy_mean": -0.0010374411526847763,
+      "expectancy_std": 0.0031039360169768508,
+      "n_windows": 19,
+      "per_window": [
+        {
+          "window_id": 0,
+          "regime": "bull_2021",
+          "ic": 0.17388370002333214,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": 0.0029090392788220626,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bull_2021",
+          "ic": -0.10283104306076718,
+          "hit_rate": 0.3548387096774194,
+          "expectancy": -0.004079008202409967,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "bull_2021",
+          "ic": 0.03583841206886763,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": 0.0004346513477234096,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "bull_2021",
+          "ic": -0.28213672648879207,
+          "hit_rate": 0.4838709677419355,
+          "expectancy": 0.0018478976325276173,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "bull_2021",
+          "ic": -0.11045217555519946,
+          "hit_rate": 0.25806451612903225,
+          "expectancy": -0.0023023763103507426,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "bear_2022",
+          "ic": -0.1279527655636774,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.001774582817896418,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bear_2022",
+          "ic": 0.2294945171493305,
+          "hit_rate": 0.5483870967741935,
+          "expectancy": 0.0022997554065334424,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "bear_2022",
+          "ic": 0.10378598411850845,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": -0.0037296851409279698,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "bear_2022",
+          "ic": -0.29012998317229977,
+          "hit_rate": 0.2903225806451613,
+          "expectancy": -0.004314594700702897,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "bear_2022",
+          "ic": -0.0006275832015355677,
+          "hit_rate": 0.4838709677419355,
+          "expectancy": -0.0010291530523450119,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 5,
+          "regime": "bear_2022",
+          "ic": -0.3077392178056365,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.006280158919666935,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "recovery_2023",
+          "ic": -0.22107428689659123,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": -0.0022110248807488838,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "recovery_2023",
+          "ic": -0.19664004406989885,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.001359116409658906,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "recovery_2023",
+          "ic": -0.33697716953858736,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.005952191681261826,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "recovery_2023",
+          "ic": -0.07169847637379306,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": 0.0062487660723594355,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "recovery_2023",
+          "ic": -0.23938715688415382,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.0017739519978567542,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 5,
+          "regime": "recovery_2023",
+          "ic": -0.2139593438925923,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.0009679532152121877,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "bull_2024_partial",
+          "ic": -0.0030903211628637347,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": 0.001306448818181624,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bull_2024_partial",
+          "ic": 0.058168226128823546,
+          "hit_rate": 0.5483870967741935,
+          "expectancy": 0.0010158568718801543,
+          "n_predictions": 31
+        }
+      ]
+    },
+    "D": {
+      "model": "D",
+      "ic_mean": -0.12078956096488769,
+      "ic_std": 0.15136463965854646,
+      "ic_min": -0.3544170044502355,
+      "ic_max": 0.1299038105676658,
+      "hr_mean": 0.43633276740237686,
+      "hr_std": 0.0785768181012301,
+      "expectancy_mean": -0.0010374411526847763,
+      "expectancy_std": 0.0031039360169768508,
+      "n_windows": 19,
+      "per_window": [
+        {
+          "window_id": 0,
+          "regime": "bull_2021",
+          "ic": 0.10870706918483408,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": 0.0029090392788220626,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bull_2021",
+          "ic": -0.1928791874526149,
+          "hit_rate": 0.3548387096774194,
+          "expectancy": -0.004079008202409967,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "bull_2021",
+          "ic": 0.05797710356524484,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": 0.0004346513477234096,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "bull_2021",
+          "ic": -0.1978141420187361,
+          "hit_rate": 0.4838709677419355,
+          "expectancy": 0.0018478976325276173,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "bull_2021",
+          "ic": -0.24120907566221086,
+          "hit_rate": 0.25806451612903225,
+          "expectancy": -0.0023023763103507426,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "bear_2022",
+          "ic": -0.11595420713048968,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.001774582817896418,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bear_2022",
+          "ic": 0.1299038105676658,
+          "hit_rate": 0.5483870967741935,
+          "expectancy": 0.0022997554065334424,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "bear_2022",
+          "ic": -0.007945521577046602,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": -0.0037296851409279698,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "bear_2022",
+          "ic": -0.3333683455001578,
+          "hit_rate": 0.2903225806451613,
+          "expectancy": -0.004314594700702897,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "bear_2022",
+          "ic": 0.028867513459481287,
+          "hit_rate": 0.4838709677419355,
+          "expectancy": -0.0010291530523450119,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 5,
+          "regime": "bear_2022",
+          "ic": -0.2939735609633195,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.006280158919666935,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "recovery_2023",
+          "ic": -0.19567272453270135,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": -0.0022110248807488838,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "recovery_2023",
+          "ic": -0.3544170044502355,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.001359116409658906,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "recovery_2023",
+          "ic": -0.3103257696894238,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.005952191681261826,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "recovery_2023",
+          "ic": -0.017251638983558856,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": 0.0062487660723594355,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "recovery_2023",
+          "ic": -0.18274699627207186,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.0017739519978567542,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 5,
+          "regime": "recovery_2023",
+          "ic": -0.15075567228888181,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.0009679532152121877,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "bull_2024_partial",
+          "ic": -0.10552897060221726,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": 0.001306448818181624,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bull_2024_partial",
+          "ic": 0.07938566201357355,
+          "hit_rate": 0.5483870967741935,
+          "expectancy": 0.0010158568718801543,
+          "n_predictions": 31
+        }
+      ]
+    },
+    "E": {
+      "model": "E",
+      "ic_mean": -0.10018555021986982,
+      "ic_std": 0.16457168715569648,
+      "ic_min": -0.33697716953858736,
+      "ic_max": 0.2294945171493305,
+      "hr_mean": 0.43633276740237686,
+      "hr_std": 0.0785768181012301,
+      "expectancy_mean": -0.0010374411526847763,
+      "expectancy_std": 0.0031039360169768508,
+      "n_windows": 19,
+      "per_window": [
+        {
+          "window_id": 0,
+          "regime": "bull_2021",
+          "ic": 0.17388370002333214,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": 0.0029090392788220626,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bull_2021",
+          "ic": -0.10283104306076718,
+          "hit_rate": 0.3548387096774194,
+          "expectancy": -0.004079008202409967,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "bull_2021",
+          "ic": 0.03583841206886763,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": 0.0004346513477234096,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "bull_2021",
+          "ic": -0.28213672648879207,
+          "hit_rate": 0.4838709677419355,
+          "expectancy": 0.0018478976325276173,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "bull_2021",
+          "ic": -0.11045217555519946,
+          "hit_rate": 0.25806451612903225,
+          "expectancy": -0.0023023763103507426,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "bear_2022",
+          "ic": -0.1279527655636774,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.001774582817896418,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bear_2022",
+          "ic": 0.2294945171493305,
+          "hit_rate": 0.5483870967741935,
+          "expectancy": 0.0022997554065334424,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "bear_2022",
+          "ic": 0.10378598411850845,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": -0.0037296851409279698,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "bear_2022",
+          "ic": -0.29012998317229977,
+          "hit_rate": 0.2903225806451613,
+          "expectancy": -0.004314594700702897,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "bear_2022",
+          "ic": -0.0006275832015355677,
+          "hit_rate": 0.4838709677419355,
+          "expectancy": -0.0010291530523450119,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 5,
+          "regime": "bear_2022",
+          "ic": -0.3077392178056365,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.006280158919666935,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "recovery_2023",
+          "ic": -0.22107428689659123,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": -0.0022110248807488838,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "recovery_2023",
+          "ic": -0.19664004406989885,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.001359116409658906,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "recovery_2023",
+          "ic": -0.33697716953858736,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.005952191681261826,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "recovery_2023",
+          "ic": -0.07169847637379306,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": 0.0062487660723594355,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "recovery_2023",
+          "ic": -0.23938715688415382,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.0017739519978567542,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 5,
+          "regime": "recovery_2023",
+          "ic": -0.2139593438925923,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.0009679532152121877,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "bull_2024_partial",
+          "ic": -0.0030903211628637347,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": 0.001306448818181624,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bull_2024_partial",
+          "ic": 0.058168226128823546,
+          "hit_rate": 0.5483870967741935,
+          "expectancy": 0.0010158568718801543,
+          "n_predictions": 31
+        }
+      ]
+    },
+    "F": {
+      "model": "F",
+      "ic_mean": -0.12078956096488769,
+      "ic_std": 0.15136463965854646,
+      "ic_min": -0.3544170044502355,
+      "ic_max": 0.1299038105676658,
+      "hr_mean": 0.43633276740237686,
+      "hr_std": 0.0785768181012301,
+      "expectancy_mean": -0.0010374411526847763,
+      "expectancy_std": 0.0031039360169768508,
+      "n_windows": 19,
+      "per_window": [
+        {
+          "window_id": 0,
+          "regime": "bull_2021",
+          "ic": 0.10870706918483408,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": 0.0029090392788220626,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bull_2021",
+          "ic": -0.1928791874526149,
+          "hit_rate": 0.3548387096774194,
+          "expectancy": -0.004079008202409967,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "bull_2021",
+          "ic": 0.05797710356524484,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": 0.0004346513477234096,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "bull_2021",
+          "ic": -0.1978141420187361,
+          "hit_rate": 0.4838709677419355,
+          "expectancy": 0.0018478976325276173,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "bull_2021",
+          "ic": -0.24120907566221086,
+          "hit_rate": 0.25806451612903225,
+          "expectancy": -0.0023023763103507426,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "bear_2022",
+          "ic": -0.11595420713048968,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.001774582817896418,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bear_2022",
+          "ic": 0.1299038105676658,
+          "hit_rate": 0.5483870967741935,
+          "expectancy": 0.0022997554065334424,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "bear_2022",
+          "ic": -0.007945521577046602,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": -0.0037296851409279698,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "bear_2022",
+          "ic": -0.3333683455001578,
+          "hit_rate": 0.2903225806451613,
+          "expectancy": -0.004314594700702897,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "bear_2022",
+          "ic": 0.028867513459481287,
+          "hit_rate": 0.4838709677419355,
+          "expectancy": -0.0010291530523450119,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 5,
+          "regime": "bear_2022",
+          "ic": -0.2939735609633195,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.006280158919666935,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "recovery_2023",
+          "ic": -0.19567272453270135,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": -0.0022110248807488838,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "recovery_2023",
+          "ic": -0.3544170044502355,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.001359116409658906,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "recovery_2023",
+          "ic": -0.3103257696894238,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.005952191681261826,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "recovery_2023",
+          "ic": -0.017251638983558856,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": 0.0062487660723594355,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "recovery_2023",
+          "ic": -0.18274699627207186,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.0017739519978567542,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 5,
+          "regime": "recovery_2023",
+          "ic": -0.15075567228888181,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.0009679532152121877,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "bull_2024_partial",
+          "ic": -0.10552897060221726,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": 0.001306448818181624,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bull_2024_partial",
+          "ic": 0.07938566201357355,
+          "hit_rate": 0.5483870967741935,
+          "expectancy": 0.0010158568718801543,
+          "n_predictions": 31
+        }
+      ]
+    },
+    "G": {
+      "model": "G",
+      "ic_mean": -0.10018555021986982,
+      "ic_std": 0.16457168715569648,
+      "ic_min": -0.33697716953858736,
+      "ic_max": 0.2294945171493305,
+      "hr_mean": 0.43633276740237686,
+      "hr_std": 0.0785768181012301,
+      "expectancy_mean": -0.0010374411526847763,
+      "expectancy_std": 0.0031039360169768508,
+      "n_windows": 19,
+      "per_window": [
+        {
+          "window_id": 0,
+          "regime": "bull_2021",
+          "ic": 0.17388370002333214,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": 0.0029090392788220626,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bull_2021",
+          "ic": -0.10283104306076718,
+          "hit_rate": 0.3548387096774194,
+          "expectancy": -0.004079008202409967,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "bull_2021",
+          "ic": 0.03583841206886763,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": 0.0004346513477234096,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "bull_2021",
+          "ic": -0.28213672648879207,
+          "hit_rate": 0.4838709677419355,
+          "expectancy": 0.0018478976325276173,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "bull_2021",
+          "ic": -0.11045217555519946,
+          "hit_rate": 0.25806451612903225,
+          "expectancy": -0.0023023763103507426,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "bear_2022",
+          "ic": -0.1279527655636774,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.001774582817896418,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bear_2022",
+          "ic": 0.2294945171493305,
+          "hit_rate": 0.5483870967741935,
+          "expectancy": 0.0022997554065334424,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "bear_2022",
+          "ic": 0.10378598411850845,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": -0.0037296851409279698,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "bear_2022",
+          "ic": -0.29012998317229977,
+          "hit_rate": 0.2903225806451613,
+          "expectancy": -0.004314594700702897,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "bear_2022",
+          "ic": -0.0006275832015355677,
+          "hit_rate": 0.4838709677419355,
+          "expectancy": -0.0010291530523450119,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 5,
+          "regime": "bear_2022",
+          "ic": -0.3077392178056365,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.006280158919666935,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "recovery_2023",
+          "ic": -0.22107428689659123,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": -0.0022110248807488838,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "recovery_2023",
+          "ic": -0.19664004406989885,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.001359116409658906,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 2,
+          "regime": "recovery_2023",
+          "ic": -0.33697716953858736,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.005952191681261826,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 3,
+          "regime": "recovery_2023",
+          "ic": -0.07169847637379306,
+          "hit_rate": 0.5161290322580645,
+          "expectancy": 0.0062487660723594355,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 4,
+          "regime": "recovery_2023",
+          "ic": -0.23938715688415382,
+          "hit_rate": 0.41935483870967744,
+          "expectancy": -0.0017739519978567542,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 5,
+          "regime": "recovery_2023",
+          "ic": -0.2139593438925923,
+          "hit_rate": 0.3870967741935484,
+          "expectancy": -0.0009679532152121877,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 0,
+          "regime": "bull_2024_partial",
+          "ic": -0.0030903211628637347,
+          "hit_rate": 0.45161290322580644,
+          "expectancy": 0.001306448818181624,
+          "n_predictions": 31
+        },
+        {
+          "window_id": 1,
+          "regime": "bull_2024_partial",
+          "ic": 0.058168226128823546,
+          "hit_rate": 0.5483870967741935,
+          "expectancy": 0.0010158568718801543,
+          "n_predictions": 31
+        }
+      ]
+    }
+  },
+  "deltas": {
+    "delta_ic_b_a": 0.0,
+    "delta_ic_c_a": 0.020604010745017873,
+    "delta_ic_d_a": 0.0,
+    "delta_ic_e_c": 0.0,
+    "delta_ic_f_d": 0.0,
+    "delta_ic_g_c": 0.0
+  },
+  "per_regime": {
+    "bull_2021": {
+      "A": {
+        "ic_mean": -0.09304364647669658,
+        "ic_std": 0.14588187316933984,
+        "hr_mean": 0.4129032258064516,
+        "expectancy_mean": -0.00023795925073752394,
+        "n_windows": 5
+      },
+      "B": {
+        "ic_mean": -0.09304364647669658,
+        "ic_std": 0.14588187316933984,
+        "hr_mean": 0.4129032258064516,
+        "expectancy_mean": -0.00023795925073752394,
+        "n_windows": 5
+      },
+      "C": {
+        "ic_mean": -0.05713956660251178,
+        "ic_std": 0.1533429629891513,
+        "hr_mean": 0.4129032258064516,
+        "expectancy_mean": -0.00023795925073752394,
+        "n_windows": 5
+      },
+      "D": {
+        "ic_mean": -0.09304364647669658,
+        "ic_std": 0.14588187316933984,
+        "hr_mean": 0.4129032258064516,
+        "expectancy_mean": -0.00023795925073752394,
+        "n_windows": 5
+      },
+      "E": {
+        "ic_mean": -0.05713956660251178,
+        "ic_std": 0.1533429629891513,
+        "hr_mean": 0.4129032258064516,
+        "expectancy_mean": -0.00023795925073752394,
+        "n_windows": 5
+      },
+      "F": {
+        "ic_mean": -0.09304364647669658,
+        "ic_std": 0.14588187316933984,
+        "hr_mean": 0.4129032258064516,
+        "expectancy_mean": -0.00023795925073752394,
+        "n_windows": 5
+      },
+      "G": {
+        "ic_mean": -0.05713956660251178,
+        "ic_std": 0.1533429629891513,
+        "hr_mean": 0.4129032258064516,
+        "expectancy_mean": -0.00023795925073752394,
+        "n_windows": 5
+      }
+    },
+    "bear_2022": {
+      "A": {
+        "ic_mean": -0.09874505185731108,
+        "ic_std": 0.16845782831660172,
+        "hr_mean": 0.44086021505376344,
+        "expectancy_mean": -0.0024714032041676316,
+        "n_windows": 6
+      },
+      "B": {
+        "ic_mean": -0.09874505185731108,
+        "ic_std": 0.16845782831660172,
+        "hr_mean": 0.44086021505376344,
+        "expectancy_mean": -0.0024714032041676316,
+        "n_windows": 6
+      },
+      "C": {
+        "ic_mean": -0.06552817474588506,
+        "ic_std": 0.19703077220540127,
+        "hr_mean": 0.44086021505376344,
+        "expectancy_mean": -0.0024714032041676316,
+        "n_windows": 6
+      },
+      "D": {
+        "ic_mean": -0.09874505185731108,
+        "ic_std": 0.16845782831660172,
+        "hr_mean": 0.44086021505376344,
+        "expectancy_mean": -0.0024714032041676316,
+        "n_windows": 6
+      },
+      "E": {
+        "ic_mean": -0.06552817474588506,
+        "ic_std": 0.19703077220540127,
+        "hr_mean": 0.44086021505376344,
+        "expectancy_mean": -0.0024714032041676316,
+        "n_windows": 6
+      },
+      "F": {
+        "ic_mean": -0.09874505185731108,
+        "ic_std": 0.16845782831660172,
+        "hr_mean": 0.44086021505376344,
+        "expectancy_mean": -0.0024714032041676316,
+        "n_windows": 6
+      },
+      "G": {
+        "ic_mean": -0.06552817474588506,
+        "ic_std": 0.19703077220540127,
+        "hr_mean": 0.44086021505376344,
+        "expectancy_mean": -0.0024714032041676316,
+        "n_windows": 6
+      }
+    },
+    "recovery_2023": {
+      "A": {
+        "ic_mean": -0.20186163436947888,
+        "ic_std": 0.10964636438897202,
+        "hr_mean": 0.43010752688172044,
+        "expectancy_mean": -0.0010025786853965204,
+        "n_windows": 6
+      },
+      "B": {
+        "ic_mean": -0.20186163436947888,
+        "ic_std": 0.10964636438897202,
+        "hr_mean": 0.43010752688172044,
+        "expectancy_mean": -0.0010025786853965204,
+        "n_windows": 6
+      },
+      "C": {
+        "ic_mean": -0.21328941294260276,
+        "ic_std": 0.07785242582694045,
+        "hr_mean": 0.43010752688172044,
+        "expectancy_mean": -0.0010025786853965204,
+        "n_windows": 6
+      },
+      "D": {
+        "ic_mean": -0.20186163436947888,
+        "ic_std": 0.10964636438897202,
+        "hr_mean": 0.43010752688172044,
+        "expectancy_mean": -0.0010025786853965204,
+        "n_windows": 6
+      },
+      "E": {
+        "ic_mean": -0.21328941294260276,
+        "ic_std": 0.07785242582694045,
+        "hr_mean": 0.43010752688172044,
+        "expectancy_mean": -0.0010025786853965204,
+        "n_windows": 6
+      },
+      "F": {
+        "ic_mean": -0.20186163436947888,
+        "ic_std": 0.10964636438897202,
+        "hr_mean": 0.43010752688172044,
+        "expectancy_mean": -0.0010025786853965204,
+        "n_windows": 6
+      },
+      "G": {
+        "ic_mean": -0.21328941294260276,
+        "ic_std": 0.07785242582694045,
+        "hr_mean": 0.43010752688172044,
+        "expectancy_mean": -0.0010025786853965204,
+        "n_windows": 6
+      }
+    },
+    "bull_2024_partial": {
+      "A": {
+        "ic_mean": -0.013071654294321854,
+        "ic_std": 0.09245731630789542,
+        "hr_mean": 0.5,
+        "expectancy_mean": 0.0011611528450308892,
+        "n_windows": 2
+      },
+      "B": {
+        "ic_mean": -0.013071654294321854,
+        "ic_std": 0.09245731630789542,
+        "hr_mean": 0.5,
+        "expectancy_mean": 0.0011611528450308892,
+        "n_windows": 2
+      },
+      "C": {
+        "ic_mean": 0.027538952482979905,
+        "ic_std": 0.03062927364584364,
+        "hr_mean": 0.5,
+        "expectancy_mean": 0.0011611528450308892,
+        "n_windows": 2
+      },
+      "D": {
+        "ic_mean": -0.013071654294321854,
+        "ic_std": 0.09245731630789542,
+        "hr_mean": 0.5,
+        "expectancy_mean": 0.0011611528450308892,
+        "n_windows": 2
+      },
+      "E": {
+        "ic_mean": 0.027538952482979905,
+        "ic_std": 0.03062927364584364,
+        "hr_mean": 0.5,
+        "expectancy_mean": 0.0011611528450308892,
+        "n_windows": 2
+      },
+      "F": {
+        "ic_mean": -0.013071654294321854,
+        "ic_std": 0.09245731630789542,
+        "hr_mean": 0.5,
+        "expectancy_mean": 0.0011611528450308892,
+        "n_windows": 2
+      },
+      "G": {
+        "ic_mean": 0.027538952482979905,
+        "ic_std": 0.03062927364584364,
+        "hr_mean": 0.5,
+        "expectancy_mean": 0.0011611528450308892,
+        "n_windows": 2
+      }
+    }
+  },
+  "gate": {
+    "passed": false,
+    "message": "PHASE B-001 GATE:\n  \u274c Spring alone IC delta: 0.000000 (target >0.005)\n  \u274c Spring + Regime IC delta: 0.000000 (target >0.003)\n"
+  }
+}
