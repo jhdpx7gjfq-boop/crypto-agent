@@ -102,24 +102,25 @@ class X20Opportunity:
 
 @dataclass
 class NARMSignal:
-    """NARM-P+ narrative adoption scoring."""
+    """NARM-P+ narrative adoption rotation scoring."""
     timestamp: datetime
     asset: str
-    narrative_strength: float  # 0-100
-    adoption: float           # 0-100
-    capital_rotation: float   # 0-100
-    fundamentals: float       # 0-100
-    market_timing: float      # 0-100
-    total_score: float = field(default_factory=lambda: 0.0)
+    narm_score: float               # 0-100, combined weighted score
+    narrative_strength: float       # 0-100, 30% weight
+    adoption_velocity: float        # 0-100, 25% weight
+    capital_rotation: float         # 0-100, 25% weight
+    rotation_valid: bool            # True if narm_score >= 65
 
     def __post_init__(self):
-        self.total_score = (
-            self.narrative_strength * 0.20 +
-            self.adoption * 0.25 +
-            self.capital_rotation * 0.25 +
-            self.fundamentals * 0.20 +
-            self.market_timing * 0.10
-        )
+        # Validate score bounds
+        if not (0 <= self.narm_score <= 100):
+            raise ValueError(f"narm_score must be 0-100, got {self.narm_score}")
+        if not (0 <= self.narrative_strength <= 100):
+            raise ValueError(f"narrative_strength must be 0-100, got {self.narrative_strength}")
+        if not (0 <= self.adoption_velocity <= 100):
+            raise ValueError(f"adoption_velocity must be 0-100, got {self.adoption_velocity}")
+        if not (0 <= self.capital_rotation <= 100):
+            raise ValueError(f"capital_rotation must be 0-100, got {self.capital_rotation}")
 
 
 @dataclass

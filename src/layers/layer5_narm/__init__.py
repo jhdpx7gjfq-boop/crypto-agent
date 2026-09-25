@@ -4,6 +4,6 @@ Narrative Adoption Rotation Model Plus.
 Scores narrative strength, adoption, capital rotation.
 """
 
-from .narm_engine import NARPEngine
+from .narm_engine import NARMEngine, NARMAnalysisReport
 
-__all__ = ["NARPEngine"]
+__all__ = ["NARMEngine", "NARMAnalysisReport"]
