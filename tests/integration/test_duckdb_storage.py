@@ -129,12 +129,13 @@ class TestDuckDBStorage:
 
         # Query metadata
         result = duckdb_store.conn.execute(
-            "SELECT record_count FROM data_metadata WHERE symbol = ? AND timeframe = ?",
+            "SELECT record_count, source FROM data_metadata WHERE symbol = ? AND timeframe = ?",
             ["bitcoin", "1d"],
         ).fetchall()
 
         assert len(result) == 1
         assert result[0][0] == 5
+        assert result[0][1] == "coingecko"  # Should be extracted from parquet metadata
 
     def test_duplicate_load_raises(self, duckdb_store, temp_parquet):
         """Loading same file twice raises constraint error (PRIMARY KEY prevents duplicates)."""

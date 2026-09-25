@@ -20,6 +20,9 @@ logger = get_logger(__name__)
 class CoinGeckoAdapter(DatasourceAdapter):
     """CoinGecko public API adapter."""
 
+    SOURCE_NAME = "coingecko"
+    PROVIDER_NAME = "CoinGecko"
+
     BASE_URL = "https://api.coingecko.com/api/v3"
     TIMEOUT_SECONDS = 10
     RETRY_COUNT = 3
@@ -40,7 +43,7 @@ class CoinGeckoAdapter(DatasourceAdapter):
         self._last_request_time = 0  # Track last request for rate limiting
 
     def get_name(self) -> str:
-        return "coingecko"
+        return self.SOURCE_NAME
 
     def fetch_ohlcv(
         self,
@@ -164,8 +167,8 @@ class CoinGeckoAdapter(DatasourceAdapter):
 
                 now_utc = datetime.now(tz=timezone.utc)
                 provenance = Provenance(
-                    source="coingecko",
-                    provider="CoinGecko",
+                    source=self.SOURCE_NAME,
+                    provider=self.PROVIDER_NAME,
                     endpoint="/coins/{id}/market_chart/range",
                     retrieval_timestamp=now_utc,
                     event_timestamp=ts,
@@ -174,7 +177,7 @@ class CoinGeckoAdapter(DatasourceAdapter):
                     timeframe=timeframe,
                     schema_version="1.0",
                     data_version=ts.strftime("%Y-%m-%d"),
-                    caveats="CoinGecko free tier: daily data only, no true OHLC",
+                    caveats=f"{self.PROVIDER_NAME} free tier: daily data only, no true OHLC",
                 )
 
                 candle = OHLCV(

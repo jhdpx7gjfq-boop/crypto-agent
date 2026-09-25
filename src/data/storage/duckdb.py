@@ -72,6 +72,10 @@ class DuckDBStore:
         # Read parquet safely using PyArrow (no SQL injection risk)
         table = pq.read_table(str(parquet_path))
 
+        # Extract source from parquet metadata
+        metadata = table.schema.metadata or {}
+        source = metadata.get(b"provider", b"unknown").decode()
+
         # Register as temporary table and insert (safe from SQL injection)
         temp_table = "_temp_parquet_import"
         self.conn.register(temp_table, table)
@@ -95,7 +99,7 @@ class DuckDBStore:
                 INSERT INTO data_metadata
                 (symbol, timeframe, source, record_count, first_timestamp, last_timestamp, file_path)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, [symbol, timeframe, "coingecko", cnt, first, last, str(parquet_path)])
+            """, [symbol, timeframe, source, cnt, first, last, str(parquet_path)])
 
         logger.info(
             "Parquet loaded to DuckDB",
