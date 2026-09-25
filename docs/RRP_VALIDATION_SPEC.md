@@ -22,7 +22,9 @@ RRP (Revival Radar Pipeline) must demonstrate statistical validity before Layer 
 
 ## Hypothesis
 
-**RRP can identify dead token resurrections with sufficient statistical confidence (≥60% precision, ≥40% recall) to support investment decision research when validated via walk-forward methodology.**
+**RRP provides reproducible predictive information about token resurrections, superior to baseline, with OOS/WFV stability and operational interpretability.**
+
+*Precision/recall become validation metrics, not pre-defined success criteria.*
 
 ### Supporting Metrics
 - RRP implementation: Complete (21/21 tests passing) ✓
@@ -32,9 +34,9 @@ RRP (Revival Radar Pipeline) must demonstrate statistical validity before Layer 
 
 ### Conflicting Metrics
 - No historical backtest results yet
-- No precision/recall baseline established
+- No baseline established for comparison
 - No walk-forward validation completed
-- Unknown false positive rate
+- Ground truth definition not yet formalized
 
 ### Assumptions
 1. Historical dead token data is reliable (CoinGecko, on-chain sources)
@@ -52,18 +54,22 @@ RRP (Revival Radar Pipeline) must demonstrate statistical validity before Layer 
 
 ## 1. Functional Requirements
 
-### 1.1 Detection Accuracy
+### 1.1 Predictive Information & Baseline
 
-**Requirement:** RRP must correctly identify dead token resurrections within statistical confidence bounds.
+**Requirement:** RRP must demonstrate information advantage over null hypothesis.
+
+**Phase 0: Establish Baseline** (BEFORE PIT)
+- Random classifier on ground truth distribution
+- Simple heuristic baseline (e.g., "all dead tokens have same resurrection rate")
+- Domain baseline (if exists from prior art)
 
 **Acceptance Criteria:**
 
-| Metric | Target | Rationale |
-|--------|--------|-----------|
-| **Recall** | ≥ 40% | Catch most genuine resurrections (minimize missed opportunities) |
-| **Precision** | ≥ 60% | Minimize false positives (avoid chasing noise) |
-| **F1-Score** | ≥ 0.48 | Balanced accuracy metric |
-| **ROC-AUC** | ≥ 0.65 | Discrimination ability above random |
+| Metric | Requirement | Rationale |
+|--------|-------------|-----------|
+| **RRP > Baseline** | AUC(RRP) > AUC(baseline) + 0.10 | Meaningful discriminative power |
+| **PIT Stability** | AUC_PIT ≥ 0.65 | In-sample performance floor |
+| **Reproducibility** | Results repeatable ± 2% | Implementation correct |
 
 **Measurement Method:**
 ```
@@ -180,7 +186,149 @@ For validation period [DATE_START, DATE_END]:
 
 ---
 
-## 3. Validation Framework (Walk-Forward)
+## 3. Validation Framework
+
+### Phase 0: Spec Freeze & Ground Truth Definition
+
+**MUST COMPLETE BEFORE ANY DATA TOUCH**
+
+#### 3.0.1 Formal Definitions
+
+**Define & Lock:**
+
+```text
+DORMANT TOKEN
+  Definition:  Market cap < $X, Volume < $Y, Addresses < $Z for N days
+  Threshold:   [TO BE SPECIFIED]
+  Duration:    [TO BE SPECIFIED]
+  Examples:    [Provide 3-5 examples]
+  Exclusions:  Tokens that migrated? Delisted? Rugged? [Define]
+
+RESURRECTION EVENT
+  Definition:  Dormant token shows recovery in [metric] by [amount]
+  Metric:      Price? Market cap? Volume? Multiple?
+  Threshold:   [TO BE SPECIFIED] % / X coins
+  Time window: [TO BE SPECIFIED] days
+  Examples:    [Provide 3-5 examples]
+  Exclusions:  Pump-and-dump vs sustainable? [Define]
+
+DATA CUTOFF (Lookahead Protection)
+  PIT snapshot date:  T0 ≤ 2024-12-31
+  Resurrection check: T0 + [WINDOW]
+  NO data after resurrection date used in T0 score
+  Strict temporal ordering enforced
+```
+
+#### 3.0.2 Data Provenance Architecture
+
+```text
+SOURCE HIERARCHY (by confidence):
+  1. CoinGecko OHLCV
+     - Timestamp format: UTC ISO8601
+     - Resampling: None (native frequency)
+     - Quality: Missing data threshold [X]%
+
+  2. On-chain metrics (if needed)
+     - Source: [Glassnode? Nansen? Local chain?]
+     - Reproducibility: Chain RPC node versioned
+     - Validation: Compare vs official explorer
+
+  3. Token metadata
+     - Source: [Coingecko? GitHub? Official?]
+     - Snapshot date: Track exactly
+     - Migrations / hard forks: Document
+
+  4. Delistings / events
+     - Source: CEX official announcements
+     - Date: [When announced? When executed?]
+     - Treatment: [Include or exclude?]
+```
+
+#### 3.0.3 Data Gap Policy
+
+**Measurable, not arbitrary:**
+
+```text
+Gap Definition:
+  Missing OHLCV for [N] consecutive days
+
+Gap Handling:
+  Gaps ≤ 7 days:    Interpolate? Forward-fill? [Decide]
+  Gaps 7-30 days:   Exclude period? [Decide]
+  Gaps > 30 days:   Exclude coin? [Decide]
+
+Documentation:
+  - Record gap locations in audit log
+  - Justify each handling decision
+  - Test sensitivity (results change if different handling?)
+```
+
+#### 3.0.4 Formal Approval Gate
+
+- [ ] Hypothesis text finalized and approved
+- [ ] Definitions locked (no changes after this)
+- [ ] Data provenance architecture reviewed
+- [ ] Gap policy documented
+- [ ] Ground truth labeled on [N] example coins
+- [ ] Pre-registration: Commit hash with locked definitions
+
+**SPEC FREEZE: This gate must pass before Phase 1 data collection.**
+
+---
+
+### Phase 1: Data Audit & Collection
+
+**Objective:** Verify data quality before ground truth construction.
+
+**Tasks:**
+1. Collect raw OHLCV for all coins 2020-present
+2. Audit for gaps, misalignments, errors
+3. Document provenance (source, date, hash)
+4. Tag any data quality issues
+5. Produce audit report (pass/fail by source)
+
+**Acceptance:**
+- [ ] Data completeness ≥ 95%
+- [ ] No unexplained gaps
+- [ ] Provenance trail intact
+- [ ] Audit report approved by human
+
+---
+
+### Phase 2: Ground Truth Construction & Freeze
+
+**Objective:** Formally label "dormant" and "resurrection" for all coins.
+
+**Tasks:**
+1. Apply dormant definition to all coins 2020-2024
+2. For each dormant coin, check resurrection by definition
+3. Label: Yes / No / Ambiguous
+4. Human review of ambiguous cases
+5. Document all decisions
+
+**Output:**
+```python
+ground_truth = {
+  coin_id: {
+    dormant_date: T0,
+    dormant_duration: N,
+    resurrected: True/False,
+    resurrection_date: T+k (if True),
+    confidence: DEFINITE / PROBABLE / AMBIGUOUS,
+    notes: [Human review comments]
+  }
+}
+```
+
+**Acceptance:**
+- [ ] All coins labeled
+- [ ] Ambiguous cases < 5% or resolved
+- [ ] Human verification of random sample (10-20%)
+- [ ] Ground truth frozen (no changes after)
+
+---
+
+### Phase 3: Walk-Forward Validation
 
 ### 3.1 Historical Backtest Dataset
 
@@ -190,85 +338,154 @@ For validation period [DATE_START, DATE_END]:
 Training:      2020-01-01 to 2024-12-31 (5 years)
 Testing:       2025-01-01 to 2026-09-25 (current)
 
-Three validation phases:
+Three validation phases (after spec/ground truth frozen):
 ```
 
-### 3.2 Phase 1: PIT (In-Sample) Validation
+### 3.3 Phase 3a: PIT (In-Sample) Validation
 
 **Purpose:** Verify RRP logic works on historical data it was calibrated on.
 
 **Method:**
 ```
 1. Historical window: 2020-2024
-2. Input: Dead tokens at snapshot date (mcap <$50M, volume <$1M, addresses <100k)
-3. Label: Did it resurrect in next 6-12 months?
-4. Measure: Precision, recall, AUC on training set
+2. Input: Dormant tokens per ground truth at snapshot date
+3. Label: Did it resurrect per ground truth definition?
+4. Measure: AUC, calibration, component ablation on training set
 ```
 
-**Expected Results:**
-- Recall: 50-70% (captures most genuine resurrections)
-- Precision: 70-85% (trained on this data, should fit well)
-- AUC: 0.72-0.85
+**Pre-Registration (before running):**
+```text
+PIT_BASELINE = AUC(random classifier on ground truth distribution)
+```
 
 **Acceptance Criteria:**
-- [ ] Precision ≥ 70%
-- [ ] Recall ≥ 50%
-- [ ] AUC ≥ 0.70
+- [ ] AUC(RRP) > AUC_BASELINE + 0.10 (meaningful info)
+- [ ] Metrics reproducible ± 2%
+- [ ] Calibration curve monotonic (no reversals)
+- [ ] No component is zero-weight (all contribute)
+- [ ] No obvious lookahead bias in scores
 
-### 3.3 Phase 2: OOS (Out-of-Sample) Validation
+### 3.4 Phase 3b: OOS (Out-of-Sample) Validation
 
-**Purpose:** Verify RRP generalizes to unseen data periods.
+**Purpose:** Verify RRP generalizes to unseen data periods (different market regime).
 
 **Method:**
 ```
-1. Split data: 70% train (2020-2023) + 30% test (2024)
-2. Train RRP parameters on 2020-2023
-3. Evaluate on 2024 (held-out, never seen during training)
-4. Measure: Precision, recall, AUC on test set
+1. Split data: 80% train (2020-2023) + 20% test (2024)
+2. Train RRP parameters on 2020-2023 ONLY
+3. Evaluate on 2024 (held-out, never touched during training)
+4. Measure: AUC, calibration, component stability
 ```
 
-**Expected Results:**
-- Recall: 35-50% (some performance drop due to different regime)
-- Precision: 60-75%
-- AUC: 0.62-0.75
+**Pre-Registration:**
+```text
+TOLERANCE_DEGRADATION = [TO BE DECIDED]
+  Acceptable AUC drop from PIT to OOS: [X]%
+  
+Example: If PIT_AUC = 0.72, accept OOS_AUC ≥ 0.68 (5.5% degradation)
+```
 
 **Acceptance Criteria:**
-- [ ] Precision ≥ 60%
-- [ ] Recall ≥ 35%
-- [ ] AUC ≥ 0.60
-- [ ] AUC drop from PIT ≤ 0.15 (no severe overfitting)
+- [ ] AUC(OOS) > AUC_BASELINE + 0.08 (still better than baseline)
+- [ ] AUC drop: |AUC_OOS - AUC_PIT| ≤ [TOLERANCE] (overfitting check)
+- [ ] Calibration preserved (no systematic over/under confidence)
+- [ ] Component weights stable (no weight collapse)
 
-### 3.4 Phase 3: WFV (Walk-Forward Validation)
+### 3.5 Phase 3c: WFV (Walk-Forward Validation)
 
-**Purpose:** Simulate real-world deployment where model makes forward predictions.
+**Purpose:** Simulate real-world deployment where model makes forward predictions (strictest test).
 
 **Method:**
 ```
 Walk-forward simulation:
 
 For each date T in [2024-01-01, 2026-09-25]:
-  1. Train RRP on data from [2020-01-01, T-6mo]
-  2. Score tokens at date T
-  3. Observe resurrection at T+6mo
-  4. Compute metrics for this window
+  1. Train RRP on data from [2020-01-01, T-6mo] ONLY (no future data)
+  2. Score tokens at date T using T-only data
+  3. Observe ground truth outcome at T+[WINDOW]
+  4. Compute AUC/stats for this window
   5. Move forward 1 month
   6. Repeat
   
-Result: Time series of precision/recall/AUC per month
+Result: Time series of AUC per month (most realistic scenario)
 ```
 
-**Expected Results:**
-- Mean Recall: 30-45% (online learning, most challenging scenario)
-- Mean Precision: 55-70%
-- Mean AUC: 0.58-0.68
-- Consistency: Metrics stable across time (no sudden degradation)
+**Pre-Registration:**
+```text
+WFV_MIN_AUC = [TO BE DECIDED]
+WFV_STABILITY = Max AUC fluctuation per month [TO BE DECIDED]
+
+Example: Require AUC ≥ 0.55 every month, max variance ± 0.10
+```
 
 **Acceptance Criteria:**
-- [ ] Mean Precision ≥ 55%
-- [ ] Mean Recall ≥ 30%
-- [ ] Mean AUC ≥ 0.58
-- [ ] Metrics don't degrade >20% in any month
-- [ ] No regime-specific collapse
+- [ ] AUC(WFV) > AUC_BASELINE + 0.05 (still informative online)
+- [ ] Mean AUC ≥ [WFV_MIN_AUC] across all windows
+- [ ] Monthly AUC variance ≤ [STABILITY] (no sudden collapses)
+- [ ] No regime-specific degradation (bull/bear/sideways separate analysis)
+
+### 3.6 Phase 4: Ablation & Component Analysis
+
+**Purpose:** Verify each component contributes meaningfully (not just noise).
+
+**Method:**
+```
+For each component [volume, address, price, velocity, stat]:
+  1. Train RRP without this component
+  2. Measure AUC loss: AUC_full - AUC_without
+  3. Statistical significance test (bootstrap CI)
+  
+Result: Component contribution ranking
+```
+
+**Acceptance Criteria:**
+- [ ] Each component AUC drop ≥ 0.05 (material contribution)
+- [ ] No component is solely explanatory (no >60% correlation with others)
+- [ ] Component ordering matches hypothesis (volume/address most important)
+
+---
+
+### 3.7 Phase 5: Robustness & Statistical Validation
+
+**Purpose:** Verify stability across subgroups and statistical rigor.
+
+**Tests:**
+
+**5.1 Stratified Analysis**
+```
+For each stratification:
+  - By market cap bucket (if available)
+  - By category (if available)
+  - By data source quality
+  
+Acceptance: No subgroup AUC < [Overall - 0.10]
+```
+
+**5.2 Temporal Stability**
+```
+For each month in WFV:
+  - Is AUC consistent?
+  - Are outlier months explainable?
+  - Does regime change cause collapse?
+```
+
+**5.3 Sensitivity Analysis**
+```
+For each key threshold in RRP:
+  - Volume multiplier (3x vs 2x vs 5x)
+  - Address multiplier (2x vs 1.5x vs 3x)
+  - Price threshold (50% vs 25% vs 100%)
+  
+Acceptance: Results stable ± 0.05 AUC for reasonable range
+```
+
+**5.4 Statistical Confidence**
+```
+For all final metrics (PIT/OOS/WFV AUC):
+  - Compute 95% bootstrap CI
+  - CI width ≤ 0.10 (narrow enough to be useful)
+  - No CI overlapping with baseline
+```
 
 ---
 
@@ -380,64 +597,87 @@ class RRPValidationStatus:
 
 ---
 
-## 6. Success Criteria Summary
+## 6. Success Criteria Framework
 
 ### Alpha Validation Passes If:
 
 **ALL of the following are TRUE:**
 
-- [ ] **Functional:**
-  - [ ] PIT Precision ≥ 70%, Recall ≥ 50%
-  - [ ] OOS Precision ≥ 60%, Recall ≥ 35%
-  - [ ] WFV Precision ≥ 55%, Recall ≥ 30%
-  - [ ] Score calibration R² ≥ 0.60
-  - [ ] No component is dead weight (all ≥ min contribution)
+- [ ] **Phase 0: Spec Freeze**
+  - [ ] Hypothesis finalized (non-numeric, framework-based)
+  - [ ] Ground truth definitions locked and approved
+  - [ ] Data provenance architecture documented
+  - [ ] Gap policy formalized
+  - [ ] Baseline methodology pre-registered
 
-- [ ] **Data Integrity:**
-  - [ ] Immutable audit trail verified
-  - [ ] Zero lookahead bias found
-  - [ ] Snapshot completeness ≥ 95%
-  - [ ] No temporal ordering violations
+- [ ] **Phase 1-2: Data & Ground Truth**
+  - [ ] Data completeness ≥ 95%
+  - [ ] Ground truth labeled on all coins
+  - [ ] Ambiguous cases < 5% or resolved
+  - [ ] Human verification of random sample
 
-- [ ] **Statistical:**
-  - [ ] ≥ 100 dead tokens tested, ≥ 30 resurrections observed
-  - [ ] 95% CI width ≤ 20% of estimates
-  - [ ] No subgroup shows <50% of overall performance
-  - [ ] Metrics stable across time windows
+- [ ] **Phase 3a-3c: Walk-Forward Validation**
+  - [ ] PIT: AUC(RRP) > AUC(baseline) + 0.10 ✓
+  - [ ] OOS: AUC(RRP) > AUC(baseline) + 0.08, degradation ≤ [TOLERANCE] ✓
+  - [ ] WFV: AUC(RRP) > AUC(baseline) + 0.05, stability ≤ [TOLERANCE] ✓
+  - [ ] No lookahead bias at any point
 
-- [ ] **Governance:**
-  - [ ] Code versioned and reproducible
+- [ ] **Phase 4: Ablation**
+  - [ ] Each component contributes ≥ 0.05 AUC
+  - [ ] Component ordering interpretable
+  - [ ] No single component dominates (< 60%)
+
+- [ ] **Phase 5: Robustness**
+  - [ ] Stratified performance: no subgroup < (overall - 0.10)
+  - [ ] Temporal stability: no unexplained regime collapse
+  - [ ] Sensitivity: stable ± 0.05 AUC for reasonable parameter ranges
+  - [ ] Statistical confidence: 95% CI width ≤ 0.10
+
+- [ ] **Governance & Reproducibility**
+  - [ ] Code versioned (commit hash recorded)
+  - [ ] Dataset versioned (version stamp + provenance)
+  - [ ] Results independently reproducible
   - [ ] Human approvals documented at each gate
-  - [ ] Results tied to specific commits/datasets
-  - [ ] No shortcuts taken
+  - [ ] Pre-registration respected (no cherry-picking)
 
 ### Alpha Validation Fails If:
 
 **ANY of the following are TRUE:**
 
 - ❌ Lookahead bias detected at any point
-- ❌ Metrics below thresholds in any phase
-- ❌ Performance collapse in specific market regimes
+- ❌ Ground truth definition changed mid-validation
+- ❌ Baseline not established before running analysis
+- ❌ AUC(RRP) not reliably > AUC(baseline)
+- ❌ Performance collapse in any market regime
 - ❌ Unable to reproduce results
-- ❌ Snapshots missing/corrupted
+- ❌ Data gaps > acceptable threshold
 - ❌ Human approval withheld at any gate
+- ❌ Pre-registration violated (post-hoc threshold adjustments)
 
 ---
 
-## 7. Timeline & Milestones
+## 7. Timeline & Phases
 
-**Proposed Schedule:**
+**Phase Structure (sequential, some parallelization possible):**
 
-| Phase | Task | Owner | Duration | Target Date |
-|-------|------|-------|----------|-------------|
-| **P1** | Historical data collection & cleaning | AI Copilot proposal | 1 week | 2026-10-02 |
-| **P2** | PIT backtest (2020-2024) | Human execution | 2 weeks | 2026-10-16 |
-| **P3** | PIT review & approval | Human approval | 1 week | 2026-10-23 |
-| **P4** | OOS validation (2024) | Human execution | 1 week | 2026-10-30 |
-| **P5** | OOS review & decision | Human approval | 1 week | 2026-11-06 |
-| **P6** | WFV simulation (2024-2026) | Human execution | 2 weeks | 2026-11-20 |
-| **P7** | WFV analysis & gate decision | Human approval | 1 week | 2026-11-27 |
-| **TOTAL** | | | ~10 weeks | **2026-11-27** |
+| Phase | Task | Duration | Gate | Target |
+|-------|------|----------|------|--------|
+| **Phase 0** | Spec Freeze + Ground Truth Design | 1-2 weeks | ✓ Human approval | Oct 2 |
+| **Phase 1** | Data Audit & Collection | 1-2 weeks | ✓ Data quality check | Oct 16 |
+| **Phase 2** | Ground Truth Construction | 1-2 weeks | ✓ Human review | Oct 30 |
+| **Phase 3a** | PIT Backtest (2020-2024) | 1 week | ✓ Performance check | Nov 6 |
+| **Phase 3b** | OOS Validation (2024) | 1 week | ✓ Degradation check | Nov 13 |
+| **Phase 3c** | WFV Simulation (2024-2026) | 1-2 weeks | ✓ Stability check | Nov 27 |
+| **Phase 4** | Ablation & Component Analysis | 1 week | ✓ Contribution check | Dec 4 |
+| **Phase 5** | Robustness & Statistics | 1-2 weeks | ✓ Subgroup/regime test | Dec 18 |
+| **GATE** | Human Final Decision (Alpha or Rework) | | ✓ Binomial | Dec 20 |
+| **TOTAL** | | ~12 weeks | | **Dec 20, 2026** |
+
+**Notes:**
+- Phases 1-2 can be partially parallelized
+- Phases 3a-3c sequential (dependent on prior results)
+- Phase 4-5 can overlap with phase 3c
+- Each gate requires human approval before progression
 
 ---
 
@@ -467,66 +707,123 @@ class RRPValidationStatus:
 
 ---
 
-## 9. Open Questions for Human Review
+## 9. Pre-Registration: Open Questions for Human Review
 
-**Before approving this spec, please address:**
+**MUST be decided BEFORE Phase 0 Spec Freeze:**
 
-1. **Ground Truth Definition**
-   - Is 2/3 validation checks the right definition of "resurrection"?
-   - Should we require minimum 100% price gain? 200%?
-   - Time window: 6 months? 12 months? Variable?
+### Ground Truth Definitions (Q1-Q3)
 
-2. **Data Sources**
-   - Which data sources for ground truth? (CoinGecko only? On-chain?)
-   - Acceptable data gap tolerance? (≤7 days? ≤30 days?)
-   - How to handle delisted tokens?
+**Q1: Dormant Token Definition**
+- Market cap threshold: < $[X]M?
+- Volume threshold: < $[Y]M per day?
+- Active address threshold: < [Z]K?
+- Minimum dormancy duration: [N] days?
+- Examples: Provide 3-5 coins matching this definition
 
-3. **Acceptance Thresholds**
-   - Are 60% precision / 40% recall targets appropriate?
-   - OOS drop tolerance: 15 points? 20 points?
-   - WFV minimum: 55%? Too high? Too low?
+**Q2: Resurrection Event Definition**
+- Metric(s): Price only? Market cap? Multiple?
+- Threshold: [X]% gain / [Y]x multiple?
+- Time window: [N] days? 6 months? 1 year?
+- Exclusions: How to distinguish pump-and-dump vs sustainable?
+- Examples: Provide 3-5 coins showing this event
 
-4. **Timeline**
-   - Is 10 weeks realistic?
-   - Can this run in parallel with other work?
-   - What's the absolute deadline?
+**Q3: Data Cutoff & Temporal Rules**
+- PIT snapshot date: ≤ 2024-12-31? Different date?
+- Resurrection observation window: [SNAPSHOT + N days]?
+- Strict lookahead rule: No future data allowed in ANY score?
+- Delistings/migrations: Include or exclude?
 
-5. **Scope**
-   - Should we validate X20/NARM-P+/RCM/RPM in parallel?
-   - Or RRP first, then others?
-   - Do other layers have their own validation gates?
+### Data Architecture (Q4-Q5)
+
+**Q4: Data Provenance & Gap Policy**
+- Primary data source: CoinGecko only? Multiple sources?
+- On-chain fallback: Yes or no? Which provider?
+- Gap measurement: Consecutive missing days? Percentage?
+- Gap tolerance: ≤ 7 days? ≤ 30 days? Measure vs decide?
+
+**Q5: Data Quality Acceptance**
+- Overall completeness minimum: 95%? 98%?
+- Per-coin completeness: 90%? 95%? Required or desired?
+- Data quality score methodology: [Define how to measure]
+
+### Validation Thresholds (Q6-Q7)
+
+**Q6: Baseline & Information Advantage**
+- How to establish baseline? (Random classifier? Domain heuristic?)
+- Minimum AUC advantage over baseline: 0.10? 0.15?
+- Pre-register baseline calculation BEFORE running analysis
+
+**Q7: Degradation Tolerances**
+```
+OOS degradation from PIT:  |AUC_OOS - AUC_PIT| ≤ [  ]?
+WFV stability per month:   Max variance ≤ [  ]?
+WFV minimum AUC:          AUC ≥ [  ]? (baseline + [X]?)
+Subgroup stability:       No subgroup < overall - [  ]?
+```
+
+### Timeline & Scope (Q8)
+
+**Q8: Execution Timeline**
+- 12-week schedule (Oct 2 - Dec 20, 2026) acceptable?
+- Can phases 1-2 run in parallel or must be sequential?
+- Hard deadline for gate decision? (Affects scope/depth)
+
+**Q9: Scope - RRP Only or Multiple Layers?**
+- RRP validation ONLY now, X20/NARM-P+/RCM/RPM later?
+- Or should we plan multi-layer validation roadmap?
 
 ---
 
-## 10. Approval Tracking
+## 10. Governance & Approval Tracking
 
 **Proposal Status:**
 
 ```
-Proposal ID:     rrp_validation_spec_2026-09-25
-Generated:       2026-09-25 by AI Research Copilot
-Confidence:      0.72 (structured framework, known gaps)
-Status:          🟡 PENDING HUMAN APPROVAL
+Proposal ID:        rrp_validation_spec_2026-09-25
+Generated:          2026-09-25 by AI Research Copilot
+Version:            DRAFT (Framework Approved / Details Pending)
+Framework Status:    🟡 PROPOSED (methodology structure)
+Pre-registration:    ❌ INCOMPLETE (Q1-Q9 must be answered)
+Phase 0 Gate:        🔒 BLOCKED (awaiting answers to Q1-Q9)
 
-[ ] Approved by:        [NAME] ____________
-[ ] Rejected by:        [NAME] ____________
-[ ] Modifications by:   [NAME] ____________
-[ ] Final Gate:         [DATE] ____________
+BEFORE Phase 0 Freeze:
+[ ] Answer Q1-Q9 completely and document
+[ ] Hypothesis finalized (non-numeric, framework-based)
+[ ] Ground truth definitions locked
+[ ] Baseline methodology pre-registered
+[ ] Human approval: Spec Freeze gate
+
+Conditional Approvals:
+[ ] Phase 1-2 gate: Data completeness & quality
+[ ] Phase 3a gate: PIT meets AUC > baseline + 0.10
+[ ] Phase 3b gate: OOS meets AUC > baseline + 0.08, degradation ≤ tolerance
+[ ] Phase 3c gate: WFV meets AUC > baseline + 0.05, stability ≤ tolerance
+[ ] Phase 4-5 gate: Ablation & robustness checks
+[ ] Final gate: VALIDATED_ALPHA or REWORK decision
 ```
 
 ---
 
 ## Summary
 
-This specification defines **alpha-level** validation for RRP: sufficient confidence (55-70% precision, 30-45% recall walk-forward) to support research-gated investment decisions, not autonomous trading.
+This specification defines a **methodology framework** for RRP alpha validation, based on:
 
-**Key Principle:** Research proposal → human review → experiment → validation.
+1. **Spec Freeze & Ground Truth first** (before touching any data)
+2. **Walk-forward testing** (PIT → OOS → WFV) with pre-registered thresholds
+3. **Baseline comparison** (RRP must beat random, not hit arbitrary %s)
+4. **Rigorous methodology** (ablation, robustness, stratified analysis)
+5. **Human approval at every gate** (no auto-progression)
 
-**Human decision required at every gate.**
+**Key Principle:** Framework approved → Ground truth defined → Validation executed → Decision made.
+
+**Human decision required at every single gate.**
+
+**This spec awaits completion of Q1-Q9 before Phase 0 can begin.**
 
 ---
 
 **Generated:** 2026-09-25  
 **By:** AI Research Copilot (Phase 9)  
-**Status:** Awaiting Human Approval  
-**Next:** Approve / Reject / Modify + Iterate
+**Version:** DRAFT (Framework + Methodology)  
+**Status:** 🟡 AWAITING HUMAN DECISIONS ON PRE-REGISTRATION QUESTIONS  
+**Next Step:** Answer Q1-Q9 → Approve Phase 0 Spec Freeze → Begin validation
