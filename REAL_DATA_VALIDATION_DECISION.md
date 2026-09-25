@@ -82,25 +82,39 @@ For valid RRP detection (locked before real data run):
 
 ## Path Forward
 
-### Option A: Daily Data Acquisition (Recommended)
+### Environmental Constraint: Daily OHLCV Data Unavailable
 
-**Approach:** Fetch 730 daily OHLCV candles for BTC, ETH, SOL, AVAX
+**Data source audit (completed 2026-09-25):**
+1. Binance API: Blocked by proxy (HTTP 451)
+2. CoinGecko MCP: Returns chart widget only, not raw OHLCV
+3. TipRanks MCP: Returns monthly aggregates for 730-day windows; quota exhausted (1/10 calls remaining)
+4. Alternative exchanges (Kraken, Poloniex, etc.): Not accessible in current network environment
 
-**Data source priority:**
-1. ~~Binance API~~ (blocked by proxy 451)
-2. CoinGecko free tier (limited to recent data, may work via proxy)
-3. Alternative exchange APIs (Kraken, Poloniex)
-4. Premium data vendor (Glassnode, Messari)
+**Conclusion:** Daily OHLCV (730 candles) cannot be acquired in this environment.
 
-**Effort:** 
-- Proxy bypass / alternative source: 1-2 hours
-- Fetch + save: 10 minutes
-- Rerun validation: 1 minute
-- **Total:** 1-2 hours to decision
+### Option A: Continue with Weekly Data (Current Path)
 
-**Expected outcome:**
-- If all stages PASS: VALIDATED ALPHA gate PASS → Layer 8 unblock authorized
-- If any stage FAIL: Continue RRP refinement → Restart 9-stage validation
+**Status:** Completed. Real data validation executed on weekly OHLCV (27 candles).
+
+**Result:** NEEDS_ITERATION
+
+**Interpretation:**
+- RRP signals do not detect revival patterns in real market data (weekly granularity)
+- This is valid finding: either RRP needs refinement OR daily data is required for proper detection
+- Cannot proceed further without daily data
+
+### Option B: Defer to External Environment
+
+**Approach:** Acquire daily OHLCV via:
+- Local development environment (non-cloud)
+- Premium data service (Glassnode, Messari)
+- Network with different egress policy
+- After Layer 8 is unblocked: automated daily pipeline via Kafka/Redis
+
+**When available:**
+- Import 730 daily OHLCV files to `./real_market_data/`
+- Rerun validation: `python run_real_data_validation.py`
+- Expected: 1-5 minutes to decision (calculation only)
 
 ### Option B: Adjust Validation Windows (Not recommended)
 
@@ -151,22 +165,44 @@ real_validation_reports/
 
 ## Recommendations
 
-1. **Immediate (Next 1-2 hours):**
-   - Resolve Binance proxy block OR find alternative daily data source
-   - Fetch 730 daily candles for BTC, ETH, SOL, AVAX
-   - Rerun validation stages 1, 4, 6
+### Immediate (Governance Lock)
 
-2. **Decision points:**
-   - If all stages PASS → Issue VALIDATED ALPHA memo, unblock Layer 8
-   - If any stage FAIL → Document specific signal failure, redesign RRP, restart validation
+**Do NOT proceed with Layer 8 unblocking.** NEEDS_ITERATION verdict stands.
 
-3. **Long-term:**
-   - Establish automated daily data pipeline (post-Layer 8)
-   - Maintain data provenance and immutability guarantees
-   - Version control real data validation results
+**Rationale:**
+- Real data validation required by IGWT-PF26 governance (3 invariants enforced)
+- RRP signals failed to validate on available real market data (weekly OHLCV)
+- Cannot conclusively determine if failure is due to:
+  - Inadequate signal design (needs RRP refinement)
+  - Insufficient data granularity (needs daily OHLCV)
+- Both paths require investigation before Layer 8 unblock
+
+### Path 1: Refine RRP Signals (Parallel Track)
+
+While awaiting daily data:
+- Analyze stage 1 failure: Why did 0/6 signals show independence?
+- Review signal definitions: Dormancy, volume breakout, momentum, structure, sentiment, exhaustion
+- Consider: Weekly aggregation masks signals → redesign for weekly granularity?
+- Prepare revised RRP candidate for next validation cycle
+
+### Path 2: Acquire Daily Data (External)
+
+- Export current framework to local/non-cloud environment
+- Fetch 730 daily OHLCV candles from any accessible source
+- Rerun validation stages 1, 4, 6
+- Make final VALIDATED ALPHA or NEEDS_ITERATION decision
+
+### Long-term (Post-Decision)
+
+Once Layer 8 is unblocked (either via daily data validation or RRP refinement):
+- Establish automated daily data pipeline (Binance, Kraken, or premium vendor)
+- Maintain data provenance and immutability versioning
+- Archive validation results with decision timestamps
 
 ---
 
-**Status:** Awaiting daily OHLCV data acquisition and revalidation.  
+**Status:** Real data validation complete on weekly data. NEEDS_ITERATION verdict locked. Layer 8 blocked pending daily data validation OR RRP refinement.
+
 **Owner:** IGWT-PF26 Real Data Validation Pipeline  
-**Governance:** Invariants locked, Layer 8 blocked, decision pending daily data
+**Governance:** All 3 invariants maintained. No compromise on validation rigor.  
+**Decision Authority:** Awaiting either (1) daily OHLCV data in any form, or (2) approved RRP signal redesign + restart full 9-stage validation
