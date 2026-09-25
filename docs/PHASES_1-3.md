@@ -236,8 +236,9 @@ test_feature_store.py           4/5  ✓
 test_wyckoff_bce.py             7/7  ✓
 test_x20_engine.py              7/7  ✓
 test_narm_p_plus.py             9/9  ✓
+test_rcm_rpm_engine.py          12/12 ✓
 
-Total: 37/38 ✓ (97.4%)
+Total: 49/50 ✓ (98.0%)
 ```
 
 Run all:
@@ -247,13 +248,69 @@ pytest tests/ -v
 
 ---
 
-## Completed: Phase 5 ✓
+## Completed: Phases 1-6 ✓
 
-**5. NARM-P+** - Narrative adoption rotation model ✓
+**5. NARM-P+** - Narrative adoption rotation model ✓  
+**6. RCM/RPM** - Capital rotation detection ✓
 
-## Next: Phase 6-9
+---
 
-**6. RCM/RPM** - Capital rotation detection  
+## Phase 6: RCM/RPM Engine
+
+### Capital Rotation Detection Model - v1.0.0
+
+Detects capital rotation patterns and confirms multi-week rotation trends with Walk Forward validation.
+
+**Scoring System:** 0-100 points (5 weighted components)
+
+**Components:**
+- **Capital Flow** (25%) - Exchange inflow/outflow momentum (positive = capital rotating in)
+- **Relative Strength** (25%) - 7d/30d price performance vs market baseline
+- **Narrative Acceleration** (20%) - Narrative mention growth momentum (7d/30d growth rates)
+- **Fundamental Confirmation** (20%) - On-chain activity growth (active addresses, transaction volume)
+- **Derivatives Structure** (10%) - Futures positioning (funding rates, open interest trends)
+
+**Signal Classification:**
+```
+Score >= 75 → STRONG_ROTATION
+Score >= 55 → MODERATE_ROTATION
+Score >= 35 → WEAK_ROTATION
+Score < 35 → NO_ROTATION
+```
+
+**Key Features:**
+- **Walk Forward Backtest:** No lookahead bias validation
+  - Trains on past N days
+  - Tests on next M days
+  - Slides window forward to confirm signal quality
+- **Rotation Strength Assessment:** Based on component variance
+- **Confirmation Level:** 0-1 scoring (higher = more consistent component scores)
+- **Batch Scoring:** Multiple coins ranked by rotation score
+
+**Usage:**
+```python
+engine = RCMRPMEngine()
+result = engine.score_rotation(coin_data)
+print(f"Score: {result['total_score']}/100")
+print(f"Signal: {result['rotation_signal']}")
+print(f"Confirmation: {result['confirmation_level']:.2f}")
+```
+
+**Walk Forward Backtest:**
+```python
+backtest_df = engine.walk_forward_backtest(
+    historical_data,
+    train_window_days=30,
+    test_window_days=7
+)  # Returns: timestamp, score, signal, confirmation (no lookahead)
+```
+
+**Tests:** 12/12 ✓
+
+---
+
+## Next: Phase 7-9
+
 **7. RRP** - Revival Radar (dead tokens resurrection)  
 **8. Dashboard** - Real-time monitoring  
 **9. Agent AI** - Autonomous research assistant
@@ -269,7 +326,8 @@ pytest tests/ -v
 | `src/analysis/wyckoff_bce.py` | Accumulation detection | ✓ v1.0.0 |
 | `src/analysis/x20_engine.py` | Opportunity scoring | ✓ v1.0.0 |
 | `src/analysis/narm_p_plus.py` | Narrative rotation | ✓ v1.0.0 |
-| `tests/` | Full test suite | ✓ 97.4% |
+| `src/analysis/rcm_rpm_engine.py` | Capital rotation | ✓ v1.0.0 |
+| `tests/` | Full test suite | ✓ 98.0% |
 
 ---
 
@@ -287,6 +345,6 @@ pytest tests/ -v
 ---
 
 **Built:** 2026-09-25  
-**Last Updated:** 2026-09-25 (Phase 5: NARM-P+)  
+**Last Updated:** 2026-09-25 (Phase 6: RCM/RPM)  
 **Session:** claude/wonderful-edison-05iu3k  
 **Team:** Claude Haiku 4.5 + IGWT Strategy
