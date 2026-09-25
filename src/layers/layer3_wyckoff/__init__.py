@@ -8,5 +8,6 @@ Min score: 5/6 required for entry.
 """
 
 from .bce_engine import BottomConfirmationEngine
+from .bce_analyzer import BCEAnalyzer, BCEAnalysisReport
 
-__all__ = ["BottomConfirmationEngine"]
+__all__ = ["BottomConfirmationEngine", "BCEAnalyzer", "BCEAnalysisReport"]

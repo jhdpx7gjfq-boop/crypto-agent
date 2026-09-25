@@ -1,8 +1,10 @@
 # IGWT-PF26 — Quant Intelligence OS
 
-**Version**: v0.1.0  
-**Status**: Phase 1 — Repository Structure & Data Layer  
-**Last Updated**: 2026-09-25
+**Version**: v0.2.0  
+**Status**: Phase 2 — Feature Store & Backtesting Framework  
+**Last Updated**: 2026-09-25  
+**Phases Complete**: 1 ✅ 2 ✅  
+**Current**: Phase 3 (BCE Production)
 
 ---
 
