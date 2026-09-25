@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(mess
 logger = logging.getLogger(__name__)
 
 
-def classify_zone(price, high_threshold, low_threshold):
+def classify_zone(price: float, high_threshold: float, low_threshold: float) -> str | None:
     if price > high_threshold:
         return "high"
     if price < low_threshold:
@@ -16,19 +16,19 @@ def classify_zone(price, high_threshold, low_threshold):
     return None
 
 
-def format_alert(zone, price):
+def format_alert(zone: str, price: float) -> str:
     if zone == "high":
         return f"🔴 BTC HIGH ALERT: {price}$"
     return f"🟢 BTC DIP ALERT: {price}$"
 
 
-def send(bot_token, chat_id, msg):
+def send(bot_token: str, chat_id: str, msg: str) -> None:
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
     response = requests.post(url, json={"chat_id": chat_id, "text": msg}, timeout=10)
     response.raise_for_status()
 
 
-def get_btc():
+def get_btc() -> float:
     response = requests.get(
         "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd",
         timeout=10,
@@ -37,7 +37,9 @@ def get_btc():
     return response.json()["bitcoin"]["usd"]
 
 
-def poll_once(bot_token, chat_id, high_threshold, low_threshold, last_zone):
+def poll_once(
+    bot_token: str, chat_id: str, high_threshold: float, low_threshold: float, last_zone: str | None
+) -> str | None:
     try:
         btc = get_btc()
     except (requests.RequestException, KeyError, ValueError) as exc:
@@ -55,7 +57,7 @@ def poll_once(bot_token, chat_id, high_threshold, low_threshold, last_zone):
     return zone
 
 
-def main():
+def main() -> None:
     bot_token = os.environ["BOT_TOKEN"]
     chat_id = os.environ["CHAT_ID"]
     high_threshold = float(os.environ.get("HIGH_THRESHOLD", 70000))
