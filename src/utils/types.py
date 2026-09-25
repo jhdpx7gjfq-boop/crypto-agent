@@ -13,7 +13,7 @@ class AlertZone(str, Enum):  # noqa: UP042
     NEUTRAL = None
 
 
-class PriceAlert(BaseModel):
+class PriceAlert(BaseModel):  # type: ignore[misc]
     """Price alert notification."""
 
     zone: AlertZone = Field(..., description="Alert zone (high, low, or None)")
