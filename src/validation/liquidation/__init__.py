@@ -31,6 +31,7 @@ from src.validation.liquidation.contracts import (
     LiquidationEvent,
     LiquidationQAReport,
 )
+from src.validation.liquidation.dataset import LiquidationDataset
 from src.validation.liquidation.features import LiquidationFeatureEngine
 from src.validation.liquidation.labels import LiquidationLabelEngine
 from src.validation.liquidation.persistence import LiquidationStore
@@ -45,4 +46,5 @@ __all__ = [
     "LiquidationQA",
     "LiquidationFeatureEngine",
     "LiquidationLabelEngine",
+    "LiquidationDataset",
 ]
