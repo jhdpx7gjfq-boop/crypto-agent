@@ -1,0 +1,7 @@
+{
+  "mean_win_rate": 0.49234972677595634,
+  "mean_precision": 0.5,
+  "stability": 0.9743524533327053,
+  "gate_pass": false,
+  "source": "real_coingecko_data"
+}
