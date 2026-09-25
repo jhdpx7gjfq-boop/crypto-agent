@@ -1,0 +1,205 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: igwt-phase1
+  labels:
+    phase: "1"
+    project: "igwt"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phase1-config
+  namespace: igwt-phase1
+data:
+  COINGECKO_API_URL: "https://api.coingecko.com/api/v3"
+  PHASE1_MAX_COINS: "3421"
+  PHASE1_START_DATE: "2020-01-01"
+  PHASE1_END_DATE: "2026-12-31"
+  PHASE1_TARGET_COMPLETENESS: "0.95"
+  PHASE1_MAX_GAP_DAYS: "14"
+  LOG_LEVEL: "INFO"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: phase1-secrets
+  namespace: igwt-phase1
+type: Opaque
+stringData:
+  GLASSNODE_API_KEY: ""  # Set via deployment
+  AWS_ACCESS_KEY_ID: ""  # Set via deployment
+  AWS_SECRET_ACCESS_KEY: ""  # Set via deployment
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: igwt-collector
+  namespace: igwt-phase1
+  labels:
+    app: collector
+    phase: "1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: collector
+  template:
+    metadata:
+      labels:
+        app: collector
+    spec:
+      containers:
+      - name: collector
+        image: igwt/collector:phase1
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: phase1-config
+        - secretRef:
+            name: phase1-secrets
+        env:
+        - name: PROJECT_DIR
+          value: /app
+        volumeMounts:
+        - name: data-volume
+          mountPath: /app/data
+        - name: logs-volume
+          mountPath: /app/logs
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          exec:
+            command:
+            - python3
+            - -c
+            - "import sys; sys.exit(0)"
+          initialDelaySeconds: 30
+          periodSeconds: 60
+        readinessProbe:
+          exec:
+            command:
+            - python3
+            - -c
+            - "import sys; sys.exit(0)"
+          initialDelaySeconds: 10
+          periodSeconds: 10
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: phase1-data-pvc
+      - name: logs-volume
+        persistentVolumeClaim:
+          claimName: phase1-logs-pvc
+      restartPolicy: OnFailure
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: igwt-qa-audit
+  namespace: igwt-phase1
+  labels:
+    app: qa-audit
+    phase: "1"
+spec:
+  ttlSecondsAfterFinished: 86400  # Clean up after 24 hours
+  backoffLimit: 1
+  template:
+    spec:
+      containers:
+      - name: qa-audit
+        image: igwt/qa:phase1
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: phase1-config
+        env:
+        - name: PROJECT_DIR
+          value: /app
+        volumeMounts:
+        - name: data-volume
+          mountPath: /app/data
+        - name: logs-volume
+          mountPath: /app/logs
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: phase1-data-pvc
+      - name: logs-volume
+        persistentVolumeClaim:
+          claimName: phase1-logs-pvc
+      restartPolicy: OnFailure
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: phase1-data-pvc
+  namespace: igwt-phase1
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: phase1-logs-pvc
+  namespace: igwt-phase1
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phase1-collector
+  namespace: igwt-phase1
+  labels:
+    app: collector
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: collector
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: phase1-collector
+  namespace: igwt-phase1
+  labels:
+    app: collector
+spec:
+  selector:
+    matchLabels:
+      app: collector
+  endpoints:
+  - port: metrics
+    interval: 30s

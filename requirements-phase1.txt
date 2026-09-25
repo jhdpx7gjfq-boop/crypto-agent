@@ -1,0 +1,31 @@
+# Phase 1 Data Collection & QA Requirements
+# Install with: pip install -r requirements-phase1.txt
+
+# Core data processing
+pandas>=2.0.0
+numpy>=1.24.0
+pyarrow>=12.0.0
+
+# API clients
+requests>=2.31.0
+tenacity>=8.2.0
+
+# AWS (optional for S3 backup)
+boto3>=1.26.0
+botocore>=1.29.0
+
+# Google Cloud (optional for GCS backup)
+google-cloud-storage>=2.10.0
+
+# Database
+duckdb>=0.8.0
+
+# Utilities
+python-dotenv>=1.0.0
+
+# Development & testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+black>=23.7.0
+flake8>=6.0.0
+mypy>=1.4.0

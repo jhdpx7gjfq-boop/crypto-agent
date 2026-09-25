@@ -1,0 +1,33 @@
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy project files
+COPY requirements-phase1.txt .
+COPY src/ src/
+COPY scripts/ scripts/
+COPY docs/ docs/
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements-phase1.txt
+
+# Create directories
+RUN mkdir -p data/raw/phase_1 data/qa/phase_1 data/immutable_snapshots/phase_1 logs/phase_1
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV PROJECT_DIR=/app
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python3 -c "import sys; sys.exit(0)" || exit 1
+
+# QA command - audit completeness and create snapshot
+CMD ["bash", "-c", "python3 src/phase_1_qa/audit_completeness.py && python3 src/phase_1_qa/create_immutable_snapshot.py"]
