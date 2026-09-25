@@ -1,6 +1,7 @@
 """Pytest fixtures for data and persistence layer tests."""
 
 import tempfile
+from datetime import UTC
 from pathlib import Path
 from unittest.mock import Mock
 
@@ -32,7 +33,7 @@ def sample_datapoint() -> DataPoint:
     from datetime import datetime
 
     return DataPoint(
-        timestamp=datetime.utcnow(),
+        timestamp=datetime.now(UTC),
         value=65432.50,
         asset="BTC",
         currency="USD",
