@@ -774,6 +774,374 @@ Subgroup stability:       No subgroup < overall - [  ]?
 
 ---
 
+## 9.A Proposed Answers to Q1-Q9 (AI Copilot)
+
+**STATUS:** AI Proposal, awaiting human approval/modification
+
+---
+
+### Q1: Dormant Token Definition
+
+**Proposed Answer:**
+
+```
+Dormant Token (RRP-specific):
+  - Market cap:      < $50M (below RRP target)
+  - Daily volume:    < $1M (illiquidity threshold)
+  - Active addresses: < 100K (low on-chain activity)
+  - Duration:        ≥ 90 days in dormant state
+
+Examples (proposed):
+  - DOGE alt-coin (2020-2023 dormant)
+  - Layer 2 token in bear market
+  - Gaming token pre-revival
+  
+Rationale:
+  - $50M threshold: Aligns with RRP implementation (Phase 7 code)
+  - $1M volume: Practical illiquidity floor
+  - 90 days: Sufficient to exclude noise
+```
+
+**Status:** 🟡 AWAITING APPROVAL
+
+---
+
+### Q2: Resurrection Event Definition
+
+**Proposed Answer:**
+
+```
+Resurrection Event (RRP-specific):
+  - Metric:          All three of: volume, address growth, price
+  - Volume surge:    ≥ 3x sustained over 7 days
+  - Address growth:  ≥ 2x increase over 30 days
+  - Price gain:      ≥ 50% from dormant floor
+  - Time window:     6 months from snapshot date
+  - Confirmation:    2/3 checks must pass (matches RRP 3-check framework)
+
+Examples (proposed):
+  - Token goes from $0.001 → $0.0015+ (50% gain)
+  - Volume day avg: $500K → $1.5M+ (3x)
+  - Active addresses: 50K → 100K+  (2x)
+  
+Rationale:
+  - 2/3 validation: Aligns with RRP implementation
+  - 6 months: Sufficient for sustained revival, not pump noise
+  - Multi-metric: Avoids false positives from single metric
+```
+
+**Status:** 🟡 AWAITING APPROVAL
+
+---
+
+### Q3: Data Cutoff & Temporal Rules
+
+**Proposed Answer:**
+
+```
+Temporal Isolation (Strict Lookahead Prevention):
+  - PIT snapshot date:       T0 ≤ 2024-12-31
+  - Resurrection observation: T0 + 180 days (6 months)
+  - Data cutoff:             NO future data in T0 score
+  - Strict rule:             If event occurs at T0+150, don't use T0+151 data
+  
+Delistings/Migrations:
+  - Include dormant coins that migrated to new chain (if data available)
+  - Exclude coins with protocol shutdown (no resurrection possible)
+  - Document migration handling (affects ground truth)
+
+Rationale:
+  - 180 days: Standard evaluation window, not too aggressive
+  - Strict cutoff: Prevents inadvertent lookahead
+  - Migration handling: Realistic (tokens do migrate), requires documentation
+```
+
+**Status:** 🟡 AWAITING APPROVAL
+
+---
+
+### Q4: Data Provenance & Gap Policy
+
+**Proposed Answer:**
+
+```
+Primary Source Hierarchy:
+  1. CoinGecko API (free tier)
+     - Format: OHLCV, volume, market cap
+     - Frequency: Daily (resampled to consistent intervals)
+     - Fallback: Yes, use previous day if gap 1 day
+  
+  2. On-chain metrics (secondary, if needed)
+     - Source: Glassnode (if available) OR local RPC
+     - Metrics: Active addresses, transaction volume
+     - Validation: Compare vs official chain explorer
+  
+  3. Token metadata
+     - Source: Coingecko official data
+     - Snapshot: Dated
+     - Migrations: Document chain migration events
+
+Gap Policy (Measured, Not Arbitrary):
+  - Gap ≤ 7 days:   Linear interpolation (connect nearby points)
+  - Gap 7-30 days:  Mark as "low confidence" in audit trail
+  - Gap > 30 days:  Flag coin as incomplete for this period
+  
+  Acceptance:
+    - Per-coin data completeness: ≥ 90% of trading days
+    - Overall dataset: ≥ 95% of expected time series
+    - Report: Document all gap handling decisions
+
+Rationale:
+  - CoinGecko primary: Free, reproducible, auditable
+  - Measured gaps: Transparent, not arbitrary thresholds
+  - Interpolation: Standard time series practice, documented
+```
+
+**Status:** 🟡 AWAITING APPROVAL
+
+---
+
+### Q5: Data Quality Acceptance
+
+**Proposed Answer:**
+
+```
+Data Quality Thresholds:
+
+Overall Dataset:
+  - Minimum completeness: ≥ 95% of expected snapshots
+  - Lookback period: Full 2020-present (or available data)
+  - Quality score: (complete_points / expected_points) * 100
+
+Per-Coin Acceptance:
+  - Minimum: ≥ 90% daily price data points
+  - Minimum: ≥ 80% volume/address data points
+  - Exclusion: Coins <90% on mandatory fields
+
+Quality Audit Report:
+  - Document every coin's completeness score
+  - Flag coins with low data quality
+  - Justify exclusions if any
+  - Report source of missing data
+
+Acceptance Criteria:
+  - [ ] Overall ≥ 95% completeness verified
+  - [ ] Per-coin failures < 5% of total
+  - [ ] Gap handling documented
+  - [ ] Audit report approved by human
+
+Rationale:
+  - 95% threshold: High quality without perfection bias
+  - 90% per-coin: Flexible on edge cases
+  - Audit trail: Full transparency on quality decisions
+```
+
+**Status:** 🟡 AWAITING APPROVAL
+
+---
+
+### Q6: Baseline & Information Advantage
+
+**Proposed Answer:**
+
+```
+Baseline Establishment (Pre-Registration):
+
+Null Hypothesis:
+  - Random classifier on ground truth distribution
+  
+Calculation:
+  1. Observe resurrection rate in ground truth: R% (e.g., 25%)
+  2. Random classifier: Assign random score 0-100 to each coin
+  3. AUC metric: How well does random score rank resurrection coins?
+  4. Expected AUC: ~0.50 (random assignment)
+  
+Pre-Register Before PIT:
+  - AUC_BASELINE = [calculated from ground truth distribution]
+  - Example: If 25% resurrect, AUC_random ≈ 0.52
+  
+Success Criterion:
+  - AUC(RRP) > AUC_BASELINE + 0.10
+  - Example: AUC_RRP must be ≥ 0.62 to pass
+  
+Rationale:
+  - Random baseline: Most conservative, prevents bias
+  - +0.10 threshold: Meaningful information advantage (10% better than random)
+  - Pre-registration: Prevents post-hoc threshold tuning
+```
+
+**Status:** 🟡 AWAITING APPROVAL
+
+---
+
+### Q7: Degradation Tolerances
+
+**Proposed Answer:**
+
+```
+Pre-Registered Tolerances (Specify Before Analysis):
+
+OOS Degradation (2024 unseen data):
+  - Allow: |AUC_OOS - AUC_PIT| ≤ 0.12
+  - Rationale: Different market regime (2024 recovery vs 2020-2023)
+  - Failure: If degradation > 0.12, suggests overfitting
+
+WFV Stability (Monthly walk-forward):
+  - Allow: Month-to-month AUC variance ≤ ±0.08
+  - Allow: No single month < (mean_AUC - 0.15)
+  - Rationale: Real-world deployment must be stable
+  - Failure: If collapse in any month, regime-specific issue
+
+Subgroup Stability:
+  - Allow: No subgroup AUC < (overall_AUC - 0.10)
+  - Stratify by: Market cap bucket, category (if available)
+  - Rationale: RRP should work for all dormant token types
+  - Failure: If specific category collapses, segment-specific bias
+
+Statistical Confidence:
+  - 95% bootstrap CI width ≤ 0.10 for all metrics
+  - Rationale: Narrow enough CI to be useful for decisions
+  - Failure: If CI too wide, results too uncertain
+
+Rationale:
+  - Degradation 0.12: Realistic for market regime change
+  - Stability ±0.08: Allows natural variance, not collapse
+  - Subgroup ±0.10: Ensures consistent performance
+  - CI ≤ 0.10: Precision requirement for decision-making
+```
+
+**Status:** 🟡 AWAITING APPROVAL
+
+---
+
+### Q8: Timeline & Execution
+
+**Proposed Answer:**
+
+```
+Proposed Timeline (Starting Oct 2, 2026):
+
+Phase 0: Spec Freeze                     Oct 2-9        (1 week)
+  ↓ Gate: Human approval of Q1-Q9 answers
+
+Phase 1: Data Audit & Collection         Oct 9-23       (2 weeks)
+  - Collect 2020-present OHLCV
+  - Audit for gaps, quality issues
+  - Report: Completeness ≥ 95%
+  ↓ Gate: Data quality approval
+
+Phase 2: Ground Truth Construction       Oct 23-Nov 6   (2 weeks)
+  - Label dormant coins per Q1 definition
+  - Label resurrections per Q2 definition
+  - Human review of ambiguous cases
+  - Freeze: No changes after this
+  ↓ Gate: Ground truth approval
+
+Phase 3a: PIT Backtest (2020-2024)       Nov 6-13       (1 week)
+  - Train RRP on historical data
+  - Measure AUC vs baseline
+  - Approval: AUC > baseline + 0.10?
+  ↓ Gate: PIT performance approval
+
+Phase 3b: OOS Validation (2024)          Nov 13-20      (1 week)
+  - Train on 2020-2023
+  - Test on 2024 (held-out)
+  - Measure degradation ≤ 0.12?
+  ↓ Gate: OOS degradation approval
+
+Phase 3c: WFV Simulation (2024-2026)     Nov 20-Dec 4   (2 weeks)
+  - Walk-forward month by month
+  - Measure stability ± 0.08
+  ↓ Gate: WFV stability approval
+
+Phase 4: Ablation Analysis               Dec 4-11       (1 week)
+  - Remove each component
+  - Measure AUC contribution
+  - Verify each ≥ 0.05 AUC
+  ↓ Gate: Component validation
+
+Phase 5: Robustness & Statistics         Dec 11-18      (1 week)
+  - Stratified analysis (subgroups)
+  - Sensitivity testing (parameter ranges)
+  - Statistical CI computation
+  ↓ Gate: Robustness approval
+
+FINAL GATE:                               Dec 18-20      (2 days)
+  - Human decision: VALIDATED_ALPHA or REWORK
+  
+TOTAL: 11 weeks (Oct 2 - Dec 20)
+
+Parallelization Possible:
+  - Phase 4-5 can start during Phase 3c (no data dependency)
+  - Phase 1-2 can overlap for data audit
+
+Rationale:
+  - Sequential: Prevents lookahead bias
+  - 11 weeks: Realistic for rigorous validation
+  - Human gates: Every phase requires approval before next
+```
+
+**Status:** 🟡 AWAITING APPROVAL
+
+---
+
+### Q9: Scope — RRP Only or Multi-Layer?
+
+**Proposed Answer:**
+
+```
+Scope Decision: RRP ONLY (now)
+
+Phase 9 AI Copilot Recommendation:
+  "Validate RRP in isolation. Success gates its own layer.
+   X20/NARM-P+/RCM/RPM have their own validation gates downstream.
+   Do not conflate validation efforts."
+
+Rationale:
+  1. RRP is foundational (dead token detection affects Layer 8 investment use)
+  2. Each layer deserves independent validation
+  3. Coupling validations creates dependency risk
+  4. Better to validate sequentially: RRP → X20 → NARM-P+ → RCM/RPM
+
+Multi-Layer Roadmap (Future, Not Now):
+  ```
+  2026 Q4: RRP validation (Phase 9, Dec 20)
+  2027 Q1: X20 validation roadmap
+  2027 Q2: NARM-P+ validation roadmap
+  2027 Q3: RCM/RPM validation roadmap
+  2027 Q4: Full system integration validation
+  ```
+
+Decision:
+  - [ ] APPROVED: RRP only, validate sequentially
+  - [ ] MODIFIED: [Alternative scope]
+
+Rationale:
+  - RRP is P0 blocker for Layer 8
+  - Other layers don't block each other yet
+  - Sequential validation: Cleaner governance
+```
+
+**Status:** 🟡 AWAITING APPROVAL
+
+---
+
+## Summary of Proposed Answers
+
+```
+Q1 Dormant definition:     Defined ($50M, $1M, 100K, 90 days)  ✓
+Q2 Resurrection metric:    Multi-metric (volume/address/price)  ✓
+Q3 Data cutoff:            Strict temporal (T0+180 days max)    ✓
+Q4 Data sources:           CoinGecko primary, documented gaps   ✓
+Q5 Data quality:           95% overall, 90% per-coin minimum    ✓
+Q6 Baseline:               Random classifier, AUC +0.10 threshold ✓
+Q7 Tolerances:             OOS ≤0.12, WFV ±0.08, CI ≤0.10      ✓
+Q8 Timeline:               11 weeks (Oct 2 - Dec 20, 2026)      ✓
+Q9 Scope:                  RRP only, sequential validation      ✓
+```
+
+---
+
 ## 10. Governance & Approval Tracking
 
 **Proposal Status:**
