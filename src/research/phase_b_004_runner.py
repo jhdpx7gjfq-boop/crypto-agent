@@ -13,9 +13,14 @@ from scipy.stats import spearmanr
 from typing import Tuple, Dict, List
 from dataclasses import dataclass
 
-from rpm_layer import RPMLayer, RPMSignal
-from rcm_layer import RCMLayer
-from baseline_predictor import BaselinePredictor
+try:
+    from .rpm_layer import RPMLayer, RPMSignal
+    from .rcm_layer import RCMLayer
+    from .baseline_predictor import BaselinePredictor
+except ImportError:
+    from rpm_layer import RPMLayer, RPMSignal
+    from rcm_layer import RCMLayer
+    from baseline_predictor import BaselinePredictor
 
 
 @dataclass
@@ -94,6 +99,9 @@ class PhaseB004Runner:
         """
         Create 19 expanding WFV windows (train start fixed, test start slides).
 
+        Each window: train period EXPANDS, test period is 30 days.
+        Window i: train_end_idx = TRAIN_DAYS + i*SLIDE_DAYS - 1
+
         Returns:
             List of (train_start_idx, train_end_idx, test_start_idx, test_end_idx)
         """
@@ -101,14 +109,14 @@ class PhaseB004Runner:
         train_start_idx = 0
 
         for window_idx in range(self.TARGET_WINDOWS):
-            # Test start slides: day 0, 30, 60, ..., 540
-            test_start_offset = window_idx * self.SLIDE_DAYS
-            test_start_idx = self.TRAIN_DAYS + test_start_offset
+            # Expanding train: grows by SLIDE_DAYS each window
+            train_end_idx = self.TRAIN_DAYS + window_idx * self.SLIDE_DAYS - 1
+            test_start_idx = train_end_idx + 1
             test_end_idx = test_start_idx + self.TEST_DAYS
 
             windows.append((
                 train_start_idx,
-                self.TRAIN_DAYS + test_start_offset - 1,
+                train_end_idx,
                 test_start_idx,
                 test_end_idx,
             ))
@@ -209,8 +217,10 @@ class PhaseB004Runner:
         else:
             rcm_values = rpm_values.copy()  # No regime: RCM = RPM
 
-        # Compute baseline signal (momentum)
-        baseline_values = self.baseline.predict(test_df)
+        # Compute baseline signal (momentum) for each test point
+        baseline_values = np.array([
+            self.baseline.predict(test_df, i) for i in range(len(test_df))
+        ])
 
         # Blend for full stack: 0.5*baseline + 0.3*narm + 0.2*rpm
         # (narm not available yet, use 0 for now)

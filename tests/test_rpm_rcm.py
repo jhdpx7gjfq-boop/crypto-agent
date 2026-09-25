@@ -21,7 +21,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
 
 from research.rpm_layer import RPMLayer, RPMSignal
-from research.rcm_layer import RCMLayer
+from research.rcm_layer import RCMLayer, RCMSignal
 from research.phase_b_004_runner import PhaseB004Runner
 
 
@@ -196,16 +196,18 @@ class TestWFVWindowBoundaries:
         assert len(windows) == 19
 
     def test_wfv_window_sizes(self):
-        """WFV windows should have correct train/test sizes."""
+        """WFV windows should have correct train/test sizes (expanding windows)."""
         runner = PhaseB004Runner()
         windows = runner.create_wfv_windows()
 
         for idx, (train_start, train_end, test_start, test_end) in enumerate(windows):
-            # Train: 180 days
+            # Train: expands from 180 days (window 0) by 30 days per window
+            expected_train_size = 180 + idx * 30
             train_size = train_end - train_start + 1
-            assert train_size == 180, f"Window {idx}: train size {train_size} != 180"
+            assert train_size == expected_train_size, \
+                f"Window {idx}: train size {train_size} != expected {expected_train_size}"
 
-            # Test: 30 days
+            # Test: always 30 days
             test_size = test_end - test_start
             assert test_size == 30, f"Window {idx}: test size {test_size} != 30"
 
