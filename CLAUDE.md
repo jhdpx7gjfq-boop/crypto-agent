@@ -1,8 +1,9 @@
 # IGWT-PF26: Crypto Intelligence OS — Project Context
 
 **Version**: 0.3.0  
-**Status**: Phase B-003 COMPLETED — Macro layer (NARM-P+) validated ✅  
-**Last Updated**: 2026-09-25
+**Status**: Phase 2.1 FINAL PASS ✅ | B-004 UNBLOCKED  
+**Last Updated**: 2026-09-25  
+**Gate 2.1 Decision**: Exception ACCEPTED (1 pre-existing test, out-of-scope)
 
 ## Project Mission
 
@@ -112,6 +113,36 @@ Spring Detector P0.4 WFV Results:
 - **Macro-structure**: Research signal identified (ΔIC +35.7–89.5 points in Bull regimes), but production validation fails (HR > 0.50 not met)
 - **Next**: Phase B-004 (RPM/RCM capital rotation) **without pre-filtering to Bull** (post-hoc regime analysis only)
 
+### Phase 2.1: COMPLETED ✅ — FINAL PASS ✅
+
+**Objective**: Real equity accounting backtester for WFV validation
+
+**Implementation**: EquityBacktester with mark-to-market, PIT compliance, T→T convention, trade provenance, annualized metrics
+
+**Gate 2.1 Results** (all 6 criteria verified):
+1. ✅ PIT No-Lookahead: Signal receives only data[:idx+1]
+2. ✅ Future Invariance: Modifying T+n doesn't affect signals T<n
+3. ✅ Equity Conservation: close_equity = cash + position_value (exact)
+4. ✅ T→T Convention: entry_timestamp ≠ exit_timestamp (strictly different bars)
+5. ✅ Annualization: Log-based formula, numerically stable (tested: 100% return → 1.0 annualized)
+6. ✅ Trade Provenance: Full record with entry_signal_pit_cutoff, pnl, fees
+
+**Test Suite**:
+- Phase 2.1 tests: 9/9 passing
+- Old tests: 130/130 passing
+- Total: 139/140 (1 pre-existing failure)
+
+**Known Exception** (ACCEPTED by Owner):
+- Test: `test_look_ahead_c_sweep_not_confirmed_early` (Spring Detector Phase A)
+- Status: Pre-existing (verified on commit `2e2fbd5` before Phase 2.1)
+- Scope: OUT-OF-PHASE-2.1 (zero interaction with backtester code)
+- Regression: NONE introduced
+- Owner approval: 2026-09-25 (ACCEPT EXCEPTION)
+
+**Verdict**: ✅ **GATE 2.1 FINAL PASS** (exception accepted, non-regression verified)
+
+**Status**: Ready for Phase B-004 RPM/RCM validation
+
 ## Architecture Overview
 
 ### Layer 1: Data Intelligence
@@ -169,7 +200,7 @@ Spring Detector P0.4 WFV Results:
 
 - **Branch**: `claude/busy-goodall-jmiaq3`
 - **Remote**: origin (up to date)
-- **Commits**: 5 (Spring Detector + WFV pipeline + Phase B-001/B-002/B-003 validation)
+- **Commits**: 6 (Spring Detector + WFV pipeline + Phase B-001/B-002/B-003 + Phase 2.1 backtester)
 
 ## Token Economy Notes
 
@@ -195,28 +226,22 @@ Spring Detector P0.4 WFV Results:
 
 ---
 
-## Latest: Phase B Micro & Macro Investigation Complete (2026-09-25)
+## Latest: Phase 2.1 FINAL PASS | B-004 UNBLOCKED (2026-09-25)
 
-**Phase B-001 (Spring context)**: Gate FAIL (Δ IC = 0.000)  
-**Phase B-002 (Flow context)**: Gate FAIL (Δ IC = -0.0009, negative)  
-**Phase B-003 (NARM-P+ macro)**: Gate FAIL (ΔIC passes, HR/Stability fail)  
+**Phase 2.1 Backtester Hardening**: ✅ FINAL PASS
+- EquityBacktester: Real MTM, PIT compliance, T→T convention, trade provenance
+- Test suite: 139/140 passing (1 pre-existing Spring test, out-of-scope)
+- Gate 2.1: ALL 6 CRITERIA VERIFIED PASSING
+- Exception: Accepted (test pre-existing on commit `2e2fbd5`, zero Phase 2.1 interaction)
 
-**Combined Verdict**:
-- **Micro-structure (order flow, patterns)**: Non-predictive, gates failed
-- **Macro-structure (narrative, adoption)**: Research signal identified (ΔIC +0.0359), but production validation fails
-- **Full stack (Spring + Regime + NARM)**: Regresses vs NARM alone; exclude Spring/Regime
-
-**Key Discovery**: NARM-P+ IC improvement regime-dependent (ΔIC points):
-- Bull 2021: +0.0895 (strong in-sample)
-- Bull 2024: +0.0357 (strong in-sample)
-- Bear 2022: +0.0030 (minimal)
-- Recovery 2023: +0.0241 (weak)
-- Data-snooping risk: 19 windows × 4 regimes → post-hoc regime analysis only, no pre-filtering
+**Phase B Micro & Macro Investigation**: COMPLETE
+- **Micro-structure (Spring + Regime + Flow)**: Non-predictive (Δ IC = 0 to −9 points)
+- **Macro-structure (NARM-P+)**: Research signal (ΔIC +35.7–89.5 points in Bull), production gate fails (HR < 0.50)
 
 **Path Forward**:
-1. Phase B-004: RPM/RCM validation (no pre-filtering to Bull; full WFV first)
-2. If RPM/RCM gate passes: Ablation (RPM alone vs combined macro)
-3. Post-hoc: Interaction analysis (regime × RPM/RCM) for future hypothesis
+1. **Phase B-004**: RPM/RCM validation (UNBLOCKED) — FULL WFV, no pre-filtering to Bull
+2. **Protocol**: Freeze results → measure ΔIC/HR/Stability → test gate criteria → post-hoc regime analysis
+3. **Layer 8**: BLOCKED until alpha independently validated
 
-**Status**: All micro-structure investigations complete (non-predictive). Macro framework ready for B-004.  
-**Next**: RPM/RCM (capital rotation at sector/market-wide scale)
+**Status**: Phase 2.1 prerequisite complete. B-004 ready to execute.  
+**Next**: RPM/RCM capital rotation (Layer 6) — full-dataset WFV validation
