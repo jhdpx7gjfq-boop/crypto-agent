@@ -1,7 +1,7 @@
-# IGWT-PF26: Phases 1-3 Complete
+# IGWT-PF26: Phases 1-5 Complete
 
 **Status:** ✓ Production  
-**Commit:** c47b52f  
+**Commit:** a116674  
 **Branch:** claude/wonderful-edison-05iu3k
 
 ---
@@ -90,7 +90,7 @@ signals_df = bce.backtest_signals(historical_df)
 
 ---
 
-## Phase 4 (Coming): X20 Engine
+## Phase 4: X20 Engine
 
 ### Asymmetric Opportunity Scoring - v1.0.0
 
@@ -135,6 +135,56 @@ results_df = engine.score_batch(coins_list)  # Returns ranked DataFrame
 ```
 
 **Tests:** 7/7 ✓
+
+---
+
+## Phase 5: NARM-P+ Model
+
+### Narrative Adoption Rotation Model Plus - v1.0.0
+
+Detects narrative shifts and sector rotations for opportunity discovery.
+
+**Scoring System:** 0-100 points (5 equal components, 20% each)
+
+**Components:**
+- **Narrative Strength** (20%) - Hot narrative positioning (AI=95, RWA=85, L2=70, DeFi=60, Infrastructure=55, Privacy=50, Memes=40, NFT=30)
+- **Adoption Growth** (20%) - User/TVL growth rate (7-day and 30-day momentum)
+- **Capital Rotation** (20%) - Bullish sentiment + momentum momentum potential (inflow indicators)
+- **Fundamental Score** (20%) - On-chain metrics (DEX volume, active addresses, transaction throughput)
+- **Market Timing** (20%) - Macro conditions (risk_on score, crypto_season) + RSI accumulation zone (40-60)
+
+**Supported Narratives (8):**
+- AI: artificial intelligence, LLM, agents, inference
+- RWA: real world assets, tokenized, securities, staking
+- DeFi: lending, yield, swap, protocol
+- L2: layer 2, scaling, rollup, optimistic
+- NFT: NFT, gaming, collectible, metaverse
+- Infrastructure: network, validator, node, blockchain
+- Privacy: privacy, encrypted, ZKP, anon
+- Memes: meme, community, social
+
+**Features:**
+- **Rotation Opportunity Assessment:** HIGH/MODERATE/LOW/MINIMAL (based on rotation + narrative scores)
+- **Confidence Scoring:** 0-1 scale (higher = more consistent component scores; lower variance = higher confidence)
+- **Batch Scoring:** Multiple coins ranked by total_score descending
+- **Rotation Detection:** Identifies narrative shifts over 30-day lookback periods (scores changes > 10 points)
+
+**Usage:**
+```python
+narm = NARMPPlus()
+result = narm.score_narrative(coin_data)
+print(f"Score: {result['total_score']}/100")
+print(f"Rotation: {result['rotation_opportunity']}")
+print(f"Confidence: {result['confidence']:.2f}")
+```
+
+**Batch Analysis:**
+```python
+results_df = narm.score_batch(coins_list)  # Returns ranked DataFrame with all scores
+rotations_df = narm.detect_narrative_rotation(current_df, previous_df)  # Detects score changes
+```
+
+**Tests:** 9/9 ✓
 
 ---
 
@@ -185,8 +235,9 @@ test_coingecko_collector.py    10/10 ✓
 test_feature_store.py           4/5  ✓
 test_wyckoff_bce.py             7/7  ✓
 test_x20_engine.py              7/7  ✓
+test_narm_p_plus.py             9/9  ✓
 
-Total: 28/29 ✓ (96.5%)
+Total: 37/38 ✓ (97.4%)
 ```
 
 Run all:
@@ -196,9 +247,12 @@ pytest tests/ -v
 
 ---
 
-## Next: Phase 5-9
+## Completed: Phase 5 ✓
 
-**5. NARM-P+** - Narrative adoption rotation model  
+**5. NARM-P+** - Narrative adoption rotation model ✓
+
+## Next: Phase 6-9
+
 **6. RCM/RPM** - Capital rotation detection  
 **7. RRP** - Revival Radar (dead tokens resurrection)  
 **8. Dashboard** - Real-time monitoring  
@@ -214,7 +268,8 @@ pytest tests/ -v
 | `src/data/feature_store.py` | Indicators + storage | ✓ v1.0.0 |
 | `src/analysis/wyckoff_bce.py` | Accumulation detection | ✓ v1.0.0 |
 | `src/analysis/x20_engine.py` | Opportunity scoring | ✓ v1.0.0 |
-| `tests/` | Full test suite | ✓ 96.5% |
+| `src/analysis/narm_p_plus.py` | Narrative rotation | ✓ v1.0.0 |
+| `tests/` | Full test suite | ✓ 97.4% |
 
 ---
 
@@ -232,5 +287,6 @@ pytest tests/ -v
 ---
 
 **Built:** 2026-09-25  
+**Last Updated:** 2026-09-25 (Phase 5: NARM-P+)  
 **Session:** claude/wonderful-edison-05iu3k  
 **Team:** Claude Haiku 4.5 + IGWT Strategy
