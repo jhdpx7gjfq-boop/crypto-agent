@@ -6,7 +6,7 @@ La décision finale est humaine. Aucune exécution automatique d'ordre, jamais.
 
 ---
 
-## 1. ÉTAT RÉEL DU REPO (à jour : 2026-09-13)
+## 1. ÉTAT RÉEL DU REPO (à jour : 2026-09-25)
 
 Ne pas supposer que les layers ci-dessous (§4) existent. Ce qui existe :
 
@@ -49,6 +49,7 @@ Avant d'implémenter : vérifier l'existant avec `ls`/`grep`, ne pas recréer.
 8. **Jamais** de fichier de données (`.parquet`, `.csv`) commité dans git.
 9. **Jamais** `git push --force` sur `main`. **Jamais** de PR sans demande explicite.
 10. **Jamais** de test skippé/désactivé pour faire passer la CI.
+11. **Jamais** de valeur affichée sans sa source et son horodatage. Un champ sans données affiche « pas de données », jamais un nombre plausible (détail : §4, critères Phase 8).
 
 ---
 
@@ -66,6 +67,16 @@ Avant d'implémenter : vérifier l'existant avec `ls`/`grep`, ne pas recréer.
 **Seuils d'acceptation d'une stratégie** : trades >= 200, profit factor > 1.3, max drawdown < 25 %, walk-forward PASS.
 
 **FOMO Circuit Breaker** : price discovery / euphorie / extension excessive → réduction du score. Obligatoire sur tout moteur de scoring.
+
+**Critères d'acceptation — Dashboard / vue (Phase 8)**. Aucune interface n'est construite tant que les 5 ne sont pas tenus :
+
+1. **Tout score affiché est adossé à sa preuve** — validation jointe (nb trades, profit factor, max drawdown, walk-forward) ou mention explicite « non validé ». Pas de score nu.
+2. **La Definition of Done (§7) s'applique à l'interface** — spec, tests, preuve chiffrée. Une page n'échappe pas à la règle parce qu'elle est visuelle.
+3. **Filtrage avant affichage** — tout candidat passe par BCE >= 5/6 et le FOMO Circuit Breaker avant d'apparaître. Jamais de liste de « gems » brute.
+4. **La vue ne calcule rien** — elle lit des données produites par la couche data. Aucun collecteur, aucun scoring, aucun appel réseau dans l'interface.
+5. **Aucun nombre sans provenance** — chaque valeur porte sa source et son horodatage. Champ sans données → « pas de données », jamais une valeur plausible.
+
+Motif : une interface qui affiche des chiffres inventés de manière crédible est plus dangereuse qu'une page vide, parce qu'elle sert de base à une décision réelle. Une page vide, on sait qu'elle est vide.
 
 ---
 
