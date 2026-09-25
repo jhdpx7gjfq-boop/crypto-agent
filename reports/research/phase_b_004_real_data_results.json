@@ -1,0 +1,15 @@
+{
+  "spec_version": "1.0_FROZEN",
+  "data_source": "real_coingecko_btc",
+  "windows_evaluated": 19,
+  "mean_ic_j": -0.013152523054386746,
+  "std_ic_j": 0.21012931610196608,
+  "delta_ic_j": -0.013152523054386746,
+  "mean_hr_j": 0.5008488964346349,
+  "stability_j": -14.976338187713731,
+  "gate_1_delta_ic": false,
+  "gate_2_hr": true,
+  "gate_3_stability": false,
+  "gate_pass": false,
+  "timestamp": "2026-09-25T19:45:51.209876"
+}

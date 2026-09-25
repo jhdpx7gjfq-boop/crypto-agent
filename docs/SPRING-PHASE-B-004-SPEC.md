@@ -1,8 +1,10 @@
 # PHASE B-004 SPECIFICATION — RPM/RCM Capital Rotation Engine
 
-**Version**: 1.0 (DRAFT)  
+**Version**: 1.0 (FROZEN)  
 **Date**: 2026-09-25  
-**Status**: AWAITING OWNER APPROVAL → FREEZE  
+**Status**: ✅ FROZEN — OWNER APPROVED FOR B-004 REAL DATA WFV
+**Frozen By**: Owner Directive (Option A)
+**Effective**: 2026-09-25 15:15 UTC  
 **Scope**: Layer 6 — RPM/RCM validation (capital flow detection, rotation confirmation)
 
 ---
