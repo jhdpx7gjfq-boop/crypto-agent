@@ -1,0 +1,66 @@
+# IGWT-PF26 Configuration Template
+# Phase 1: Data Layer
+
+# Datasources
+datasources:
+  coingecko:
+    enabled: true
+    base_url: "https://api.coingecko.com/api/v3"
+    timeout_seconds: 10
+    retry_count: 3
+    retry_backoff_seconds: 2
+    rate_limit_per_second: 10
+
+  binance:
+    enabled: false
+    base_url: "https://api.binance.com"
+    timeout_seconds: 10
+    symbols:
+      - "BTCUSDT"
+      - "ETHUSDT"
+
+# Data Storage
+storage:
+  raw_data_dir: "data/raw"
+  normalized_dir: "data/normalized"
+  features_dir: "data/features"
+  datasets_dir: "data/datasets"
+  metadata_dir: "data/metadata"
+
+  format: "parquet"
+  compression: "snappy"
+
+# DuckDB Configuration
+duckdb:
+  database_path: "data/duckdb/igwt.duckdb"
+  memory_limit_mb: 4096
+
+# Symbols to collect
+symbols:
+  - "bitcoin"      # CoinGecko ID
+  - "ethereum"
+  - "solana"
+
+# Timeframes for OHLCV collection
+timeframes:
+  - "1h"
+  - "1d"
+  - "4h"
+
+# Logging
+logging:
+  level: "INFO"
+  format: "json"  # json or text
+  output: "stdout"  # stdout or file
+  log_dir: "logs"
+
+# Feature Engineering (Phase 2)
+features:
+  validation_strict: true
+  missing_data_policy: "forward_fill"
+
+# Research & Validation (Phase 2+)
+validation:
+  pit_enabled: false
+  oos_enabled: false
+  walk_forward_enabled: false

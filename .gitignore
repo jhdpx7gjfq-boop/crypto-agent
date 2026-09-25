@@ -1,4 +1,25 @@
 __pycache__/
 *.pyc
 .env
+.env.local
 .pytest_cache/
+.venv/
+venv/
+
+# Data storage (local, not committed)
+data/
+logs/
+
+# DuckDB
+*.duckdb
+*.duckdb.wal
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
