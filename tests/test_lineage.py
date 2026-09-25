@@ -38,13 +38,14 @@ class TestCanonicalGraph:
         findings = lineage.validate(graph, root=REPO)
         assert findings == [], "\n".join(str(item) for item in findings)
 
-    def test_the_declared_artefacts_are_the_expected_five(self, graph):
+    def test_the_declared_artefacts_are_the_expected_six(self, graph):
         assert set(graph["artefacts"]) == {
             "WFV-V2-CONTRACT",
             "REAL-DATA-FIXTURE-001",
             "CODE-FEATURE-CONTRACT",
             "REAL-DATA-FULL-001",
             "MOMENTUM-30D-WFV-001",
+            "PATH-A-LIQUIDATION-ALPHA",
         }
 
     def test_the_contract_is_the_root(self, graph):

@@ -1,0 +1,48 @@
+{
+  "fixture_id": "PATH-A-LIQUIDATION-ALPHA",
+  "status": "RESEARCH-CANDIDATE / INFRASTRUCTURE-COMPLETE",
+  "created_at": "2026-09-25T20:30:00Z",
+  "governance": {
+    "scope": "Research validation only",
+    "integration": "None (independent from BCE/X20/RPM/NARM-P+)",
+    "verdict_type": "Evidence of alpha or NOT"
+  },
+  "pipeline_status": {
+    "specification": "COMPLETE",
+    "data_acquisition": {
+      "binance_spot": "READY — API blocked; awaiting file ingestion",
+      "binance_perp": "PLANNED — OI + funding data (Phase 2)",
+      "symbols": ["BTCUSDT", "ETHUSDT", "SOLUSDT", "AVAXUSDT"],
+      "timeframe": "1d",
+      "minimum_history": "365 days (730 preferred)"
+    },
+    "audit_module": "COMPLETE",
+    "features_pit": "COMPLETE",
+    "wfv_integration": "READY — awaits observations",
+    "tests": {
+      "unit_tests": "9 PASS",
+      "total_test_suite": "208 PASS",
+      "coverage": ["audit_integrity", "signal_construction", "pit_safety", "observations_wfv_contract"]
+    }
+  },
+  "blockers": {
+    "data_unavailable": {
+      "reason": "Binance API unreachable (policy blocked); CSV files not present",
+      "action_required": "Provide OHLCV CSV exports or enable file ingestion"
+    }
+  },
+  "next_steps": [
+    "1. Acquire 365-730 days Binance OHLCV for BTC/ETH/SOL/AVAX",
+    "2. Run binance_audit.audit_binance_klines() → verify PASS/WARN verdict",
+    "3. Run path_a_runner.run_path_a_full() → generate observations.json",
+    "4. Validate observations satisfy WFV contract",
+    "5. Execute WFV walk-forward validation",
+    "6. Compute IC / direction_flips / regime_conditioning",
+    "7. Publish verdict: PASS (edge evidence) / FAIL (no edge) / INCONCLUSIVE"
+  ],
+  "lineage": {
+    "depends_on": ["REAL-DATA-FIXTURE-001", "WFV-V2-CONTRACT"],
+    "produces": "PATH-A-LIQUIDATION-ALPHA observations and WFV report",
+    "relation_type": "derived"
+  }
+}

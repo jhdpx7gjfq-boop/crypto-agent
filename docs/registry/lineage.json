@@ -122,6 +122,37 @@
           }
         }
       ]
+    },
+    "PATH-A-LIQUIDATION-ALPHA": {
+      "kind": "result",
+      "status": "PENDING_ACQUISITION",
+      "production": "BLOCKED",
+      "record": "docs/registry/PATH-A-STATUS.json",
+      "specification": "docs/specs/PATH-A-LIQUIDATION-ALPHA.md",
+      "implementation": {
+        "fetcher": "igwt/data/binance_fetcher.py",
+        "audit": "igwt/data/binance_audit.py",
+        "signal": "igwt/features/liquidation_alpha_signals.py",
+        "runner": "igwt/fixtures/path_a_runner.py"
+      },
+      "relations": [
+        {
+          "type": "contract_dependency",
+          "target": "WFV-V2-CONTRACT",
+          "evidence": {
+            "file": "igwt/fixtures/path_a_runner.py",
+            "contains": "build_path_a_observations"
+          }
+        },
+        {
+          "type": "derived",
+          "target": "REAL-DATA-FIXTURE-001",
+          "evidence": {
+            "file": "docs/specs/PATH-A-LIQUIDATION-ALPHA.md",
+            "contains": "Tester une hypothèse d'alpha indépendant"
+          }
+        }
+      ]
     }
   },
   "excluded_ancestors": {
