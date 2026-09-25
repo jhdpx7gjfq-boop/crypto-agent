@@ -1,0 +1,52 @@
+{
+  "validation_run": "REAL_DATA",
+  "timestamp": "2026-09-25T13:59:22.073895Z",
+  "symbols": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "AVAX"
+  ],
+  "stages": {
+    "1": {
+      "stage": 1,
+      "name": "PIT_AUDIT (Real Data)",
+      "data_source": "Real historical OHLCV",
+      "symbols_tested": 4,
+      "independent_signals_threshold": 3,
+      "independent_signals_found": 0,
+      "signal_analysis": {},
+      "result": "FAIL",
+      "timestamp": "2026-09-25T13:59:22.073984Z"
+    },
+    "4": {
+      "stage": 4,
+      "name": "BASELINE_COMPARISON (Real Data)",
+      "rrp_ic_mean": 0.0,
+      "rrp_ic_samples": 0,
+      "baseline_ic_mean": 0.0,
+      "baseline_ic_samples": 0,
+      "advantage": 0.0,
+      "result": "PASS",
+      "timestamp": "2026-09-25T13:59:22.074065Z"
+    },
+    "6": {
+      "stage": 6,
+      "name": "WFV (Real Data)",
+      "win_rate": 0.0,
+      "wins": 0,
+      "total": 0,
+      "threshold": 0.55,
+      "result": "FAIL",
+      "timestamp": "2026-09-25T13:59:22.074191Z"
+    }
+  },
+  "summary": {
+    "stage_1_pit": "FAIL",
+    "stage_4_baseline": "PASS",
+    "stage_6_wfv": "FAIL",
+    "all_pass": false,
+    "any_fail": true,
+    "verdict": "NEEDS_ITERATION"
+  }
+}

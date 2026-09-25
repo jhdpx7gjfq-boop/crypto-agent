@@ -1,0 +1,18 @@
+{
+  "stage": 4,
+  "title": "Baseline Comparison - IC Analysis",
+  "timestamp": "2026-09-25T13:09:33.718531",
+  "results": {
+    "stage": 4,
+    "timestamp": "2026-09-25T13:09:33.673781",
+    "data_points": 245,
+    "information_coefficients": {
+      "rrp": -0.44538851427236487,
+      "baseline_1_momentum": -0.6139258582281374,
+      "baseline_2_volume": -0.24673559147769467,
+      "baseline_3_combined": -0.26637508262001325
+    },
+    "rrp_advantage": false,
+    "result": "MARGINAL"
+  }
+}

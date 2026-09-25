@@ -1,0 +1,13 @@
+{
+  "stage": 7,
+  "title": "Ablation Testing",
+  "timestamp": "2026-09-25T13:09:33.719073",
+  "results": {
+    "stage": 7,
+    "timestamp": "2026-09-25T13:09:33.699897",
+    "full_correlation": -0.44538851427236487,
+    "signals_tested": 6,
+    "all_signals_contribute": true,
+    "result": "PASS"
+  }
+}
