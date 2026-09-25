@@ -5,6 +5,6 @@ Detects capital flows and sector rotations.
 Walk-forward validated only.
 """
 
-from .rcm_engine import RotationConfirmationModel
+from .rcm_engine import RCMEngine, RCMAnalysisReport
 
-__all__ = ["RotationConfirmationModel"]
+__all__ = ["RCMEngine", "RCMAnalysisReport"]
