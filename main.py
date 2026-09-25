@@ -7,6 +7,7 @@ import requests
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
 
+
 def classify_zone(price, high_threshold, low_threshold):
     if price > high_threshold:
         return "high"
