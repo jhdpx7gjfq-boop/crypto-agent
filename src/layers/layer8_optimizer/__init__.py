@@ -1,14 +1,9 @@
-"""Layer 8 — RPM X20 Optimizer.
+"""Layer 8 — RPM X20 Optimizer Engine.
 
-Backtesting, optimization, and parameter tuning.
-Walk-forward validation mandatory.
-
-Constraints:
-- Min 200 trades
-- Profit factor > 1.3
-- Max drawdown < 25%
+Parameter tuning with constraint enforcement.
+Backtesting optimization with walk-forward validation.
 """
 
-from .optimizer_engine import BacktestOptimizer
+from .optimizer_engine import OptimizerEngine, OptimizerParameters, OptimizationReport
 
-__all__ = ["BacktestOptimizer"]
+__all__ = ["OptimizerEngine", "OptimizerParameters", "OptimizationReport"]
