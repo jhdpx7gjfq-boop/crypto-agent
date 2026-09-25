@@ -1,0 +1,16 @@
+.git
+.github
+.gitignore
+.pytest_cache
+.coverage
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+dist
+build
+.env
+.env.local
+*.md
+tests
+.pre-commit-config.yaml

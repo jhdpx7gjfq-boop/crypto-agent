@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      CHAT_ID: ${CHAT_ID}
+      HIGH_THRESHOLD: ${HIGH_THRESHOLD:-70000}
+      LOW_THRESHOLD: ${LOW_THRESHOLD:-55000}
+      POLL_SECONDS: ${POLL_SECONDS:-60}
+    restart: unless-stopped
+    # Uncomment to run single check instead of continuous polling:
+    # command: python main.py --check-once
