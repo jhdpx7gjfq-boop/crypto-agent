@@ -30,16 +30,27 @@ from .data_sources_config import (
     DataSourceRegistry,
     DataCollectionPlan,
 )
+from .phase2_credentials import (
+    CredentialStatus,
+    Phase2CredentialManager,
+    load_phase2_credentials,
+)
 
 __all__ = [
+    # Core framework
     "LiquidationSignal",
     "LiquidationFeatures",
     "LiquidationDataCollector",
     "LiquidationFeatureEngineer",
     "LiquidationValidationPipeline",
     "LiquidationAlphaResearchFramework",
+    # Data sources
     "DataSourceStatus",
     "DataSourceInfo",
     "DataSourceRegistry",
     "DataCollectionPlan",
+    # Phase 2: Credentials
+    "CredentialStatus",
+    "Phase2CredentialManager",
+    "load_phase2_credentials",
 ]
