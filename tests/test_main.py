@@ -34,6 +34,13 @@ class TestFormatAlert:
         assert "DIP" in msg
         assert "50000" in msg
 
+    def test_no_context_appended_when_none(self):
+        assert "\n\n" not in main.format_alert("high", 75000, context=None)
+
+    def test_context_appended_when_present(self):
+        msg = main.format_alert("high", 75000, context="ETF inflows drove the move.")
+        assert "ETF inflows drove the move." in msg
+
 
 class TestGetBtc:
     @patch("main.requests.get")
@@ -69,34 +76,52 @@ class TestSend:
 
 
 class TestPollOnce:
+    @patch("main.perplexity_agent.get_market_context", return_value=None)
     @patch("main.send")
     @patch("main.get_btc")
-    def test_sends_alert_on_new_zone(self, mock_get_btc, mock_send):
+    def test_sends_alert_on_new_zone(self, mock_get_btc, mock_send, mock_context):
         mock_get_btc.return_value = 75000
         result = main.poll_once("tok", "chat", 70000, 55000, last_zone=None)
         assert result == "high"
         mock_send.assert_called_once()
 
+    @patch("main.perplexity_agent.get_market_context", return_value=None)
     @patch("main.send")
     @patch("main.get_btc")
-    def test_does_not_resend_while_still_in_same_zone(self, mock_get_btc, mock_send):
+    def test_does_not_resend_while_still_in_same_zone(self, mock_get_btc, mock_send, mock_context):
         mock_get_btc.return_value = 75000
         result = main.poll_once("tok", "chat", 70000, 55000, last_zone="high")
         assert result == "high"
         mock_send.assert_not_called()
+        mock_context.assert_not_called()
 
+    @patch("main.perplexity_agent.get_market_context", return_value=None)
     @patch("main.send")
     @patch("main.get_btc")
-    def test_malformed_api_response_is_handled_without_crashing(self, mock_get_btc, mock_send):
+    def test_malformed_api_response_is_handled_without_crashing(
+        self, mock_get_btc, mock_send, mock_context
+    ):
         mock_get_btc.side_effect = KeyError("bitcoin")
         result = main.poll_once("tok", "chat", 70000, 55000, last_zone="high")
         assert result == "high"
         mock_send.assert_not_called()
 
+    @patch("main.perplexity_agent.get_market_context", return_value=None)
     @patch("main.send")
     @patch("main.get_btc")
-    def test_telegram_failure_does_not_prevent_zone_update(self, mock_get_btc, mock_send):
+    def test_telegram_failure_does_not_prevent_zone_update(
+        self, mock_get_btc, mock_send, mock_context
+    ):
         mock_get_btc.return_value = 75000
         mock_send.side_effect = requests.RequestException("boom")
         result = main.poll_once("tok", "chat", 70000, 55000, last_zone=None)
         assert result == "high"
+
+    @patch("main.perplexity_agent.get_market_context", return_value="ETF inflows drove it.")
+    @patch("main.send")
+    @patch("main.get_btc")
+    def test_market_context_is_included_in_sent_alert(self, mock_get_btc, mock_send, mock_context):
+        mock_get_btc.return_value = 75000
+        main.poll_once("tok", "chat", 70000, 55000, last_zone=None)
+        args, _ = mock_send.call_args
+        assert "ETF inflows drove it." in args[2]

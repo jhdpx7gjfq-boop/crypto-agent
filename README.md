@@ -13,6 +13,10 @@ Set these environment variables (never commit real credentials to the repo):
 - `HIGH_THRESHOLD` — optional, USD price above which a high alert fires (default `70000`)
 - `LOW_THRESHOLD` — optional, USD price below which a dip alert fires (default `55000`)
 - `POLL_SECONDS` — optional, polling interval in seconds (default `60`)
+- `PERPLEXITY_API_KEY` — optional; when set, alerts include a one-line
+  web-grounded market context fetched via the [Perplexity Agent
+  API](https://docs.perplexity.ai/docs/agent-api/quickstart). Create a key at
+  https://console.perplexity.ai. Alerts still send without it.
 
 ```
 pip install -r requirements.txt
