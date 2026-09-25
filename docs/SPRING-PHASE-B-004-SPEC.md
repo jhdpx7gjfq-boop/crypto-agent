@@ -408,18 +408,17 @@ Recommendation: RPM layer does not contribute; freeze until new hypothesis
 
 ### 12.1 Spec Status
 
-**Current**: DRAFT  
-**Next**: Owner review and approval  
-**Action after approval**: FREEZE (no modifications to protocol)
+**Current**: ✅ FROZEN (Owner approved 2026-09-25)  
+**Authority**: dvdlgustin@gmail.com  
+**Lock date**: 2026-09-25  
+**Modifications**: PROHIBITED (must create new version if changes needed)
 
-### 12.2 Owner Decision Required
-
-- [ ] **APPROVE** (proceed to Phase B-004 implementation)
-- [ ] **REQUEST CHANGES** (specify modifications to spec)
-- [ ] **REJECT** (alternative hypothesis preferred)
+### 12.2 Freeze Certification
 
 **Owner**: dvdlgustin@gmail.com  
-**Date**: ________________
+**Decision**: ✅ APPROVE (proceed to Phase B-004 implementation)  
+**Date**: 2026-09-25  
+**Authority**: FINAL (immutable protocol)
 
 ---
 
