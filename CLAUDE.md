@@ -22,36 +22,38 @@ Spring Detector P0.4 WFV Results:
 
 ### Phase B-001: COMPLETED ✅ — GATE FAILED ❌
 
-**Objective**: Determine if Spring becomes predictive when conditioned on market context.
+**Objective**: Spring incremental alpha?
 
-**Results**:
-```
-Model A (Baseline)           : IC = -0.121
-Model B (+ Spring)           : IC = -0.121  [delta = 0.000 ❌ <0.005]
-Model C (+ Regime)           : IC = -0.100  [delta = +0.020]
-Model E (+ Spring + Regime)  : IC = -0.100  [delta = 0.000 ❌ <0.003]
-```
+**Results**: Spring redundant (Δ IC = 0.000), Regime weak (+0.020)
+- Model A: IC = -0.1208
+- Model B (+ Spring): IC = -0.1208 (Δ = 0.000 ❌)
+- Model C (+ Regime): IC = -0.1006 (Δ = +0.020)
 
-**Key Findings**:
-- **Spring is fully redundant** (delta IC = 0.000): No new predictive information
-- **Regime adds marginal value** (+0.020 IC): Weak but present
-- **Spring + Regime: No synergy** (E = C): Spring doesn't enrich regime context
-- **Baseline momentum is contrarian** (IC<0): Predicts DOWN when momentum UP
+### Phase B-002: COMPLETED ✅ — GATE FAILED ❌
 
-**Gate Decision**: FAIL
-- Spring incremental IC: 0.000 (target >0.005) ❌
-- Spring + Regime synergy: 0.000 (target >0.003) ❌
+**Objective**: Capital flow (OI, Funding) incremental alpha?
 
-**Interpretation**:
-- Spring excels at pattern detection (HR=87% from Phase A)
-- But produces signals uncorrelated with short-term returns (IC=0)
-- Possible issues: 1D horizon too short, momentum reversion natural in crypto, or Spring simply doesn't predict
+**Results**: Flow negative (Δ IC = -0.0009), makes predictions worse
+- Model A: IC = -0.1208, HR = 43.6%
+- Model D (+ Flow): IC = -0.1217 (Δ = -0.0009 ❌, WORSE)
+- Model G (Full): IC = -0.1128 (Spring adds only +0.009)
+
+**Verdict**: Micro-structure layers (Spring + Regime + Flow) non-predictive on 1D BTC
+
+### Micro-Structure Investigation: COMPLETE
+
+| Layer | Δ IC | Status | Notes |
+|-------|------|--------|-------|
+| Spring (B-001) | 0.000 | ❌ | Pattern detector, not predictor |
+| Regime (B-001) | +0.020 | ⚠️ | Weakly helpful, insufficient |
+| Flow (B-002) | -0.0009 | ❌ | Negative; synthetic data noise likely |
+| Full Stack (B-002) | -0.113 | ❌ | No synergy; all components weak |
+
+**Key Finding**: Baseline momentum (IC ≈ -0.12) is contrarian: predicts DOWN when momentum UP.
 
 **Key Files**:
-- `docs/SPRING-PHASE-B-001-SPEC.md`: Protocol
-- `docs/SPRING-PHASE-B-001-RESULTS.md`: Full interpretation
-- `reports/research/phase_b_001_ablation.json`: Raw results
-- `src/research/`: Framework (6 modules, reusable for Phase B-002)
+- `docs/SPRING-PHASE-B-002-SPEC.md`, `RESULTS.md`: Flow validation
+- `reports/research/phase_b_002_ablation.json`: Raw data
 
 ### Constraints (FROZEN)
 
@@ -60,38 +62,37 @@ Model E (+ Spring + Regime)  : IC = -0.100  [delta = 0.000 ❌ <0.003]
 - BCE/X20/RPM parameters
 - Phase A validation results
 
-### Architectural Decision: Phase B-002 Roadmap
+### Phase B-003 Options (Micro-Structure Complete, Failed)
 
-Phase B-001 FAILED → Multiple options forward:
+Micro-structure (Spring + Regime + Flow) proven non-predictive on 1D BTC.
 
-**Option 1: Archive Spring (Recommended)**
-- Spring retained as structural/risk-mgmt tool (not signal)
-- Proceed to Phase B-002: Capital Flow layer (OI, Funding, Liquidations)
-- Test: IC(Flow) alone, then IC(Regime + Flow)
+**Option 1: Jump to Macro (Layer 5) — RECOMMENDED**
+- Abandon micro-structure entirely
+- Test NARM-P+ (Narrative + adoption rotation)
+- Then RPM/RCM (Capital rotation on macro scale)
+- Assumption: Alpha in narrative/macro, not order flow
 
-**Option 2: Investigate Capital Flow First**
-- Test if Flow layer is sufficient for Phase B predictiveness
-- Ablation: D, F, G fully implemented (currently placeholder)
-- If IC(D-A) >0.010, proceed; else abandon this path
+**Option 2: Test X20 Standalone (Layer 4)**
+- Asymmetric opportunities (10-20x potential tokens)
+- Different signal type vs momentum-based layers
+- May be independent of 1D return prediction
+- Then test X20 + macro (NARM-P+, RPM/RCM)
 
-**Option 3: Modify Horizon**
-- Test 5D returns instead of 1D (momentum reversion vs trend)
-- Re-run B/C/E on longer horizon
-- If Spring IC improves on longer term, reconsider architecture
+**Option 3: Horizon Experiment (Branch B-002-ALT)**
+- Re-run B-001/B-002 with 5D returns instead of 1D
+- Test if Flow/Spring/Regime IC flips positive on longer horizon
+- If yes, rebuild stack for 5D; if no, confirm micro is dead
+- Risk: Extends validation cycle significantly
 
-**Option 4: Pivot to Layer 4 (X20 Engine)**
-- Skip Flow layer entirely
-- Test X20 (asymmetric opportunities) as Phase B core
-- Measure IC(X20 alone), then IC(Regime + X20)
-
-**Option 5: Reconsider Entire Stack**
-- Accept that micro-structure layers (Spring/Flow) may not be predictive
-- Build Phase B on macro layers (Layer 5: NARM-P+, Layer 6: RPM/RCM)
-- Wyckoff + narrative rotation + capital rotation as primary signals
+**Option 4: Real Flow Data (Contingency)**
+- Current Flow used synthetic data (placeholder OI/Funding)
+- If had `pip install ccxt` → real Binance Perpetual data
+- Re-run D/G with authentic signals
+- Risk: Still likely to fail (Flow inherently not lead indicator)
 
 ---
 
-**Awaiting user directive. CLAUDE.md will freeze here until Phase B-002 scope is chosen.**
+**Phase B-003 awaits user directive. Micro-structure validation complete.**
 
 ## Architecture Overview
 
