@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 .env
 .pytest_cache/
+b004_results/
+real_validation_reports/
