@@ -1,9 +1,9 @@
 # IGWT-PF26: Crypto Intelligence OS — Project Context
 
-**Version**: 0.3.0  
-**Status**: Phase 2.1 FINAL PASS ✅ | B-004 UNBLOCKED  
-**Last Updated**: 2026-09-25  
-**Gate 2.1 Decision**: Exception ACCEPTED (1 pre-existing test, out-of-scope)
+**Version**: 0.4.0  
+**Status**: All Layers Tested | Layer 8 Indefinitely Blocked | Autonomous Mode Active  
+**Last Updated**: 2026-09-25 (Layer 7 Complete)  
+**Mode**: Autonomous execution (awaiting owner decision on real data or Layer 8 alternative)
 
 ## Project Mission
 
@@ -287,16 +287,39 @@ Spring Detector P0.4 WFV Results:
 - **Capital flows** (B-004 RPM): Strong signal ΔIC +38.3, gate fail (HR/Stability) ❌
 - **Conclusion**: All tested layers non-predictive on 1D BTC. Baseline contrarian IC ≈ -0.121 persists.
 
-**Layer 8 Status**: 🔴 BLOCKED indefinitely (constraint: "until independent alpha validated"; no layer passes ALL gate criteria)
+**Layer 8 Status**: 🔴 BLOCKED INDEFINITELY
+- Constraint: "until independent alpha validated"
+- Finding: **NO layer passes ALL gate criteria** (tested 6 layers)
+- Implication: Blocking condition cannot be met with current signal paradigms
 
-**Autonomous Decision: Layer 7 Specification Created**
-- Layer 7 (RRP - Revival Radar Pipeline) specification DRAFT ✅ Ready for owner approval
-- Rationale: Independent of Layer 8 constraint; different signal class (state detection vs return prediction)
-- Strategic: Revival detection = opportunity niche, lower correlation to failed layers
-- **Gate criteria**: WR > 50%, Precision > 60%, Stability < 0.5, OOS validation
-- **Next**: Owner approval → Freeze → Implementation
+**Layer 7 Execution Complete** ✅
+- Implementation: 1,381 lines of production code (6 files)
+- Tests: **17/17 PASSING** (100%)
+- WFV: 19-window expanding validation executed, results frozen
+- Results: WR=50%, Precision=50%, Stability=1.0 — **GATE FAIL** (3/4 criteria)
+- Code: src/research/{rrp_layer,layer_7_runner}.py, src/data/rrp_data_layer.py, tests/test_rrp.py, scripts/run_layer_7_rrp_wfv.py
+- Status: Frozen (no post-hoc tuning allowed per governance)
 
-**Commits**: 11 total (Phase 2.1: 6 + B-004: 3 + Layer 7 spec: 2)  
-**Branch**: claude/busy-goodall-jmiaq3 (up to date)  
-**Status**: Phase 2.1 ✅, B-004 ❌ (frozen), Layer 7 spec ✅ (awaiting approval)  
-**Next**: Layer 7 execution (autonomous, pending owner confirmation)
+### Comprehensive Layer Testing Summary
+All 6 layers tested across micro/macro/alt signal classes:
+
+| Layer | Class | Signal | ΔIC/ΔWR | Gate | Reason |
+|-------|-------|--------|----------|------|--------|
+| Spring | Micro | Pattern | ΔIC 0.000 | ❌ | No signal |
+| Regime | Micro | Risk | ΔIC +0.020 | ⚠️ | Weak |
+| Flow | Micro | Capital | ΔIC -0.0009 | ❌ | Negative |
+| NARM-P+ | Macro | Narrative | ΔIC +0.0359, HR 43.6% | ❌ | HR fail |
+| RPM | Macro | Rotation | ΔIC +0.383, HR 45.1%, Stab 0.577 | ❌ | HR/Stab fail |
+| RRP | Alt | Revival | WR 50.0%, Prec 50%, Stab 1.0 | ❌ | All 3 fail |
+
+**Key Finding**: Baseline contrarian IC ≈ -0.121 persists. Even structurally different signal classes (RRP state detection vs RPM return prediction) both fail on synthetic data.
+
+**Autonomous Mode**: ACTIVE (per user mandate 2026-09-25: "Ne t'arrête plus, jusqu'à mon réveille!")
+- Decision: Completed all feasible layer research autonomously
+- Recommendation: Proceed with Layer 7 real data validation (not synthetic)
+- Alternative: Accept Layer 8 indefinitely blocked; pivot to qualitative + research-only models
+
+**Commits**: 12 total (Phase 2.1: 6 + B-004: 3 + Layer 7: 3)  
+**Branch**: claude/busy-goodall-jmiaq3 (all pushed)  
+**Status**: Phase 2.1 ✅ PASS | B-004 ❌ FROZEN | Layer 7 ❌ FROZEN | Layer 8 🔴 BLOCKED  
+**Next**: Owner decision on real data phase OR Layer 8 alternative hypothesis
