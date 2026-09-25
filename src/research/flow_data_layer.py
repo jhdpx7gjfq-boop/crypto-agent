@@ -226,8 +226,8 @@ class FlowIndicators:
         merged = ohlcv_copy.join([oi_df_copy, funding_df_copy], how='left')
 
         # Forward fill OI/Funding (carry last known values)
-        merged['open_interest'] = merged['open_interest'].fillna(method='ffill')
-        merged['funding_rate'] = merged['funding_rate'].fillna(method='ffill')
+        merged['open_interest'] = merged['open_interest'].ffill()
+        merged['funding_rate'] = merged['funding_rate'].ffill()
 
         return merged
 
