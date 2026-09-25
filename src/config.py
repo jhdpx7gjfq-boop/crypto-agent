@@ -2,7 +2,6 @@
 
 import os
 from pathlib import Path
-from typing import Optional
 
 import yaml
 from pydantic import BaseModel, Field, field_validator
@@ -62,7 +61,7 @@ class Config(BaseModel):
 
     @field_validator("persistence", mode="before")
     @classmethod
-    def resolve_paths(cls, v):
+    def resolve_paths(cls, v: object) -> object:
         """Resolve relative paths to absolute."""
         if isinstance(v, dict):
             if "db_path" in v:
@@ -72,7 +71,7 @@ class Config(BaseModel):
         return v
 
 
-def load_config(config_path: Optional[str] = None) -> Config:
+def load_config(config_path: str | None = None) -> Config:  # noqa: C901
     """Load configuration from YAML file and environment variables.
 
     Args:

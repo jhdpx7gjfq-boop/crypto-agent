@@ -177,5 +177,5 @@ class TestDuckDBStore:
         store.close()
 
         # Attempting operations on closed connection should raise
-        with pytest.raises(Exception):
+        with pytest.raises(Exception):  # noqa: B017
             store.conn.execute("SELECT 1")

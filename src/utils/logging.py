@@ -3,7 +3,8 @@
 import json
 import logging
 import sys
-from datetime import datetime
+from datetime import UTC, datetime
+from typing import Any
 
 
 class JsonFormatter(logging.Formatter):
@@ -11,8 +12,9 @@ class JsonFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
         """Format log record as JSON."""
-        log_obj = {
-            "timestamp": datetime.utcnow().isoformat() + "Z",
+        timestamp = datetime.now(UTC).isoformat()
+        log_obj: dict[str, Any] = {
+            "timestamp": timestamp,
             "level": record.levelname,
             "name": record.name,
             "message": record.getMessage(),
@@ -43,7 +45,7 @@ def get_logger(name: str, json_format: bool = False) -> logging.Logger:
         handler = logging.StreamHandler(sys.stdout)
 
         if json_format:
-            formatter = JsonFormatter()
+            formatter: logging.Formatter = JsonFormatter()
         else:
             formatter = logging.Formatter(
                 "%(asctime)s %(levelname)s %(name)s %(message)s"

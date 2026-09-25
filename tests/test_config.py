@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from src.config import Config, DataSourceConfig, AlertConfig, PersistenceConfig, load_config
+from src.config import AlertConfig, DataSourceConfig, PersistenceConfig, load_config
 
 
 class TestDataSourceConfig:

@@ -25,12 +25,12 @@ class TestCoinGeckoSource:
         assert source.timeout == 20
 
     @patch("src.data.sources.requests.get")
-    def test_fetch_sync_returns_datapoint(self, mock_get, mock_coingecko_response):
-        """Test fetch_sync returns valid DataPoint."""
+    def test_fetch_returns_datapoint(self, mock_get, mock_coingecko_response):
+        """Test fetch returns valid DataPoint."""
         mock_get.return_value = mock_coingecko_response
 
         source = CoinGeckoSource()
-        datapoints = source.fetch_sync()
+        datapoints = source.fetch()
 
         assert len(datapoints) == 1
         point = datapoints[0]
@@ -40,37 +40,38 @@ class TestCoinGeckoSource:
         assert point.source == DataSourceType.COINGECKO
         assert point.metric == "price"
         assert point.timestamp is not None
+        assert point.timestamp.tzinfo is not None
 
     @patch("src.data.sources.requests.get")
-    def test_fetch_sync_http_error(self, mock_get):
-        """Test fetch_sync raises on HTTP error."""
+    def test_fetch_http_error(self, mock_get):
+        """Test fetch raises on HTTP error."""
         mock_response = Mock()
         mock_response.raise_for_status.side_effect = requests.HTTPError("Server error")
         mock_get.return_value = mock_response
 
         source = CoinGeckoSource()
         with pytest.raises(requests.HTTPError):
-            source.fetch_sync()
+            source.fetch()
 
     @patch("src.data.sources.requests.get")
-    def test_fetch_sync_malformed_response(self, mock_get):
-        """Test fetch_sync handles malformed JSON response."""
+    def test_fetch_malformed_response(self, mock_get):
+        """Test fetch handles malformed JSON response."""
         mock_response = Mock()
         mock_response.json.side_effect = KeyError("bitcoin")
         mock_get.return_value = mock_response
 
         source = CoinGeckoSource()
         with pytest.raises(KeyError):
-            source.fetch_sync()
+            source.fetch()
 
     @patch("src.data.sources.requests.get")
-    def test_fetch_sync_timeout(self, mock_get):
-        """Test fetch_sync respects timeout."""
+    def test_fetch_timeout(self, mock_get):
+        """Test fetch respects timeout."""
         mock_get.side_effect = requests.Timeout("Connection timeout")
 
         source = CoinGeckoSource(timeout_seconds=5)
         with pytest.raises(requests.Timeout):
-            source.fetch_sync()
+            source.fetch()
 
         # Verify timeout was passed to requests.get
         mock_get.assert_called_once()

@@ -1,6 +1,6 @@
 """Tests for data contracts (schemas)."""
 
-from datetime import datetime
+from datetime import UTC, datetime
 
 import pytest
 from pydantic import ValidationError
@@ -87,7 +87,8 @@ class TestRawDataBatch:
 
     def test_batch_ingestion_timestamp_auto(self):
         """Test RawDataBatch auto-sets ingestion_timestamp."""
-        before = datetime.utcnow()
+
+        before = datetime.now(UTC)
         point = DataPoint(
             timestamp=before,
             value=1000,
@@ -96,5 +97,5 @@ class TestRawDataBatch:
             metric="test",
         )
         batch = RawDataBatch(datapoints=[point])
-        after = datetime.utcnow()
+        after = datetime.now(UTC)
         assert before <= batch.ingestion_timestamp <= after

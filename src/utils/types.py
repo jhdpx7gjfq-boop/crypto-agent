@@ -5,7 +5,7 @@ from enum import Enum
 from pydantic import BaseModel, ConfigDict, Field
 
 
-class AlertZone(str, Enum):
+class AlertZone(str, Enum):  # noqa: UP042
     """Alert zone classification."""
 
     HIGH = "high"

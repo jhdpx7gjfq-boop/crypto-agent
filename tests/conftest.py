@@ -6,10 +6,8 @@ from unittest.mock import Mock
 
 import pytest
 
-from src.config import Config
 from src.data.contracts import DataPoint, DataSourceType, RawDataBatch
 from src.data.persistence import DuckDBStore
-from src.data.sources import CoinGeckoSource
 from src.utils.logging import get_logger
 
 
