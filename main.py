@@ -1,3 +1,4 @@
+import argparse
 import logging
 import os
 import time
@@ -58,6 +59,14 @@ def poll_once(
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="BTC price alert bot")
+    parser.add_argument(
+        "--check-once",
+        action="store_true",
+        help="Check price once and exit instead of polling continuously",
+    )
+    args = parser.parse_args()
+
     bot_token = os.environ["BOT_TOKEN"]
     chat_id = os.environ["CHAT_ID"]
     high_threshold = float(os.environ.get("HIGH_THRESHOLD", 70000))
@@ -65,9 +74,13 @@ def main() -> None:
     poll_seconds = int(os.environ.get("POLL_SECONDS", 60))
 
     last_zone = None
-    while True:
-        last_zone = poll_once(bot_token, chat_id, high_threshold, low_threshold, last_zone)
-        time.sleep(poll_seconds)
+
+    if args.check_once:
+        poll_once(bot_token, chat_id, high_threshold, low_threshold, last_zone)
+    else:
+        while True:
+            last_zone = poll_once(bot_token, chat_id, high_threshold, low_threshold, last_zone)
+            time.sleep(poll_seconds)
 
 
 if __name__ == "__main__":

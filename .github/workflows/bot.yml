@@ -1,0 +1,27 @@
+name: BTC Alert Bot
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"  # Run every 5 minutes
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    if: ${{ secrets.BOT_TOKEN && secrets.CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install requests
+
+      - name: Check BTC price and send alert
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          HIGH_THRESHOLD: ${{ secrets.HIGH_THRESHOLD || '70000' }}
+          LOW_THRESHOLD: ${{ secrets.LOW_THRESHOLD || '55000' }}
+        run: python main.py --check-once
