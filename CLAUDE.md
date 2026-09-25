@@ -357,31 +357,59 @@ All 6 layers tested across micro/macro/alt signal classes (real/synthetic data):
 
 **Key Finding**: Baseline contrarian IC ≈ -0.121 persists across all tests. Real data (RPM) shows negative ΔIC + inverted stability (σ >> mean), indicating non-predictive layer. No independent alpha validated on 1D BTC.
 
-### Phase B-004-DATA-RETRY: REAL DATA VALIDATION (REQUIRED)
+### Phase B-004-DATA-RETRY: REAL DATA VALIDATION (BLOCKING / REQUIRED)
 
-**Reason**: B-004 WFV executed on **synthetic data**, not market data. Cannot unlock Layer 8 or reject RPM/RCM without real validation.
+**Status**: 🔴 BLOCKED INDEFINITELY until real-data validation completes
 
-**Scope**: Execute identical B-004_SPEC v1.0 on real BTC OHLCV
+**Reason**: B-004 WFV executed on **synthetic data only**. Cannot unlock Layer 8 or evaluate RPM/RCM empirically without real market data validation.
 
-**Plan**:
-1. ✅ Spec: Frozen (no changes)
-2. ✅ Implementation: Audit passed (RPM/RCM vs spec)
-3. ⏳ **Data acquisition** (NEXT):
-   - Source: Binance historical 1D BTC/USDT (accessible) OR alternative verified provider
-   - Period: 2021-01-01 to 2024-09-25 (same as synthetic)
-   - Format: OHLCV + RPM feature set per frozen spec
-4. ⏳ **WFV execution**:
-   - 19 expanding windows (180D train, 30D test, 30D slide)
-   - PIT-compliant signal generation
-   - IC, HR, Stability computation
-5. ⏳ **Results freeze**: Before any post-hoc regime decomposition
-6. ⏳ **Gate evaluation**: Against frozen criteria (all 3 must pass)
+**Scope**: Execute identical B-004_SPEC v1.0 on real BTC OHLCV — **exact scope matters** for interpretation
+
+#### B-004 Data Specification (FROZEN before retry)
+
+| Parameter | Value | Rationale |
+|-----------|-------|-----------|
+| Exchange | Binance Spot (1D) | Public, accessible, reliable |
+| Pair | BTCUSDT | Bitcoin base, USD stable |
+| Period | 2021-01-01 to 2024-09-25 | 1400 days (matches synthetic) |
+| Timezone | UTC (daily candle close 00:00 UTC) | Explicit, reproducible |
+| OHLCV | Raw (no interpolation, no smoothing) | PIT-safe |
+| Missing data | Reject run if any gap | No synthetic fill-in |
+| Deduplication | Remove exact duplicates only | No correction, no adjustment |
+| Dataset hash | Compute SHA256(OHLCV) before WFV | Auditability |
+| Train window | 180D fixed (2021-01-01 to 2021-06-30) | Per frozen WFV protocol |
+| Test windows | 30D sliding (no overlap) | Per frozen WFV protocol |
+| Windows | Exactly 19 | Per frozen spec |
+
+#### Execution Protocol (STRICT)
+
+1. ✅ Spec: B-004_SPEC v1.0 (frozen)
+2. ✅ Implementation: RPM/RCM audit passed
+3. ⏳ **Data fetch** (BLOCKING):
+   - **MUST succeed** on Binance or explicitly authorized source
+   - **MUST NOT fallback** to synthetic
+   - **MUST fail visibly** if data unavailable (no silent degradation)
+4. ⏳ **WFV execution**: 19 windows, PIT-compliant
+5. ⏳ **Results freeze**: JSON lock before any analysis
+6. ⏳ **Gate evaluation**: Against frozen criteria (ALL 3 must pass)
 7. ⏳ **Decision**:
-   - **PASS**: Proceed to Layer 8 validation
-   - **FAIL**: Alpha empirically rejected for 1D BTC
-   - **DATA FAILURE**: Inconclusive, retry with different source
+   - **PASS**: All 3 gates → Proceed to Layer 8 validation
+   - **FAIL**: Any gate fails → B-004 rejected for tested scope (BTC 1D 2021-2024)
+   - **DATA UNAVAILABLE**: Cannot access real market data → No conclusion (retry required)
 
-**Governance Rule**: Synthetic results (a4e80f1) remain archived as research artifact. Real data WFV is independent test; cannot be conflated.
+#### Important: Scope-Specific Outcomes
+
+| Outcome | Interpretation | Implication |
+|---------|-----------------|-------------|
+| PASS | RPM/RCM validated on BTC 1D 2021-2024 | Layer 8 unlock candidate |
+| FAIL | B-004 rejects for BTC 1D 2021-2024 only | No rejection of RPM concept; different scope needed if exploring further |
+| DATA FAIL | Real data inaccessible | Retry with alternative source; no conclusion possible |
+
+**Governance Rule**: 
+- Synthetic results (a4e80f1) = research archive (immutable)
+- Real data WFV = independent validation (cannot be conflated)
+- No regime post-hoc analysis until real-data gate evaluation complete
+- No tuning of RPM/RCM after real-data observation
 
 **Autonomous Mode**: COMPLETED (per user mandate 2026-09-25)
 - ✅ Reverted Layer 8 unauthorized code
