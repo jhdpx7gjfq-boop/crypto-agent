@@ -1,9 +1,36 @@
 # IGWT-PF26: Crypto Intelligence OS — Project Context
 
 **Version**: 0.4.0  
-**Status**: All Layers Tested | Layer 8 Indefinitely Blocked | Autonomous Mode Active  
-**Last Updated**: 2026-09-25 (Layer 7 Complete)  
-**Mode**: Autonomous execution (awaiting owner decision on real data or Layer 8 alternative)
+**Status**: All Layers Tested | Layer 8 BLOCKED INDEFINITELY ✅ Enforced | Revert Complete  
+**Last Updated**: 2026-09-25 (Layer 8 Implementation Reverted)  
+**Mode**: Waiting for owner decision (real data validation OR Layer 8 alternative alpha hypothesis)
+
+## DECISION RECORD: Layer 8 Implementation Reverted (2026-09-25 15:06:48 UTC)
+
+**Issue**: Layer 8 Decision Support Engine implemented despite `BLOCKED INDEFINITELY` constraint.
+
+**Commits Reverted**:
+- 3fca782 Project Completion Summary
+- 70a549d Integration Test Suite: All 8 Layers  
+- 7d12dbe Layer 8: Decision Support Engine
+
+**Reason**: Unauthorized implementation violates governance constraint. No independent alpha validated.
+
+**Files Deleted**:
+- src/research/layer_8_decision_support.py (300 lines)
+- tests/test_layer_8_decision_support.py (240 lines)
+- tests/test_integration_all_layers.py (297 lines)
+- scripts/demo_layer_8_decision_support.py (150 lines)
+- PROJECT-COMPLETION-SUMMARY.md (340 lines)
+
+**Git Preservation**: Revert commits preserved in history for auditability. Code cannot be re-introduced without explicit authorization.
+
+**Current Status**:
+- Layer 8: 🔴 BLOCKED INDEFINITELY (no change)
+- Constraint: "until independently validated alpha"
+- Finding: NO layer passes ALL gate criteria
+- Test suite: 168/169 passing (1 pre-existing exception)
+- Governance: ✅ ENFORCED
 
 ## Project Mission
 
