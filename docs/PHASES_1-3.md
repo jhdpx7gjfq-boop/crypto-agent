@@ -237,8 +237,9 @@ test_wyckoff_bce.py             7/7  ✓
 test_x20_engine.py              7/7  ✓
 test_narm_p_plus.py             9/9  ✓
 test_rcm_rpm_engine.py          12/12 ✓
+test_rrp_revival_radar.py       21/21 ✓
 
-Total: 49/50 ✓ (98.0%)
+Total: 70/71 ✓ (98.6%)
 ```
 
 Run all:
@@ -248,10 +249,11 @@ pytest tests/ -v
 
 ---
 
-## Completed: Phases 1-6 ✓
+## Completed: Phases 1-7 ✓
 
 **5. NARM-P+** - Narrative adoption rotation model ✓  
-**6. RCM/RPM** - Capital rotation detection ✓
+**6. RCM/RPM** - Capital rotation detection ✓  
+**7. RRP** - Revival Radar Pipeline ✓
 
 ---
 
@@ -309,9 +311,77 @@ backtest_df = engine.walk_forward_backtest(
 
 ---
 
-## Next: Phase 7-9
+## Phase 7: RRP Revival Radar Pipeline
 
-**7. RRP** - Revival Radar (dead tokens resurrection)  
+### Resurrection Detection for Dead Tokens - v1.0.0
+
+6-stage pipeline for detecting dead tokens showing signs of revival.
+
+**Pipeline Stages:**
+1. **Collector** - Raw snapshot data collection
+2. **Snapshot Validator** - Data quality validation (no missing/invalid fields)
+3. **Immutable Raw Store** - Append-only historical storage
+4. **Feature Enrichment** - Growth metrics and technical indicators
+5. **Performance Tracker** - Metrics relative to baseline (first snapshot)
+6. **Statistical Validation** - Confirm revival is significant (not noise)
+
+**Dead Token Criteria:**
+- Market cap < $50M
+- Daily volume < $1M
+- Active addresses < 100k
+- Very low velocity (volume / market cap)
+
+**Revival Scoring:** 0-100 points
+
+**Score Components:**
+- **Volume Growth** (30 pts) - 5x+ = 30, 3x+ = 25, 2x+ = 15
+- **Address Growth** (30 pts) - 3x+ = 30, 2x+ = 25, 1x+ = 15
+- **Price Appreciation** (20 pts) - 2x+ = 20, 50%+ = 15, 10%+ = 8
+- **Velocity Improvement** (10 pts) - High = 10, moderate = 5
+- **Statistical Validation** (10 pts) - Bonus if confirmed
+
+**Revival Validation (3 Checks):**
+```
+Volume Surge:        >= 3x increase required
+Address Growth:      >= 2x increase required
+Price Appreciation:  >= 50% increase required
+Revival Confirmed:   2/3 checks pass
+```
+
+**Features:**
+- Immutable append-only snapshot history per token
+- Growth rate calculations (overall and 7-day windows)
+- Price volatility analysis
+- Recent momentum detection
+- Batch resurrection detection (scan multiple coins)
+- Performance multiple tracking (price, volume, address)
+
+**Usage:**
+```python
+radar = RRPRevivalRadar()
+
+# Collect snapshots over time
+snapshot = radar.collect_snapshot(coin_data)
+radar.store_snapshot(snapshot)
+
+# Score revival candidate
+result = radar.score_revival_candidate(coin_id)
+print(f"Revival Score: {result['score']}/100")
+
+# Validate statistical significance
+is_revival, validation = radar.validate_revival(coin_id)
+print(f"Confirmed Revival: {is_revival}")
+
+# Batch detect resurrections
+resurrections_df = radar.detect_resurrections(coins_list)
+```
+
+**Tests:** 21/21 ✓
+
+---
+
+## Next: Phase 8-9
+
 **8. Dashboard** - Real-time monitoring  
 **9. Agent AI** - Autonomous research assistant
 
@@ -327,7 +397,8 @@ backtest_df = engine.walk_forward_backtest(
 | `src/analysis/x20_engine.py` | Opportunity scoring | ✓ v1.0.0 |
 | `src/analysis/narm_p_plus.py` | Narrative rotation | ✓ v1.0.0 |
 | `src/analysis/rcm_rpm_engine.py` | Capital rotation | ✓ v1.0.0 |
-| `tests/` | Full test suite | ✓ 98.0% |
+| `src/analysis/rrp_revival_radar.py` | Dead token revival | ✓ v1.0.0 |
+| `tests/` | Full test suite | ✓ 98.6% |
 
 ---
 
@@ -345,6 +416,6 @@ backtest_df = engine.walk_forward_backtest(
 ---
 
 **Built:** 2026-09-25  
-**Last Updated:** 2026-09-25 (Phase 6: RCM/RPM)  
+**Last Updated:** 2026-09-25 (Phase 7: RRP)  
 **Session:** claude/wonderful-edison-05iu3k  
 **Team:** Claude Haiku 4.5 + IGWT Strategy
