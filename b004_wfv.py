@@ -225,7 +225,9 @@ class B004WFVOrchestrator:
                 "windows_passed": len(all_ics),
             }
 
-            # Gate decision (LOCKED CRITERIA)
+            # Gate decision (FROZEN CRITERIA - Set A, Owner approved 2026-09-25)
+            # IMMUTABLE: These thresholds cannot be adjusted post-execution
+            # Set A (FROZEN): IC >= 0.05, HR >= 0.55, Stability < 0.50
             pass_ic = mean_ic >= 0.05
             pass_hr = mean_hr >= 0.55
             pass_stability = stability < 0.50
