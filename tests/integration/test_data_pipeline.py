@@ -41,6 +41,7 @@ class TestDataPipeline:
             timeframe="1d",
             schema_version="1.0",
             data_version="2026-01-01",
+            availability_timestamp=datetime.now(timezone.utc),
         )
 
         data = []

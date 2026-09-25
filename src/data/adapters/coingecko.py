@@ -130,12 +130,14 @@ class CoinGeckoAdapter(DatasourceAdapter):
                 price = prices[ts_ms]
                 volume = volumes.get(ts_ms, 0)
 
+                now_utc = datetime.now(tz=timezone.utc)
                 provenance = Provenance(
                     source="coingecko",
                     provider="CoinGecko",
                     endpoint="/coins/{id}/market_chart/range",
-                    retrieval_timestamp=datetime.now(tz=timezone.utc),
+                    retrieval_timestamp=now_utc,
                     event_timestamp=ts,
+                    availability_timestamp=now_utc,
                     symbol=cg_symbol,
                     timeframe=timeframe,
                     schema_version="1.0",

@@ -22,6 +22,7 @@ class Provenance:
     timeframe: str  # 1h, 1d, 4h, etc.
     schema_version: str  # "1.0"
     data_version: str  # YYYY-MM-DD
+    availability_timestamp: Optional[datetime] = None  # When data became available (PIT reconstruction)
     caveats: Optional[str] = None  # Known issues, data gaps
 
     def to_dict(self) -> Dict[str, Any]:

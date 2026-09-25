@@ -8,6 +8,7 @@ import duckdb
 from pathlib import Path
 from typing import List, Dict, Any
 from datetime import datetime, timezone
+import pyarrow.parquet as pq
 
 from src.common.logging import get_logger
 
@@ -49,7 +50,6 @@ class DuckDBStore:
         # Metadata and versioning
         self.conn.execute("""
             CREATE TABLE IF NOT EXISTS data_metadata (
-                id INTEGER PRIMARY KEY DEFAULT nextval('seq_metadata'),
                 symbol VARCHAR NOT NULL,
                 timeframe VARCHAR NOT NULL,
                 source VARCHAR NOT NULL,
@@ -69,12 +69,18 @@ class DuckDBStore:
         if not parquet_path.exists():
             raise FileNotFoundError(f"Parquet file not found: {parquet_path}")
 
-        # Insert from parquet
+        # Read parquet safely using PyArrow (no SQL injection risk)
+        table = pq.read_table(str(parquet_path))
+
+        # Register as temporary table and insert (safe from SQL injection)
+        temp_table = "_temp_parquet_import"
+        self.conn.register(temp_table, table)
         self.conn.execute(f"""
             INSERT INTO ohlcv
             SELECT timestamp, open, high, low, close, volume, source, symbol, timeframe
-            FROM read_parquet('{parquet_path}')
+            FROM {temp_table}
         """)
+        self.conn.unregister(temp_table)
 
         # Record metadata
         result = self.conn.execute("""
@@ -104,7 +110,7 @@ class DuckDBStore:
     def get_candles(self, symbol: str, timeframe: str, limit: int = None) -> List[Dict[str, Any]]:
         """Fetch candles for a symbol/timeframe."""
         query = f"""
-            SELECT timestamp, open, high, low, close, volume, source
+            SELECT timestamp, open, high, low, close, volume, source, symbol, timeframe
             FROM ohlcv
             WHERE symbol = ? AND timeframe = ?
             ORDER BY timestamp DESC
@@ -122,6 +128,8 @@ class DuckDBStore:
                 "close": r[4],
                 "volume": r[5],
                 "source": r[6],
+                "symbol": r[7],
+                "timeframe": r[8],
             }
             for r in results
         ]

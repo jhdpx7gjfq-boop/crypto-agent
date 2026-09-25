@@ -60,6 +60,7 @@ class TestCoinGeckoAdapter:
             timeframe="1d",
             schema_version="1.0",
             data_version="2025-01-01",
+            availability_timestamp=ts,
         )
 
         # Invalid: Open > High
@@ -89,6 +90,7 @@ class TestCoinGeckoAdapter:
             timeframe="1d",
             schema_version="1.0",
             data_version="2025-01-01",
+            availability_timestamp=ts,
         )
 
         invalid_candle = OHLCV(
@@ -120,6 +122,7 @@ class TestCoinGeckoAdapter:
             timeframe="1d",
             schema_version="1.0",
             data_version="2025-01-01",
+            availability_timestamp=ts1,
         )
 
         candles = [
@@ -144,6 +147,7 @@ class TestCoinGeckoAdapter:
             timeframe="1d",
             schema_version="1.0",
             data_version="2025-01-01",
+            availability_timestamp=ts,
         )
 
         candle = OHLCV(
