@@ -42,7 +42,7 @@ Architecture: 8 research layers combining market regime detection, Wyckoff analy
 
 ### H-005: BTC Exchange Flows Hypothesis (PRE-REGISTERED — NOT AUTHORIZED)
 
-**Status**: 🔴 **OWNER DECISION REQUIRED** — Contract frozen, awaiting authorization parameters
+**Status**: 🟢 **AUTHORIZED** (2026-09-28) — Glassnode, BTC 1D, Profit Factor > 1.30, Signal horizon 5D
 
 **Hypothesis**:
 > Variations in BTC exchange inflows/outflows at signal generation time improve prediction of future BTC returns, net of transaction costs.
@@ -53,9 +53,9 @@ Architecture: 8 research layers combining market regime detection, Wyckoff analy
 |-----------|-------|-------|
 | Experiment ID | H-005 | Parent: B-004 (reference only, not inherited) |
 | Asset | BTC-USD | 1D candles |
-| Scope | [AWAITING OWNER] | BTC-USD 1D only, or multi-scope? |
-| Signal horizon | [AWAITING OWNER] | Fixed before execution (e.g., 5D forward returns) |
-| Features | Exchange flows (6 max) | CryptoQuant or Glassnode, TBD |
+| Scope | ✅ BTC-USD 1D only | Owner authorized: 2026-09-28 |
+| Signal horizon | ✅ 5D forward returns | Fixed (5 trading days ahead) |
+| Features | Exchange flows (6 max) | ✅ Glassnode (snapshot-versioned) |
 | Development period | [start date] → 2024-09-25 | Hold-out begins 2024-09-26 |
 | Hold-out period | 2024-09-26 → 2025-09-28 | **LOCKED — untouched during development** |
 | WFV protocol | 19-window expanding | Same as B-004 (180D train fixed, 30D test, 30D slide) |
@@ -63,35 +63,39 @@ Architecture: 8 research layers combining market regime detection, Wyckoff analy
 | Baseline | [TO-DEFINE] | Same dates, same windows as H-005 |
 | Primary metrics | ΔIC, HR, Stability | Pass: ΔIC > 0.005 AND HR > 0.50 AND Stability > 0.65 |
 | Economic metrics | Profit Factor, Drawdown, Expectancy | All must pass post-costs |
-| Data provider | [AWAITING OWNER] | CryptoQuant (revision-aware) or Glassnode (snapshot versioned) |
-| Revisions policy | [AWAITING OWNER] | If CryptoQuant: mark as `revision-aware`, not PIT-strict |
-| Snapshots | [AWAITING OWNER] | Required if claiming PIT compliance |
-| Production status | BLOCKED | Remains blocked regardless of outcome |
+| Data provider | ✅ Glassnode | Snapshot-versioned (PIT-safe) |
+| Revisions policy | ✅ Snapshot-versioned | Glassnode data frozen per timestamp |
+| Snapshots | ✅ Required | Archive all snapshots during development |
+| Production status | 🔴 BLOCKED | Remains blocked regardless of outcome |
 
-**Owner Decision Checklist**:
+**Owner Authorization Decision** (2026-09-28):
 
 ```
-H-005 Authorization: [ ] GO / [ ] NO-GO
-Data Provider: [ ] CryptoQuant / [ ] Glassnode / [ ] Other
-Scope: [ ] BTC-USD 1D only / [ ] Multi-scope
-Signal Horizon: [specify: e.g., "5D forward returns"]
-Profit Factor Threshold: [ ] > 1.30 / [ ] > [custom]
-Resources Confirmed: [ ] API access, [ ] storage, [ ] compute
-Embargo Rule: [ ] 1 day / [ ] [custom]
-Revision Policy: [ ] revision-aware (CQ) / [ ] snapshot-versioned (GN)
-Executive Sign-off: [ ] approved by [name]
+✅ H-005 Authorization: GO
+✅ Data Provider: Glassnode (snapshot-versioned)
+✅ Scope: BTC-USD 1D only
+✅ Signal Horizon: 5D forward returns
+✅ Profit Factor Threshold: > 1.30
+✅ Resources: API access to Glassnode confirmed
+✅ Embargo Rule: 1 day (minimum)
+✅ Revision Policy: Snapshot-versioned (PIT-safe)
+✅ Executive Sign-off: dvdlgustin@gmail.com
 ```
 
-**Forbidden Actions** (until owner signature):
-- ❌ Inspect or download hold-out (2024-09-26 → 2025-09-28)
-- ❌ Choose features based on hold-out performance
-- ❌ Modify gate thresholds (ΔIC > 0.005, HR > 0.50, Stability > 0.65)
-- ❌ Recalibrate or fix B-004
-- ❌ Test multiple scopes and select best
-- ❌ Present H-005 as alpha
-- ❌ Deploy to production
+**Governance Rules** (ENFORCED during H-005 execution):
+- 🔒 **LOCKED**: Hold-out (2024-09-26 → 2025-09-28) — untouched until final evaluation
+- 🔒 **FROZEN**: Gate thresholds — ΔIC > 0.005, HR > 0.50, Stability > 0.65 (no modifications)
+- 🔒 **FROZEN**: Signal horizon — 5D forward returns (no changes)
+- ❌ Do NOT choose features based on hold-out performance
+- ❌ Do NOT recalibrate or inherit B-004 settings
+- ❌ Do NOT test multiple scopes then select best
+- ❌ Do NOT present H-005 as alpha until hold-out validation complete
+- ❌ Do NOT deploy to production (blocked indefinitely)
+- ✅ DO archive all Glassnode snapshots with timestamps
+- ✅ DO maintain version control on data layer
+- ✅ DO freeze baseline before H-005 feature engineering
 
-**Next Step**: Await owner authorization. No execution until decision provided.
+**Next Step**: Initialize H-005 development environment. Development period: [start] → 2024-09-25. Hold-out evaluation: 2024-09-26 → 2025-09-28.
 
 ---
 
