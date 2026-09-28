@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-09-28T10:33:59.040472",
+  "dataset_hash": "f03f4afd12eab84e483d71adaefa784a3266b50f1f882916966cc9993621b300",
+  "rows": 1364,
+  "date_range": {
+    "start": "2021-01-01T00:00:00",
+    "end": "2024-09-25T00:00:00"
+  },
+  "baseline_a": {
+    "ic": -0.1208,
+    "source": "B-003 prior"
+  },
+  "model_j_rpm": {
+    "ic_mean": 0.0,
+    "ic_std": 0.0,
+    "delta_ic": 0.1208,
+    "hr": 0.5,
+    "stability": 1.0,
+    "gate_pass": false
+  },
+  "gate_criteria": {
+    "delta_ic_gt_0005": true,
+    "hr_gt_050": false,
+    "stability_gt_065": true,
+    "all_pass": false
+  }
+}
