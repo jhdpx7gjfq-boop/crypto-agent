@@ -1,9 +1,9 @@
 # IGWT-PF26: Crypto Intelligence OS — Project Context
 
 **Version**: 0.4.1  
-**Status**: All Layers Tested + Real Data B-004 Complete | Layer 8 BLOCKED INDEFINITELY ✅ Enforced  
-**Last Updated**: 2026-09-28 (B-004 Real Data Validation: GATE FAIL)  
-**Mode**: Awaiting owner decision (alpha hypothesis validation OR new research scope approval)
+**Status**: All Layers Tested + Real Data B-004 Complete | Layer 8 BLOCKED INDEFINITELY ✅ Enforced | H-005 PRE-REGISTERED  
+**Last Updated**: 2026-09-28 (B-004: GATE FAIL | H-005: Pre-registered, owner decision pending)  
+**Mode**: OWNER DECISION REQUIRED (H-005 authorization: GO/NO-GO + parameters)
 
 ## DECISION RECORD: Layer 8 Implementation Reverted (2026-09-25 15:06:48 UTC)
 
@@ -38,7 +38,64 @@ IGWT-PF26 is a quantitative research infrastructure for cryptocurrency investmen
 
 Architecture: 8 research layers combining market regime detection, Wyckoff analysis, narrative signals, and statistical validation.
 
-## Current Work: Phase B-001 (Incremental Alpha Research)
+## Current Work: H-005 PRE-REGISTERED (Owner Decision Pending)
+
+### H-005: BTC Exchange Flows Hypothesis (PRE-REGISTERED — NOT AUTHORIZED)
+
+**Status**: 🔴 **OWNER DECISION REQUIRED** — Contract frozen, awaiting authorization parameters
+
+**Hypothesis**:
+> Variations in BTC exchange inflows/outflows at signal generation time improve prediction of future BTC returns, net of transaction costs.
+
+**Pre-Registered Contract** (IMMUTABLE until execution):
+
+| Parameter | Value | Notes |
+|-----------|-------|-------|
+| Experiment ID | H-005 | Parent: B-004 (reference only, not inherited) |
+| Asset | BTC-USD | 1D candles |
+| Scope | [AWAITING OWNER] | BTC-USD 1D only, or multi-scope? |
+| Signal horizon | [AWAITING OWNER] | Fixed before execution (e.g., 5D forward returns) |
+| Features | Exchange flows (6 max) | CryptoQuant or Glassnode, TBD |
+| Development period | [start date] → 2024-09-25 | Hold-out begins 2024-09-26 |
+| Hold-out period | 2024-09-26 → 2025-09-28 | **LOCKED — untouched during development** |
+| WFV protocol | 19-window expanding | Same as B-004 (180D train fixed, 30D test, 30D slide) |
+| PIT rule | No lookahead | Embargo ≥ 1 day if provider lag uncertain |
+| Baseline | [TO-DEFINE] | Same dates, same windows as H-005 |
+| Primary metrics | ΔIC, HR, Stability | Pass: ΔIC > 0.005 AND HR > 0.50 AND Stability > 0.65 |
+| Economic metrics | Profit Factor, Drawdown, Expectancy | All must pass post-costs |
+| Data provider | [AWAITING OWNER] | CryptoQuant (revision-aware) or Glassnode (snapshot versioned) |
+| Revisions policy | [AWAITING OWNER] | If CryptoQuant: mark as `revision-aware`, not PIT-strict |
+| Snapshots | [AWAITING OWNER] | Required if claiming PIT compliance |
+| Production status | BLOCKED | Remains blocked regardless of outcome |
+
+**Owner Decision Checklist**:
+
+```
+H-005 Authorization: [ ] GO / [ ] NO-GO
+Data Provider: [ ] CryptoQuant / [ ] Glassnode / [ ] Other
+Scope: [ ] BTC-USD 1D only / [ ] Multi-scope
+Signal Horizon: [specify: e.g., "5D forward returns"]
+Profit Factor Threshold: [ ] > 1.30 / [ ] > [custom]
+Resources Confirmed: [ ] API access, [ ] storage, [ ] compute
+Embargo Rule: [ ] 1 day / [ ] [custom]
+Revision Policy: [ ] revision-aware (CQ) / [ ] snapshot-versioned (GN)
+Executive Sign-off: [ ] approved by [name]
+```
+
+**Forbidden Actions** (until owner signature):
+- ❌ Inspect or download hold-out (2024-09-26 → 2025-09-28)
+- ❌ Choose features based on hold-out performance
+- ❌ Modify gate thresholds (ΔIC > 0.005, HR > 0.50, Stability > 0.65)
+- ❌ Recalibrate or fix B-004
+- ❌ Test multiple scopes and select best
+- ❌ Present H-005 as alpha
+- ❌ Deploy to production
+
+**Next Step**: Await owner authorization. No execution until decision provided.
+
+---
+
+## Phase Record: B-001 through B-004 (COMPLETED & FROZEN)
 
 ### Phase A: CLOSED ✅
 
