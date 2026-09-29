@@ -357,7 +357,166 @@ class MarketEvent:
 
 ---
 
-## 5. Governance Invariants
+## 5. Control Separation & Integrity Model (AMENDMENT: 2026-09-29)
+
+### 5.1 Source-Level Controls
+
+#### C1.4-SOURCE: Upstream Revision Exposure
+
+**Definition:** Source exposes sufficient version/vintage history to prove what changes were made to historical data and when.
+
+**Implementation-Agnostic Criteria:**
+- Source provides API, audit log, or documentation showing retroactive corrections
+- Changes timestamped (when correction detected/applied)
+- Old and new values traceable
+- Reason for correction documented or inferrable
+
+**Status:** ⚠️ UNVERIFIED
+- CoinGecko: No revision API; revision policy undocumented → FAIL
+- Binance: Transparent kline fetch; retroactive corrections rare → PARTIAL
+- TradingView: OAuth not accessible in this session → UNVERIFIED
+
+---
+
+#### C1.5-SOURCE: Upstream Point-in-Time API
+
+**Definition:** Source exposes an API or mechanism allowing queries to deterministically reconstruct the data state at a specific historical timestamp or version reference.
+
+**Implementation-Agnostic Criteria:**
+- A query specifying the same historical timestamp/version deterministically reconstructs the same data state
+- Results are idempotent (same query parameters = same data)
+- Available for lookback period (≥90 days minimum)
+
+**Status:** ⚠️ UNVERIFIED
+- CoinGecko: `get-coin-history(date=YYYY-MM-DD)` does NOT support `as_of_timestamp` or vintage selection → FAIL
+- Binance: No versioned snapshots endpoint → FAIL
+- TradingView: OAuth required; not tested → UNVERIFIED
+
+---
+
+### 5.2 IGWT-Level Controls
+
+#### C1.4-IGWT: Capture-Layer Revision Audit
+
+**Definition:** IGWT responsibility to detect and log changes between consecutive daily snapshots, proving that capture layer has audited provider data changes.
+
+**Key Constraint:** Does NOT prove native provider revision history. Proves capture integrity only.
+
+**Implementation:**
+- Daily snapshot fetch with full OHLCV history (e.g., BTC: 2019-01-01 to today)
+- Diff detection: Compare current snapshot with previous snapshot
+- Revision log entry for each detected change (date, field, old value, new value)
+- Permanent retention of revision audit log
+
+**Status:** ✅ AUTHORIZED
+- Scope: C1.4-IGWT infrastructure build as implementation Step 3
+- Non-PIT work; no lookahead-bias implications
+
+**Example:**
+```
+Snapshot 2026-09-29 vs. 2026-09-28:
+  BTC 2026-09-27:
+    close: 64500 → 64512 (provider corrected)
+    → Revision log entry: "coingecko_BTC_20260928_corrected_20260929"
+```
+
+---
+
+#### C1.5-IGWT: Capture-Layer Point-in-Time Freezing
+
+**Definition:** IGWT responsibility to freeze daily snapshots with cryptographic hash verification, enabling deterministic reconstruction of captured data.
+
+**Key Constraint:** Does NOT prove provider PIT availability. Proves reproducibility of captured snapshots only.
+
+**Implementation:**
+- Daily snapshot fetch stored in tamper-evident, hash-verified snapshot store with versioned manifests
+- Manifest includes: snapshot_id, snapshot_timestamp, data_as_of, sources metadata, immutable hash
+- Hash verification on reconstruction: Verify snapshot integrity before use
+- Query API: `get_data_as_of(asset, query_date, snapshot_date)` returns frozen view
+
+**Status:** ✅ AUTHORIZED
+- Scope: C1.5-IGWT infrastructure build as implementation Step 4
+- Non-PIT work; proves reproducibility only
+
+**Example:**
+```
+Manifest for snapshot 20260929_150000:
+  immutable_hash: sha256:abc123def456...
+  BTC_2026_03_31_close: 68420.50
+  Reconstructed on 2026-10-15: Same hash, same data
+  → Proof: We captured this state deterministically
+```
+
+---
+
+### 5.3 Validation-Level Control: C1.5-PIT
+
+#### C1.5-PIT: Hard Gate for Walk-Forward Validation
+
+**Definition:** Independent proof that data used in walk-forward window was available at the upstream provider at the decision timestamp.
+
+**Acceptance Criteria (Dual-Path):**
+
+**Option A: Source-Native PIT API**
+- Source exposes native versioned query API (C1.5-SOURCE)
+- Query with `as_of_date` or equivalent returns deterministic historical state
+- No local transformation required
+
+**Option B: Independently Verifiable Signed Attestation**
+- Provider publishes signed statement of historical availability
+- Third-party verification service (e.g., blockchain timestamp, notary)
+- Covers decision window lookback period
+
+**Key Constraint:** Local snapshots (C1.5-IGWT) do NOT satisfy C1.5-PIT.
+- C1.5-IGWT proves: "We captured this data on date X"
+- C1.5-PIT requires: "Provider had this data available on date X"
+- These are independent gates.
+
+**Status:** 🔴 BLOCKED
+- No tested source meets Option A criteria
+- No Option B attestation discovered
+- Gate 3 progression BLOCKED until C1.5-PIT verified
+
+---
+
+### 5.4 Gate 3 Implications
+
+#### Mandatory Unblocking Decisions
+
+**Decision 1:** Approve ADR-035 §5 amendment (governance clarification)?
+- ✅ APPROVED (2026-09-29)
+
+**Decision 2:** Authorize Capture Layer (C1.4-IGWT + C1.5-IGWT) implementation?
+- ✅ AUTHORIZED (2026-09-29)
+
+**Decision 3: Unblock Gate 3 (requires C1.5-PIT verification)**
+- Status: PENDING
+- Requirement: Discover source exposing C1.5-SOURCE or obtain Option B attestation
+- Timeline: Before WFV/PIT-dependent work (Phase 3+)
+
+---
+
+### 5.5 Governance Rule: Control Separation & Integrity Invariant
+
+**CRITICAL INVARIANT:** Every artifact produced by Layer 1 must carry explicit provenance state:
+
+```
+PIT_STATUS = UNVERIFIED
+```
+
+**Rationale:** Prevents accidental conflation of C1.5-IGWT (capture reproducibility) with C1.5-PIT (upstream availability) in future research or LLM analysis.
+
+**Enforcement:**
+- Snapshots: `PIT_STATUS = UNVERIFIED` in manifest
+- Feature store: `PIT_STATUS = UNVERIFIED` in column metadata
+- Backtest results: `PIT_STATUS = UNVERIFIED` in validation report
+- Any research using Layer 1 data: Explicit disclaimer before PIT gate confirmed
+
+**Consequence:** Any Layer 3+ work (BCE, X20, RPM, WFV) referencing Layer 1 data must fail fast if `PIT_STATUS ≠ VERIFIED`.
+
+---
+
+## 6. Governance Invariants
 
 ### Invariant 1: Immutability
 - Once snapshot is frozen (timestamped), it cannot be modified
@@ -381,7 +540,7 @@ class MarketEvent:
 
 ---
 
-## 6. Data Quality Acceptance Criteria
+## 8. Data Quality Acceptance Criteria
 
 | Metric | Minimum | Evidence |
 |--------|---------|----------|
@@ -394,7 +553,7 @@ class MarketEvent:
 
 ---
 
-## 7. Rationale
+## 9. Rationale
 
 ### Why Dual-Layer Architecture?
 
@@ -420,7 +579,7 @@ Walk-forward validation requires **proof of data availability at decision point*
 
 ---
 
-## 8. Future Extensions
+## 10. Future Extensions
 
 - [ ] Add on-chain metrics (Glassnode snapshots) for Layer 2 regime detection
 - [ ] Implement automated PIT validation (monthly regression test)
