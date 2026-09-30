@@ -2,3 +2,7 @@ __pycache__/
 *.pyc
 .env
 .pytest_cache/
+
+# P0-DATA-PILOT: Local-only files, never committed (governance rule)
+P0-DATA-PILOT-*
+scripts/p0_data_pilot/
