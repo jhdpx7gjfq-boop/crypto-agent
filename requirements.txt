@@ -3,3 +3,4 @@ perplexityai>=0.43,<1
 numpy>=1.24,<2
 pandas>=2.0,<3
 scipy>=1.10,<2
+duckdb>=1.0,<2
