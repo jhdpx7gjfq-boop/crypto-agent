@@ -19,6 +19,7 @@ CRITICAL INVARIANT:
 
 from .snapshot_manifest import SnapshotManifest, SourceMetadata, Checksum
 from .revision_audit import RevisionAuditLog, Change, RevisionAuditEngine
+from .snapshot_freezing import FrozenSnapshot, SnapshotFreezer
 
 __all__ = [
     "SnapshotManifest",
@@ -27,4 +28,6 @@ __all__ = [
     "RevisionAuditLog",
     "Change",
     "RevisionAuditEngine",
+    "FrozenSnapshot",
+    "SnapshotFreezer",
 ]
