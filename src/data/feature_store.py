@@ -1,204 +1,349 @@
 """
-Feature Store - Layer 1 Data Processing
-Version: 1.0.0
+Feature Store - Centralized feature repository for Layers 1-7
+Version: 2.0.0
 
-OHLCV ingestion → Technical indicators → Parquet storage
+DuckDB-backed storage for OHLCV, Layer 1-7 features, and backtest results.
+Supports multi-asset, walk-forward validation, and schema versioning.
 """
 
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List, Dict, Tuple
+from uuid import uuid4
 
 import duckdb
-import numpy as np
 import pandas as pd
+
+from src.data.feature_schema import (
+    SCHEMA_VERSION,
+    get_schema,
+    get_all_schemas,
+    get_constraints,
+    validate_layer_data,
+)
 
 logger = logging.getLogger(__name__)
 
-VERSION = "1.0.0"
+VERSION = "2.0.0"
 
 
 class FeatureStore:
+    """
+    Centralized feature store for all 7 layers.
+
+    Manages:
+    - Layer 1 (OHLCV): Raw market data
+    - Layer 3 (BCE): Wyckoff bottom confirmation scores
+    - Layer 4 (X20): Opportunity detection scores
+    - Layer 5 (NARM): Narrative + adoption + rotation
+    - Layer 6 (RCM): Capital rotation with walk-forward validation
+    - Layer 7 (RRP): Revival radar scores
+    - Backtest results with validation constraints
+    """
+
     def __init__(self, db_path: str = "data/features.duckdb"):
         self.db_path = db_path
+        self.version = VERSION
+        self.schema_version = SCHEMA_VERSION
+
         Path(self.db_path).parent.mkdir(parents=True, exist_ok=True)
         self.conn = duckdb.connect(self.db_path)
-        self._init_schema()
-        logger.info(f"FeatureStore initialized (v{VERSION})")
+        self._init_schemas()
+        logger.info(f"FeatureStore initialized (v{VERSION}, schema v{SCHEMA_VERSION})")
 
-    def _init_schema(self):
-        self.conn.execute("""
-            CREATE TABLE IF NOT EXISTS ohlcv (
-                coin_id VARCHAR,
-                timestamp TIMESTAMP,
-                open DOUBLE,
-                high DOUBLE,
-                low DOUBLE,
-                close DOUBLE,
-                volume DOUBLE,
-                market_cap DOUBLE,
-                PRIMARY KEY (coin_id, timestamp)
-            )
-        """)
+    def _init_schemas(self):
+        """Initialize all layer schemas."""
+        schemas = get_all_schemas()
+        for layer_key, schema_meta in schemas.items():
+            try:
+                self.conn.execute(schema_meta["definition"])
+                logger.debug(f"Schema initialized: {schema_meta['name']}")
+            except Exception as e:
+                logger.error(f"Failed to initialize {schema_meta['name']}: {e}")
+                raise
 
-        self.conn.execute("""
-            CREATE TABLE IF NOT EXISTS indicators (
-                coin_id VARCHAR,
-                timestamp TIMESTAMP,
-                rsi14 DOUBLE,
-                sma20 DOUBLE,
-                sma50 DOUBLE,
-                bb_upper DOUBLE,
-                bb_lower DOUBLE,
-                atr14 DOUBLE,
-                volume_sma DOUBLE,
-                PRIMARY KEY (coin_id, timestamp)
-            )
-        """)
-
-    def ingest_ohlcv(self, coin_id: str, df: pd.DataFrame) -> None:
-        """Ingest OHLCV data from DataFrame."""
+    # Layer 1: OHLCV
+    def insert_layer1(self, asset: str, df: pd.DataFrame) -> int:
+        """Insert OHLCV data for an asset."""
         df = df.copy()
-        df["coin_id"] = coin_id
-        df = df[["coin_id", "timestamp", "open", "high", "low", "close", "volume", "market_cap"]]
+        df["asset"] = asset
+        df = df[["timestamp", "asset", "open", "high", "low", "close", "volume"]]
 
-        self.conn.execute("INSERT OR REPLACE INTO ohlcv SELECT * FROM df")
-        logger.info(f"Ingested {len(df)} candles for {coin_id}")
+        # Validate rows
+        errors = []
+        for idx, row in df.iterrows():
+            valid, row_errors = validate_layer_data("layer1", row.to_dict())
+            if not valid:
+                errors.extend([f"Row {idx}: {e}" for e in row_errors])
 
-    def calculate_indicators(self, coin_id: str, lookback: int = 90) -> pd.DataFrame:
-        """Calculate technical indicators for a coin."""
-        query = f"""
-            SELECT * FROM ohlcv
-            WHERE coin_id = '{coin_id}'
-            ORDER BY timestamp DESC
-            LIMIT {lookback}
-        """
-        df = self.conn.execute(query).fetch_df()
-        df = df.sort_values("timestamp").reset_index(drop=True)
+        if errors:
+            logger.warning(f"Layer1 validation warnings for {asset}: {errors[:3]}")
 
-        if len(df) < 14:
-            logger.warning(f"Not enough data for {coin_id}: {len(df)} < 14")
-            return df
+        self.conn.execute("INSERT OR REPLACE INTO features_layer1 SELECT * FROM df")
+        logger.info(f"Ingested {len(df)} Layer1 candles for {asset}")
+        return len(df)
 
-        # RSI(14)
-        df["rsi14"] = self._calculate_rsi(df["close"], 14)
+    def query_layer1(
+        self,
+        asset: str,
+        start_ms: int = None,
+        end_ms: int = None,
+        limit: int = None,
+    ) -> pd.DataFrame:
+        """Query OHLCV data for an asset."""
+        query = "SELECT * FROM features_layer1 WHERE asset = $1"
+        params = [asset]
 
-        # SMAs
-        df["sma20"] = df["close"].rolling(20).mean()
-        df["sma50"] = df["close"].rolling(50).mean()
+        if start_ms:
+            query += f" AND timestamp >= $2"
+            params.append(start_ms)
 
-        # Bollinger Bands(20, 2)
-        sma = df["close"].rolling(20).mean()
-        std = df["close"].rolling(20).std()
-        df["bb_upper"] = sma + (2 * std)
-        df["bb_lower"] = sma - (2 * std)
+        if end_ms:
+            query += f" AND timestamp <= ${len(params) + 1}"
+            params.append(end_ms)
 
-        # ATR(14)
-        df["atr14"] = self._calculate_atr(df, 14)
+        query += " ORDER BY timestamp ASC"
 
-        # Volume SMA
-        df["volume_sma"] = df["volume"].rolling(20).mean()
+        if limit:
+            query += f" LIMIT {limit}"
 
-        return df
+        return self.conn.execute(query, params).fetch_df()
 
-    def _calculate_rsi(self, prices: pd.Series, period: int = 14) -> pd.Series:
-        """Calculate RSI indicator."""
-        delta = prices.diff()
-        gain = delta.where(delta > 0, 0)
-        loss = -delta.where(delta < 0, 0)
+    # Generic Layer CRUD
+    def insert_layer_features(self, layer: str, asset: str, df: pd.DataFrame) -> int:
+        """Insert features for any layer."""
+        if layer not in ["layer3", "layer4", "layer5", "layer6", "layer7"]:
+            raise ValueError(f"Invalid layer: {layer}")
 
-        avg_gain = gain.rolling(period).mean()
-        avg_loss = loss.rolling(period).mean()
+        schema = get_schema(layer)
+        table_name = schema["name"]
+        df = df.copy()
+        df["asset"] = asset
 
-        rs = avg_gain / avg_loss
-        rsi = 100 - (100 / (1 + rs))
-        return rsi
+        # Validate
+        errors = []
+        for idx, row in df.iterrows():
+            valid, row_errors = validate_layer_data(layer, row.to_dict())
+            if not valid:
+                errors.extend([f"Row {idx}: {e}" for e in row_errors])
 
-    def _calculate_atr(self, df: pd.DataFrame, period: int = 14) -> pd.Series:
-        """Calculate ATR indicator."""
-        high_low = df["high"] - df["low"]
-        high_close = abs(df["high"] - df["close"].shift())
-        low_close = abs(df["low"] - df["close"].shift())
+        if errors:
+            logger.warning(f"{layer} validation warnings: {errors[:3]}")
 
-        tr = pd.concat([high_low, high_close, low_close], axis=1).max(axis=1)
-        atr = tr.rolling(period).mean()
-        return atr
+        self.conn.execute(f"INSERT OR REPLACE INTO {table_name} SELECT * FROM df")
+        logger.info(f"Ingested {len(df)} {layer} features for {asset}")
+        return len(df)
 
-    def save_indicators(self, coin_id: str, indicators_df: pd.DataFrame) -> None:
-        """Save calculated indicators to database."""
-        indicators_df = indicators_df[["coin_id", "timestamp", "rsi14", "sma20", "sma50", "bb_upper", "bb_lower", "atr14", "volume_sma"]].copy()
-        indicators_df = indicators_df.dropna()
+    def query_layer_features(
+        self,
+        layer: str,
+        asset: str,
+        start_ms: int = None,
+        end_ms: int = None,
+        min_score: float = None,
+        valid_only: bool = False,
+    ) -> pd.DataFrame:
+        """Query features for any layer."""
+        if layer not in ["layer3", "layer4", "layer5", "layer6", "layer7"]:
+            raise ValueError(f"Invalid layer: {layer}")
 
-        self.conn.execute("INSERT OR REPLACE INTO indicators SELECT * FROM indicators_df")
-        logger.info(f"Saved {len(indicators_df)} indicator rows for {coin_id}")
+        schema = get_schema(layer)
+        table_name = schema["name"]
+        score_field = f"{layer.replace('layer', '')}_score"
 
-    def export_parquet(self, coin_id: str, output_path: str, days: int = 365) -> None:
-        """Export coin data to Parquet."""
-        query = f"""
+        query = f"SELECT * FROM {table_name} WHERE asset = $1"
+        params = [asset]
+
+        if start_ms:
+            query += f" AND timestamp >= ${len(params) + 1}"
+            params.append(start_ms)
+
+        if end_ms:
+            query += f" AND timestamp <= ${len(params) + 1}"
+            params.append(end_ms)
+
+        if min_score is not None and score_field in ["3_score", "4_score", "5_score", "6_score", "7_score"]:
+            actual_field = f"{['bce', 'x20', 'narm', 'rcm', 'rrp'][int(layer[-1]) - 3]}_score"
+            query += f" AND {actual_field} >= ${len(params) + 1}"
+            params.append(min_score)
+
+        if valid_only:
+            query += " AND valid = TRUE"
+
+        query += " ORDER BY timestamp ASC"
+
+        return self.conn.execute(query, params).fetch_df()
+
+    def get_stats(self, layer: str, asset: str) -> Dict:
+        """Get statistics for a layer/asset."""
+        if layer == "layer1":
+            query = """
             SELECT
-                o.coin_id, o.timestamp, o.open, o.high, o.low, o.close, o.volume, o.market_cap,
-                i.rsi14, i.sma20, i.sma50, i.bb_upper, i.bb_lower, i.atr14, i.volume_sma
-            FROM ohlcv o
-            LEFT JOIN indicators i ON o.coin_id = i.coin_id AND o.timestamp = i.timestamp
-            WHERE o.coin_id = '{coin_id}'
-            AND o.timestamp >= NOW() - INTERVAL '{days}' DAY
-            ORDER BY o.timestamp DESC
+              COUNT(*) as total_records,
+              MIN(timestamp) as earliest,
+              MAX(timestamp) as latest,
+              MIN(close) as min_price,
+              MAX(close) as max_price,
+              AVG(volume) as avg_volume
+            FROM features_layer1
+            WHERE asset = $1
+            """
+        else:
+            schema = get_schema(layer)
+            table_name = schema["name"]
+            score_field = {"layer3": "bce_score", "layer4": "x20_score", "layer5": "narm_score",
+                         "layer6": "rcm_score", "layer7": "rrp_score"}[layer]
+
+            query = f"""
+            SELECT
+              COUNT(*) as total_records,
+              SUM(CASE WHEN valid = TRUE THEN 1 ELSE 0 END) as valid_records,
+              MIN(timestamp) as earliest,
+              MAX(timestamp) as latest,
+              MIN({score_field}) as min_score,
+              MAX({score_field}) as max_score,
+              AVG({score_field}) as avg_score
+            FROM {table_name}
+            WHERE asset = $1
+            """
+
+        result = self.conn.execute(query, [asset]).fetch_df()
+        if result.empty:
+            return {}
+
+        return result.iloc[0].to_dict()
+
+    # Backtest Results
+    def insert_backtest_result(
+        self,
+        asset: str,
+        start_date: str,
+        end_date: str,
+        total_trades: int,
+        winning_trades: int,
+        losing_trades: int,
+        profit_factor: float,
+        max_drawdown: float,
+        sharpe_ratio: float,
+        wfv_pass: bool = False,
+    ) -> str:
+        """Insert a backtest result. Returns test_id."""
+        test_id = str(uuid4())
+        win_rate = winning_trades / total_trades if total_trades > 0 else 0.0
+
+        # Validate constraints
+        constraints = get_constraints("backtest")["validation"]
+        status = "PASS" if (
+            total_trades >= constraints["min_trades"]
+            and profit_factor > constraints["profit_factor"][1]
+            and max_drawdown < constraints["max_drawdown"][1]
+            and wfv_pass
+        ) else "FAIL"
+
+        query = """
+        INSERT INTO backtest_results (
+            test_id, asset, start_date, end_date,
+            total_trades, winning_trades, losing_trades,
+            profit_factor, max_drawdown, sharpe_ratio, win_rate,
+            wfv_pass, validation_status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
+
+        self.conn.execute(
+            query,
+            [
+                test_id, asset, start_date, end_date,
+                total_trades, winning_trades, losing_trades,
+                profit_factor, max_drawdown, sharpe_ratio, win_rate,
+                wfv_pass, status,
+            ],
+        )
+
+        logger.info(f"Backtest result saved: {test_id} ({asset}, {status})")
+        return test_id
+
+    def get_backtest_results(
+        self,
+        asset: str = None,
+        status: str = None,
+        wfv_pass_only: bool = False,
+    ) -> pd.DataFrame:
+        """Query backtest results."""
+        query = "SELECT * FROM backtest_results WHERE 1=1"
+        params = []
+
+        if asset:
+            query += " AND asset = ?"
+            params.append(asset)
+
+        if status:
+            query += " AND validation_status = ?"
+            params.append(status)
+
+        if wfv_pass_only:
+            query += " AND wfv_pass = TRUE"
+
+        query += " ORDER BY created_at DESC"
+
+        return self.conn.execute(query, params).fetch_df()
+
+    def export_layer_parquet(
+        self,
+        layer: str,
+        asset: str,
+        output_path: str,
+    ) -> None:
+        """Export layer features to Parquet."""
+        if layer == "layer1":
+            table_name = "features_layer1"
+        else:
+            table_name = get_schema(layer)["name"]
+
+        query = f"SELECT * FROM {table_name} WHERE asset = '{asset}' ORDER BY timestamp"
 
         Path(output_path).parent.mkdir(parents=True, exist_ok=True)
         self.conn.execute(f"COPY ({query}) TO '{output_path}' (FORMAT PARQUET)")
-        logger.info(f"Exported {coin_id} to {output_path}")
+        logger.info(f"Exported {layer} ({asset}) to {output_path}")
 
-    def get_latest(self, coin_id: str, limit: int = 10) -> pd.DataFrame:
-        """Get latest rows with indicators."""
-        query = f"""
-            SELECT
-                o.coin_id, o.timestamp, o.open, o.high, o.low, o.close, o.volume, o.market_cap,
-                i.rsi14, i.sma20, i.sma50, i.bb_upper, i.bb_lower, i.atr14, i.volume_sma
-            FROM ohlcv o
-            LEFT JOIN indicators i ON o.coin_id = i.coin_id AND o.timestamp = i.timestamp
-            WHERE o.coin_id = '{coin_id}'
-            ORDER BY o.timestamp DESC
-            LIMIT {limit}
-        """
-        return self.conn.execute(query).fetch_df()
+    def export_merged_parquet(
+        self,
+        asset: str,
+        output_path: str,
+        include_layers: List[str] = None,
+    ) -> None:
+        """Export merged view of multiple layers to Parquet."""
+        if include_layers is None:
+            include_layers = ["layer1", "layer3", "layer4", "layer5", "layer6", "layer7"]
+
+        # Start with layer1
+        query = "SELECT * FROM features_layer1 WHERE asset = $1"
+        params = [asset]
+
+        # Left join other layers
+        join_index = 2
+        for layer in include_layers:
+            if layer == "layer1":
+                continue
+            table_name = get_schema(layer)["name"]
+            query += f"""
+            LEFT JOIN {table_name} l{join_index}
+              ON features_layer1.timestamp = l{join_index}.timestamp
+              AND features_layer1.asset = l{join_index}.asset
+            """
+            join_index += 1
+
+        query += " ORDER BY features_layer1.timestamp"
+
+        Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+        self.conn.execute(f"COPY ({query}) TO '{output_path}' (FORMAT PARQUET)", params)
+        logger.info(f"Exported merged view ({asset}, {include_layers}) to {output_path}")
 
     def close(self):
         self.conn.close()
 
+    def __enter__(self):
+        return self
 
-if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-    )
-
-    from src.data.coingecko_collector import CoinGeckoCollector
-
-    # Test flow
-    collector = CoinGeckoCollector()
-    store = FeatureStore()
-
-    # Fetch data
-    print("=== Fetching BTC data ===")
-    btc_df = collector.get_market_chart("bitcoin", days=90)
-    btc_df["coin_id"] = "bitcoin"
-
-    # Ingest
-    store.ingest_ohlcv("bitcoin", btc_df)
-
-    # Calculate indicators
-    print("=== Calculating indicators ===")
-    btc_with_indicators = store.calculate_indicators("bitcoin")
-    print(btc_with_indicators[["timestamp", "close", "rsi14", "sma20", "sma50"]].tail())
-
-    # Save indicators
-    store.save_indicators("bitcoin", btc_with_indicators)
-
-    # Export
-    print("=== Exporting to Parquet ===")
-    store.export_parquet("bitcoin", "data/bitcoin_features.parquet", days=90)
-
-    store.close()
-    print("✓ Feature Store test complete")
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
