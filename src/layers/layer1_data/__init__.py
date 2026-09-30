@@ -18,9 +18,13 @@ CRITICAL INVARIANT:
 """
 
 from .snapshot_manifest import SnapshotManifest, SourceMetadata, Checksum
+from .revision_audit import RevisionAuditLog, Change, RevisionAuditEngine
 
 __all__ = [
     "SnapshotManifest",
     "SourceMetadata",
     "Checksum",
+    "RevisionAuditLog",
+    "Change",
+    "RevisionAuditEngine",
 ]
