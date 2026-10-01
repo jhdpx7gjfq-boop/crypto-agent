@@ -1,0 +1,88 @@
+{
+  "metadata": {
+    "timestamp": "2026-10-01T12:51:32.156078Z",
+    "version": "1.0.0",
+    "framework": "Phase 2 Feature Store & Backtest",
+    "data_source": "Binance Data Portal (data.binance.vision)",
+    "assets": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT"
+    ],
+    "date_range": "2020-01 to 2025-12"
+  },
+  "data_qa": {
+    "BTCUSDT": {
+      "asset": "BTCUSDT",
+      "total_candles": 2192,
+      "missing_values": "0",
+      "duplicate_timestamps": "0",
+      "non_monotonic": "0",
+      "date_range": [
+        "2020-01-01",
+        "2025-12-31"
+      ],
+      "qa_pass": true,
+      "issues": []
+    },
+    "ETHUSDT": {
+      "asset": "ETHUSDT",
+      "total_candles": 2192,
+      "missing_values": "0",
+      "duplicate_timestamps": "0",
+      "non_monotonic": "0",
+      "date_range": [
+        "2020-01-01",
+        "2025-12-31"
+      ],
+      "qa_pass": true,
+      "issues": []
+    },
+    "SOLUSDT": {
+      "asset": "SOLUSDT",
+      "total_candles": 1969,
+      "missing_values": "0",
+      "duplicate_timestamps": "0",
+      "non_monotonic": "0",
+      "date_range": [
+        "2020-08-11",
+        "2025-12-31"
+      ],
+      "qa_pass": true,
+      "issues": []
+    }
+  },
+  "pit_checks": {
+    "BTCUSDT": {
+      "asset": "BTCUSDT",
+      "wfv_windows": 71,
+      "train_oos_overlap": 71,
+      "lookahead_events": 0,
+      "pit_pass": false,
+      "issues": []
+    },
+    "ETHUSDT": {
+      "asset": "ETHUSDT",
+      "wfv_windows": 71,
+      "train_oos_overlap": 71,
+      "lookahead_events": 0,
+      "pit_pass": false,
+      "issues": []
+    },
+    "SOLUSDT": {
+      "asset": "SOLUSDT",
+      "wfv_windows": 63,
+      "train_oos_overlap": 63,
+      "lookahead_events": 0,
+      "pit_pass": false,
+      "issues": []
+    }
+  },
+  "wfv_results": {},
+  "summary": {
+    "total_assets": 3,
+    "passed_assets": 0,
+    "overall_status": "FAIL",
+    "timestamp": "2026-10-01T12:53:53.614368Z"
+  }
+}

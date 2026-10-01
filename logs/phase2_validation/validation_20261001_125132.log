@@ -1,0 +1,326 @@
+2026-10-01 12:51:32,156 [INFO] 
+======================================================================
+2026-10-01 12:51:32,156 [INFO] PHASE 2 REAL DATA VALIDATION HARNESS
+2026-10-01 12:51:32,156 [INFO] ======================================================================
+2026-10-01 12:51:32,156 [INFO] Data Source: Binance Data Portal
+2026-10-01 12:51:32,156 [INFO] Assets: BTCUSDT, ETHUSDT, SOLUSDT
+2026-10-01 12:51:32,156 [INFO] Date Range: 2020-01 to 2025-12
+2026-10-01 12:51:32,156 [INFO] WFV Config: train=60d, test=30d, step=30d
+2026-10-01 12:51:32,156 [INFO] 
+
+############################################################
+2026-10-01 12:51:32,156 [INFO] # VALIDATING BTCUSDT
+2026-10-01 12:51:32,156 [INFO] ############################################################
+2026-10-01 12:51:32,156 [INFO] Fetching BTCUSDT from Binance Data Portal...
+2026-10-01 12:51:32,157 [INFO] Downloading 72 months from Binance Data Portal...
+2026-10-01 12:52:18,689 [WARNING] Fixed 365 corrupted timestamps
+2026-10-01 12:52:18,694 [INFO] Parsed 2192 candles, 0 months missing
+2026-10-01 12:52:18,699 [INFO] ✓ Fetched 2192 candles for BTCUSDT
+2026-10-01 12:52:18,699 [INFO] 
+============================================================
+2026-10-01 12:52:18,699 [INFO] DATA QA: BTCUSDT
+2026-10-01 12:52:18,700 [INFO] ============================================================
+2026-10-01 12:52:18,701 [INFO]   ✓ No missing values
+2026-10-01 12:52:18,702 [INFO]   ✓ No duplicate timestamps
+2026-10-01 12:52:18,704 [INFO]   ✓ Timestamps monotonic increasing (anomalies: 0/2 OK)
+2026-10-01 12:52:18,705 [INFO]   ✓ All OHLC bars valid
+2026-10-01 12:52:18,706 [INFO]   ✓ No zero volume candles
+2026-10-01 12:52:18,706 [INFO] 
+Data QA Status: ✓ PASS
+2026-10-01 12:52:18,706 [INFO] Candles: 2192, Date range: 2020-01-01 to 2025-12-31
+2026-10-01 12:52:18,707 [INFO] 
+============================================================
+2026-10-01 12:52:18,707 [INFO] PIT/LOOKAHEAD CHECK: BTCUSDT
+2026-10-01 12:52:18,707 [INFO] ============================================================
+2026-10-01 12:52:18,710 [WARNING]   ✗ Window 0: train/test overlap
+2026-10-01 12:52:18,710 [WARNING]   ✗ Window 1: train/test overlap
+2026-10-01 12:52:18,711 [WARNING]   ✗ Window 2: train/test overlap
+2026-10-01 12:52:18,711 [WARNING]   ✗ Window 3: train/test overlap
+2026-10-01 12:52:18,711 [WARNING]   ✗ Window 4: train/test overlap
+2026-10-01 12:52:18,712 [WARNING]   ✗ Window 5: train/test overlap
+2026-10-01 12:52:18,712 [WARNING]   ✗ Window 6: train/test overlap
+2026-10-01 12:52:18,713 [WARNING]   ✗ Window 7: train/test overlap
+2026-10-01 12:52:18,713 [WARNING]   ✗ Window 8: train/test overlap
+2026-10-01 12:52:18,714 [WARNING]   ✗ Window 9: train/test overlap
+2026-10-01 12:52:18,714 [WARNING]   ✗ Window 10: train/test overlap
+2026-10-01 12:52:18,714 [WARNING]   ✗ Window 11: train/test overlap
+2026-10-01 12:52:18,715 [WARNING]   ✗ Window 12: train/test overlap
+2026-10-01 12:52:18,715 [WARNING]   ✗ Window 13: train/test overlap
+2026-10-01 12:52:18,716 [WARNING]   ✗ Window 14: train/test overlap
+2026-10-01 12:52:18,716 [WARNING]   ✗ Window 15: train/test overlap
+2026-10-01 12:52:18,716 [WARNING]   ✗ Window 16: train/test overlap
+2026-10-01 12:52:18,717 [WARNING]   ✗ Window 17: train/test overlap
+2026-10-01 12:52:18,717 [WARNING]   ✗ Window 18: train/test overlap
+2026-10-01 12:52:18,717 [WARNING]   ✗ Window 19: train/test overlap
+2026-10-01 12:52:18,718 [WARNING]   ✗ Window 20: train/test overlap
+2026-10-01 12:52:18,718 [WARNING]   ✗ Window 21: train/test overlap
+2026-10-01 12:52:18,718 [WARNING]   ✗ Window 22: train/test overlap
+2026-10-01 12:52:18,719 [WARNING]   ✗ Window 23: train/test overlap
+2026-10-01 12:52:18,719 [WARNING]   ✗ Window 24: train/test overlap
+2026-10-01 12:52:18,720 [WARNING]   ✗ Window 25: train/test overlap
+2026-10-01 12:52:18,720 [WARNING]   ✗ Window 26: train/test overlap
+2026-10-01 12:52:18,720 [WARNING]   ✗ Window 27: train/test overlap
+2026-10-01 12:52:18,721 [WARNING]   ✗ Window 28: train/test overlap
+2026-10-01 12:52:18,721 [WARNING]   ✗ Window 29: train/test overlap
+2026-10-01 12:52:18,722 [WARNING]   ✗ Window 30: train/test overlap
+2026-10-01 12:52:18,722 [WARNING]   ✗ Window 31: train/test overlap
+2026-10-01 12:52:18,722 [WARNING]   ✗ Window 32: train/test overlap
+2026-10-01 12:52:18,723 [WARNING]   ✗ Window 33: train/test overlap
+2026-10-01 12:52:18,723 [WARNING]   ✗ Window 34: train/test overlap
+2026-10-01 12:52:18,723 [WARNING]   ✗ Window 35: train/test overlap
+2026-10-01 12:52:18,724 [WARNING]   ✗ Window 36: train/test overlap
+2026-10-01 12:52:18,724 [WARNING]   ✗ Window 37: train/test overlap
+2026-10-01 12:52:18,724 [WARNING]   ✗ Window 38: train/test overlap
+2026-10-01 12:52:18,725 [WARNING]   ✗ Window 39: train/test overlap
+2026-10-01 12:52:18,725 [WARNING]   ✗ Window 40: train/test overlap
+2026-10-01 12:52:18,726 [WARNING]   ✗ Window 41: train/test overlap
+2026-10-01 12:52:18,726 [WARNING]   ✗ Window 42: train/test overlap
+2026-10-01 12:52:18,726 [WARNING]   ✗ Window 43: train/test overlap
+2026-10-01 12:52:18,726 [WARNING]   ✗ Window 44: train/test overlap
+2026-10-01 12:52:18,727 [WARNING]   ✗ Window 45: train/test overlap
+2026-10-01 12:52:18,727 [WARNING]   ✗ Window 46: train/test overlap
+2026-10-01 12:52:18,728 [WARNING]   ✗ Window 47: train/test overlap
+2026-10-01 12:52:18,728 [WARNING]   ✗ Window 48: train/test overlap
+2026-10-01 12:52:18,728 [WARNING]   ✗ Window 49: train/test overlap
+2026-10-01 12:52:18,729 [WARNING]   ✗ Window 50: train/test overlap
+2026-10-01 12:52:18,729 [WARNING]   ✗ Window 51: train/test overlap
+2026-10-01 12:52:18,729 [WARNING]   ✗ Window 52: train/test overlap
+2026-10-01 12:52:18,729 [WARNING]   ✗ Window 53: train/test overlap
+2026-10-01 12:52:18,730 [WARNING]   ✗ Window 54: train/test overlap
+2026-10-01 12:52:18,730 [WARNING]   ✗ Window 55: train/test overlap
+2026-10-01 12:52:18,730 [WARNING]   ✗ Window 56: train/test overlap
+2026-10-01 12:52:18,730 [WARNING]   ✗ Window 57: train/test overlap
+2026-10-01 12:52:18,730 [WARNING]   ✗ Window 58: train/test overlap
+2026-10-01 12:52:18,731 [WARNING]   ✗ Window 59: train/test overlap
+2026-10-01 12:52:18,731 [WARNING]   ✗ Window 60: train/test overlap
+2026-10-01 12:52:18,731 [WARNING]   ✗ Window 61: train/test overlap
+2026-10-01 12:52:18,731 [WARNING]   ✗ Window 62: train/test overlap
+2026-10-01 12:52:18,732 [WARNING]   ✗ Window 63: train/test overlap
+2026-10-01 12:52:18,732 [WARNING]   ✗ Window 64: train/test overlap
+2026-10-01 12:52:18,732 [WARNING]   ✗ Window 65: train/test overlap
+2026-10-01 12:52:18,732 [WARNING]   ✗ Window 66: train/test overlap
+2026-10-01 12:52:18,732 [WARNING]   ✗ Window 67: train/test overlap
+2026-10-01 12:52:18,733 [WARNING]   ✗ Window 68: train/test overlap
+2026-10-01 12:52:18,733 [WARNING]   ✗ Window 69: train/test overlap
+2026-10-01 12:52:18,733 [WARNING]   ✗ Window 70: train/test overlap
+2026-10-01 12:52:18,733 [INFO]   ✓ WFV windows created: 71
+2026-10-01 12:52:18,733 [INFO]   ✓ Train/OOS overlaps: 71
+2026-10-01 12:52:18,733 [INFO] 
+PIT Check Status: ✗ FAIL
+2026-10-01 12:52:18,733 [ERROR] ✗ PIT check failed for BTCUSDT
+2026-10-01 12:52:18,733 [INFO] 
+
+############################################################
+2026-10-01 12:52:18,733 [INFO] # VALIDATING ETHUSDT
+2026-10-01 12:52:18,733 [INFO] ############################################################
+2026-10-01 12:52:18,733 [INFO] Fetching ETHUSDT from Binance Data Portal...
+2026-10-01 12:52:18,734 [INFO] Downloading 72 months from Binance Data Portal...
+2026-10-01 12:53:06,111 [WARNING] Fixed 365 corrupted timestamps
+2026-10-01 12:53:06,119 [INFO] Parsed 2192 candles, 0 months missing
+2026-10-01 12:53:06,123 [INFO] ✓ Fetched 2192 candles for ETHUSDT
+2026-10-01 12:53:06,123 [INFO] 
+============================================================
+2026-10-01 12:53:06,123 [INFO] DATA QA: ETHUSDT
+2026-10-01 12:53:06,124 [INFO] ============================================================
+2026-10-01 12:53:06,125 [INFO]   ✓ No missing values
+2026-10-01 12:53:06,125 [INFO]   ✓ No duplicate timestamps
+2026-10-01 12:53:06,126 [INFO]   ✓ Timestamps monotonic increasing (anomalies: 0/2 OK)
+2026-10-01 12:53:06,127 [INFO]   ✓ All OHLC bars valid
+2026-10-01 12:53:06,127 [INFO]   ✓ No zero volume candles
+2026-10-01 12:53:06,128 [INFO] 
+Data QA Status: ✓ PASS
+2026-10-01 12:53:06,128 [INFO] Candles: 2192, Date range: 2020-01-01 to 2025-12-31
+2026-10-01 12:53:06,128 [INFO] 
+============================================================
+2026-10-01 12:53:06,128 [INFO] PIT/LOOKAHEAD CHECK: ETHUSDT
+2026-10-01 12:53:06,128 [INFO] ============================================================
+2026-10-01 12:53:06,129 [WARNING]   ✗ Window 0: train/test overlap
+2026-10-01 12:53:06,129 [WARNING]   ✗ Window 1: train/test overlap
+2026-10-01 12:53:06,129 [WARNING]   ✗ Window 2: train/test overlap
+2026-10-01 12:53:06,130 [WARNING]   ✗ Window 3: train/test overlap
+2026-10-01 12:53:06,130 [WARNING]   ✗ Window 4: train/test overlap
+2026-10-01 12:53:06,130 [WARNING]   ✗ Window 5: train/test overlap
+2026-10-01 12:53:06,130 [WARNING]   ✗ Window 6: train/test overlap
+2026-10-01 12:53:06,131 [WARNING]   ✗ Window 7: train/test overlap
+2026-10-01 12:53:06,131 [WARNING]   ✗ Window 8: train/test overlap
+2026-10-01 12:53:06,131 [WARNING]   ✗ Window 9: train/test overlap
+2026-10-01 12:53:06,131 [WARNING]   ✗ Window 10: train/test overlap
+2026-10-01 12:53:06,132 [WARNING]   ✗ Window 11: train/test overlap
+2026-10-01 12:53:06,132 [WARNING]   ✗ Window 12: train/test overlap
+2026-10-01 12:53:06,132 [WARNING]   ✗ Window 13: train/test overlap
+2026-10-01 12:53:06,132 [WARNING]   ✗ Window 14: train/test overlap
+2026-10-01 12:53:06,132 [WARNING]   ✗ Window 15: train/test overlap
+2026-10-01 12:53:06,133 [WARNING]   ✗ Window 16: train/test overlap
+2026-10-01 12:53:06,133 [WARNING]   ✗ Window 17: train/test overlap
+2026-10-01 12:53:06,133 [WARNING]   ✗ Window 18: train/test overlap
+2026-10-01 12:53:06,133 [WARNING]   ✗ Window 19: train/test overlap
+2026-10-01 12:53:06,133 [WARNING]   ✗ Window 20: train/test overlap
+2026-10-01 12:53:06,134 [WARNING]   ✗ Window 21: train/test overlap
+2026-10-01 12:53:06,134 [WARNING]   ✗ Window 22: train/test overlap
+2026-10-01 12:53:06,134 [WARNING]   ✗ Window 23: train/test overlap
+2026-10-01 12:53:06,134 [WARNING]   ✗ Window 24: train/test overlap
+2026-10-01 12:53:06,134 [WARNING]   ✗ Window 25: train/test overlap
+2026-10-01 12:53:06,135 [WARNING]   ✗ Window 26: train/test overlap
+2026-10-01 12:53:06,135 [WARNING]   ✗ Window 27: train/test overlap
+2026-10-01 12:53:06,135 [WARNING]   ✗ Window 28: train/test overlap
+2026-10-01 12:53:06,135 [WARNING]   ✗ Window 29: train/test overlap
+2026-10-01 12:53:06,136 [WARNING]   ✗ Window 30: train/test overlap
+2026-10-01 12:53:06,136 [WARNING]   ✗ Window 31: train/test overlap
+2026-10-01 12:53:06,136 [WARNING]   ✗ Window 32: train/test overlap
+2026-10-01 12:53:06,136 [WARNING]   ✗ Window 33: train/test overlap
+2026-10-01 12:53:06,136 [WARNING]   ✗ Window 34: train/test overlap
+2026-10-01 12:53:06,137 [WARNING]   ✗ Window 35: train/test overlap
+2026-10-01 12:53:06,137 [WARNING]   ✗ Window 36: train/test overlap
+2026-10-01 12:53:06,137 [WARNING]   ✗ Window 37: train/test overlap
+2026-10-01 12:53:06,137 [WARNING]   ✗ Window 38: train/test overlap
+2026-10-01 12:53:06,137 [WARNING]   ✗ Window 39: train/test overlap
+2026-10-01 12:53:06,138 [WARNING]   ✗ Window 40: train/test overlap
+2026-10-01 12:53:06,138 [WARNING]   ✗ Window 41: train/test overlap
+2026-10-01 12:53:06,138 [WARNING]   ✗ Window 42: train/test overlap
+2026-10-01 12:53:06,138 [WARNING]   ✗ Window 43: train/test overlap
+2026-10-01 12:53:06,138 [WARNING]   ✗ Window 44: train/test overlap
+2026-10-01 12:53:06,139 [WARNING]   ✗ Window 45: train/test overlap
+2026-10-01 12:53:06,139 [WARNING]   ✗ Window 46: train/test overlap
+2026-10-01 12:53:06,139 [WARNING]   ✗ Window 47: train/test overlap
+2026-10-01 12:53:06,139 [WARNING]   ✗ Window 48: train/test overlap
+2026-10-01 12:53:06,139 [WARNING]   ✗ Window 49: train/test overlap
+2026-10-01 12:53:06,140 [WARNING]   ✗ Window 50: train/test overlap
+2026-10-01 12:53:06,140 [WARNING]   ✗ Window 51: train/test overlap
+2026-10-01 12:53:06,140 [WARNING]   ✗ Window 52: train/test overlap
+2026-10-01 12:53:06,140 [WARNING]   ✗ Window 53: train/test overlap
+2026-10-01 12:53:06,141 [WARNING]   ✗ Window 54: train/test overlap
+2026-10-01 12:53:06,141 [WARNING]   ✗ Window 55: train/test overlap
+2026-10-01 12:53:06,141 [WARNING]   ✗ Window 56: train/test overlap
+2026-10-01 12:53:06,141 [WARNING]   ✗ Window 57: train/test overlap
+2026-10-01 12:53:06,142 [WARNING]   ✗ Window 58: train/test overlap
+2026-10-01 12:53:06,142 [WARNING]   ✗ Window 59: train/test overlap
+2026-10-01 12:53:06,142 [WARNING]   ✗ Window 60: train/test overlap
+2026-10-01 12:53:06,143 [WARNING]   ✗ Window 61: train/test overlap
+2026-10-01 12:53:06,143 [WARNING]   ✗ Window 62: train/test overlap
+2026-10-01 12:53:06,143 [WARNING]   ✗ Window 63: train/test overlap
+2026-10-01 12:53:06,144 [WARNING]   ✗ Window 64: train/test overlap
+2026-10-01 12:53:06,144 [WARNING]   ✗ Window 65: train/test overlap
+2026-10-01 12:53:06,144 [WARNING]   ✗ Window 66: train/test overlap
+2026-10-01 12:53:06,144 [WARNING]   ✗ Window 67: train/test overlap
+2026-10-01 12:53:06,145 [WARNING]   ✗ Window 68: train/test overlap
+2026-10-01 12:53:06,145 [WARNING]   ✗ Window 69: train/test overlap
+2026-10-01 12:53:06,145 [WARNING]   ✗ Window 70: train/test overlap
+2026-10-01 12:53:06,145 [INFO]   ✓ WFV windows created: 71
+2026-10-01 12:53:06,145 [INFO]   ✓ Train/OOS overlaps: 71
+2026-10-01 12:53:06,145 [INFO] 
+PIT Check Status: ✗ FAIL
+2026-10-01 12:53:06,145 [ERROR] ✗ PIT check failed for ETHUSDT
+2026-10-01 12:53:06,145 [INFO] 
+
+############################################################
+2026-10-01 12:53:06,146 [INFO] # VALIDATING SOLUSDT
+2026-10-01 12:53:06,146 [INFO] ############################################################
+2026-10-01 12:53:06,146 [INFO] Fetching SOLUSDT from Binance Data Portal...
+2026-10-01 12:53:06,146 [INFO] Downloading 72 months from Binance Data Portal...
+2026-10-01 12:53:06,873 [WARNING] Missing: 2020-01
+2026-10-01 12:53:07,377 [WARNING] Missing: 2020-02
+2026-10-01 12:53:07,880 [WARNING] Missing: 2020-03
+2026-10-01 12:53:08,480 [WARNING] Missing: 2020-04
+2026-10-01 12:53:09,248 [WARNING] Missing: 2020-05
+2026-10-01 12:53:09,986 [WARNING] Missing: 2020-06
+2026-10-01 12:53:10,615 [WARNING] Missing: 2020-07
+2026-10-01 12:53:53,568 [WARNING] Fixed 365 corrupted timestamps
+2026-10-01 12:53:53,574 [INFO] Parsed 1969 candles, 7 months missing
+2026-10-01 12:53:53,579 [INFO] ✓ Fetched 1969 candles for SOLUSDT
+2026-10-01 12:53:53,579 [INFO] 
+============================================================
+2026-10-01 12:53:53,579 [INFO] DATA QA: SOLUSDT
+2026-10-01 12:53:53,579 [INFO] ============================================================
+2026-10-01 12:53:53,581 [INFO]   ✓ No missing values
+2026-10-01 12:53:53,582 [INFO]   ✓ No duplicate timestamps
+2026-10-01 12:53:53,583 [INFO]   ✓ Timestamps monotonic increasing (anomalies: 0/1 OK)
+2026-10-01 12:53:53,584 [INFO]   ✓ All OHLC bars valid
+2026-10-01 12:53:53,585 [INFO]   ✓ No zero volume candles
+2026-10-01 12:53:53,586 [INFO] 
+Data QA Status: ✓ PASS
+2026-10-01 12:53:53,586 [INFO] Candles: 1969, Date range: 2020-08-11 to 2025-12-31
+2026-10-01 12:53:53,586 [INFO] 
+============================================================
+2026-10-01 12:53:53,586 [INFO] PIT/LOOKAHEAD CHECK: SOLUSDT
+2026-10-01 12:53:53,586 [INFO] ============================================================
+2026-10-01 12:53:53,587 [WARNING]   ✗ Window 0: train/test overlap
+2026-10-01 12:53:53,588 [WARNING]   ✗ Window 1: train/test overlap
+2026-10-01 12:53:53,588 [WARNING]   ✗ Window 2: train/test overlap
+2026-10-01 12:53:53,589 [WARNING]   ✗ Window 3: train/test overlap
+2026-10-01 12:53:53,589 [WARNING]   ✗ Window 4: train/test overlap
+2026-10-01 12:53:53,589 [WARNING]   ✗ Window 5: train/test overlap
+2026-10-01 12:53:53,590 [WARNING]   ✗ Window 6: train/test overlap
+2026-10-01 12:53:53,590 [WARNING]   ✗ Window 7: train/test overlap
+2026-10-01 12:53:53,591 [WARNING]   ✗ Window 8: train/test overlap
+2026-10-01 12:53:53,591 [WARNING]   ✗ Window 9: train/test overlap
+2026-10-01 12:53:53,592 [WARNING]   ✗ Window 10: train/test overlap
+2026-10-01 12:53:53,592 [WARNING]   ✗ Window 11: train/test overlap
+2026-10-01 12:53:53,592 [WARNING]   ✗ Window 12: train/test overlap
+2026-10-01 12:53:53,593 [WARNING]   ✗ Window 13: train/test overlap
+2026-10-01 12:53:53,593 [WARNING]   ✗ Window 14: train/test overlap
+2026-10-01 12:53:53,594 [WARNING]   ✗ Window 15: train/test overlap
+2026-10-01 12:53:53,594 [WARNING]   ✗ Window 16: train/test overlap
+2026-10-01 12:53:53,594 [WARNING]   ✗ Window 17: train/test overlap
+2026-10-01 12:53:53,595 [WARNING]   ✗ Window 18: train/test overlap
+2026-10-01 12:53:53,595 [WARNING]   ✗ Window 19: train/test overlap
+2026-10-01 12:53:53,596 [WARNING]   ✗ Window 20: train/test overlap
+2026-10-01 12:53:53,596 [WARNING]   ✗ Window 21: train/test overlap
+2026-10-01 12:53:53,597 [WARNING]   ✗ Window 22: train/test overlap
+2026-10-01 12:53:53,597 [WARNING]   ✗ Window 23: train/test overlap
+2026-10-01 12:53:53,597 [WARNING]   ✗ Window 24: train/test overlap
+2026-10-01 12:53:53,598 [WARNING]   ✗ Window 25: train/test overlap
+2026-10-01 12:53:53,598 [WARNING]   ✗ Window 26: train/test overlap
+2026-10-01 12:53:53,598 [WARNING]   ✗ Window 27: train/test overlap
+2026-10-01 12:53:53,599 [WARNING]   ✗ Window 28: train/test overlap
+2026-10-01 12:53:53,599 [WARNING]   ✗ Window 29: train/test overlap
+2026-10-01 12:53:53,600 [WARNING]   ✗ Window 30: train/test overlap
+2026-10-01 12:53:53,600 [WARNING]   ✗ Window 31: train/test overlap
+2026-10-01 12:53:53,601 [WARNING]   ✗ Window 32: train/test overlap
+2026-10-01 12:53:53,601 [WARNING]   ✗ Window 33: train/test overlap
+2026-10-01 12:53:53,601 [WARNING]   ✗ Window 34: train/test overlap
+2026-10-01 12:53:53,602 [WARNING]   ✗ Window 35: train/test overlap
+2026-10-01 12:53:53,602 [WARNING]   ✗ Window 36: train/test overlap
+2026-10-01 12:53:53,603 [WARNING]   ✗ Window 37: train/test overlap
+2026-10-01 12:53:53,603 [WARNING]   ✗ Window 38: train/test overlap
+2026-10-01 12:53:53,603 [WARNING]   ✗ Window 39: train/test overlap
+2026-10-01 12:53:53,604 [WARNING]   ✗ Window 40: train/test overlap
+2026-10-01 12:53:53,604 [WARNING]   ✗ Window 41: train/test overlap
+2026-10-01 12:53:53,605 [WARNING]   ✗ Window 42: train/test overlap
+2026-10-01 12:53:53,605 [WARNING]   ✗ Window 43: train/test overlap
+2026-10-01 12:53:53,605 [WARNING]   ✗ Window 44: train/test overlap
+2026-10-01 12:53:53,606 [WARNING]   ✗ Window 45: train/test overlap
+2026-10-01 12:53:53,606 [WARNING]   ✗ Window 46: train/test overlap
+2026-10-01 12:53:53,607 [WARNING]   ✗ Window 47: train/test overlap
+2026-10-01 12:53:53,607 [WARNING]   ✗ Window 48: train/test overlap
+2026-10-01 12:53:53,607 [WARNING]   ✗ Window 49: train/test overlap
+2026-10-01 12:53:53,608 [WARNING]   ✗ Window 50: train/test overlap
+2026-10-01 12:53:53,608 [WARNING]   ✗ Window 51: train/test overlap
+2026-10-01 12:53:53,609 [WARNING]   ✗ Window 52: train/test overlap
+2026-10-01 12:53:53,609 [WARNING]   ✗ Window 53: train/test overlap
+2026-10-01 12:53:53,609 [WARNING]   ✗ Window 54: train/test overlap
+2026-10-01 12:53:53,610 [WARNING]   ✗ Window 55: train/test overlap
+2026-10-01 12:53:53,610 [WARNING]   ✗ Window 56: train/test overlap
+2026-10-01 12:53:53,610 [WARNING]   ✗ Window 57: train/test overlap
+2026-10-01 12:53:53,611 [WARNING]   ✗ Window 58: train/test overlap
+2026-10-01 12:53:53,611 [WARNING]   ✗ Window 59: train/test overlap
+2026-10-01 12:53:53,612 [WARNING]   ✗ Window 60: train/test overlap
+2026-10-01 12:53:53,612 [WARNING]   ✗ Window 61: train/test overlap
+2026-10-01 12:53:53,613 [WARNING]   ✗ Window 62: train/test overlap
+2026-10-01 12:53:53,613 [INFO]   ✓ WFV windows created: 63
+2026-10-01 12:53:53,613 [INFO]   ✓ Train/OOS overlaps: 63
+2026-10-01 12:53:53,613 [INFO] 
+PIT Check Status: ✗ FAIL
+2026-10-01 12:53:53,613 [ERROR] ✗ PIT check failed for SOLUSDT
+2026-10-01 12:53:53,613 [INFO] 
+======================================================================
+2026-10-01 12:53:53,613 [INFO] VALIDATION SUMMARY
+2026-10-01 12:53:53,613 [INFO] ======================================================================
+2026-10-01 12:53:53,613 [INFO] BTCUSDT: ✗ FAIL
+2026-10-01 12:53:53,614 [INFO] ETHUSDT: ✗ FAIL
+2026-10-01 12:53:53,614 [INFO] SOLUSDT: ✗ FAIL
+2026-10-01 12:53:53,614 [INFO] 
+Overall: 0/3 assets passed
+2026-10-01 12:53:53,615 [INFO] 
+Results saved to: /home/user/crypto-agent/logs/phase2_validation/results_20261001_125353.json
+2026-10-01 12:53:53,615 [ERROR] 
+❌ Phase 2 Real Data Validation: SOME FAILED

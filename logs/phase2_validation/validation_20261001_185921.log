@@ -1,0 +1,245 @@
+2026-10-01 18:59:21,142 [INFO] 
+======================================================================
+2026-10-01 18:59:21,142 [INFO] PHASE 2 REAL DATA VALIDATION HARNESS
+2026-10-01 18:59:21,142 [INFO] ======================================================================
+2026-10-01 18:59:21,142 [INFO] Data Source: Binance Data Portal
+2026-10-01 18:59:21,142 [INFO] Assets: BTCUSDT, ETHUSDT, SOLUSDT
+2026-10-01 18:59:21,143 [INFO] Date Range: 2020-01 to 2025-12
+2026-10-01 18:59:21,143 [INFO] WFV Config: train=60d, test=30d, step=30d
+2026-10-01 18:59:21,143 [INFO] 
+
+############################################################
+2026-10-01 18:59:21,143 [INFO] # VALIDATING BTCUSDT
+2026-10-01 18:59:21,143 [INFO] ############################################################
+2026-10-01 18:59:21,143 [INFO] Fetching BTCUSDT from Binance Data Portal...
+2026-10-01 18:59:21,144 [INFO] Downloading 72 months from Binance Data Portal...
+2026-10-01 19:00:06,365 [WARNING] Fixed 365 corrupted timestamps
+2026-10-01 19:00:06,373 [INFO] Parsed 2192 candles, 0 months missing
+2026-10-01 19:00:06,377 [INFO] ✓ Fetched 2192 candles for BTCUSDT
+2026-10-01 19:00:06,377 [INFO] 
+============================================================
+2026-10-01 19:00:06,377 [INFO] DATA QA: BTCUSDT
+2026-10-01 19:00:06,377 [INFO] ============================================================
+2026-10-01 19:00:06,379 [INFO]   ✓ No missing values
+2026-10-01 19:00:06,381 [INFO]   ✓ No duplicate timestamps
+2026-10-01 19:00:06,382 [INFO]   ✓ Timestamps monotonic increasing (anomalies: 0/2 OK)
+2026-10-01 19:00:06,383 [INFO]   ✓ All OHLC bars valid
+2026-10-01 19:00:06,383 [INFO]   ✓ No zero volume candles
+2026-10-01 19:00:06,384 [INFO] 
+Data QA Status: ✓ PASS
+2026-10-01 19:00:06,384 [INFO] Candles: 2192, Date range: 2020-01-01 to 2025-12-31
+2026-10-01 19:00:06,384 [INFO] 
+============================================================
+2026-10-01 19:00:06,385 [INFO] PIT/LOOKAHEAD CHECK: BTCUSDT
+2026-10-01 19:00:06,385 [INFO] ============================================================
+2026-10-01 19:00:06,394 [INFO]   ✓ WFV windows created: 71
+2026-10-01 19:00:06,395 [INFO]   ✓ Train/OOS overlaps: 0
+2026-10-01 19:00:06,395 [INFO] 
+PIT Check Status: ✓ PASS
+2026-10-01 19:00:06,395 [INFO] 
+============================================================
+2026-10-01 19:00:06,395 [INFO] WALK-FORWARD VALIDATION: BTCUSDT
+2026-10-01 19:00:06,395 [INFO] ============================================================
+2026-10-01 19:00:06,528 [INFO] Window 0:
+2026-10-01 19:00:06,529 [INFO]   IS: trades=3 pf=2.95 return=1.58%
+2026-10-01 19:00:06,529 [INFO]   OOS: trades=1 pf=∞ return=18.10% ✓
+2026-10-01 19:00:06,656 [INFO] Window 1:
+2026-10-01 19:00:06,656 [INFO]   IS: trades=2 pf=∞ return=44.44%
+2026-10-01 19:00:06,656 [INFO]   OOS: trades=3 pf=0.93 return=-0.19% ✗
+2026-10-01 19:00:06,782 [INFO] Window 2:
+2026-10-01 19:00:06,782 [INFO]   IS: trades=3 pf=8.41 return=20.37%
+2026-10-01 19:00:06,782 [INFO]   OOS: trades=3 pf=0.00 return=-10.15% ✗
+2026-10-01 19:00:06,912 [INFO] Window 3:
+2026-10-01 19:00:06,912 [INFO]   IS: trades=6 pf=0.20 return=-10.34%
+2026-10-01 19:00:06,912 [INFO]   OOS: trades=3 pf=0.13 return=-5.90% ✗
+2026-10-01 19:00:07,060 [INFO] Window 4:
+2026-10-01 19:00:07,061 [INFO]   IS: trades=5 pf=0.00 return=-17.58%
+2026-10-01 19:00:07,061 [INFO]   OOS: trades=2 pf=10.91 return=3.01% ✓
+2026-10-01 19:00:07,182 [INFO] Window 5:
+2026-10-01 19:00:07,182 [INFO]   IS: trades=6 pf=0.30 return=-5.06%
+2026-10-01 19:00:07,182 [INFO]   OOS: trades=1 pf=0.00 return=-1.57% ✗
+2026-10-01 19:00:07,282 [INFO] Window 6:
+2026-10-01 19:00:07,282 [INFO]   IS: trades=3 pf=2.11 return=1.75%
+2026-10-01 19:00:07,282 [INFO]   OOS: trades=2 pf=6.68 return=13.20% ✓
+2026-10-01 19:00:07,383 [INFO] Window 7:
+2026-10-01 19:00:07,383 [INFO]   IS: trades=3 pf=17.55 return=26.04%
+2026-10-01 19:00:07,383 [INFO]   OOS: trades=1 pf=0.00 return=-9.57% ✗
+2026-10-01 19:00:07,483 [INFO] Window 8:
+2026-10-01 19:00:07,483 [INFO]   IS: trades=4 pf=0.80 return=-3.86%
+2026-10-01 19:00:07,483 [INFO]   OOS: trades=3 pf=0.06 return=-13.37% ✗
+2026-10-01 19:00:07,583 [INFO] Window 9:
+2026-10-01 19:00:07,583 [INFO]   IS: trades=3 pf=1.80 return=15.62%
+2026-10-01 19:00:07,584 [INFO]   OOS: trades=3 pf=∞ return=3.42% ✓
+2026-10-01 19:00:07,584 [INFO] 
+WFV Status: ✗ FAIL
+2026-10-01 19:00:07,584 [INFO]   Aggregate IS PF: 1.87
+2026-10-01 19:00:07,584 [INFO]   Aggregate OOS PF: 0.94
+2026-10-01 19:00:07,584 [INFO]   Aggregate OOS Return: -3.02%
+2026-10-01 19:00:07,584 [INFO]   Degradation: 50.0%
+2026-10-01 19:00:07,584 [INFO]   Consistency (OOS positive folds): 40.0%
+2026-10-01 19:00:07,584 [INFO]   OOS Positive Folds: 4/10
+2026-10-01 19:00:07,585 [INFO] 
+
+############################################################
+2026-10-01 19:00:07,585 [INFO] # VALIDATING ETHUSDT
+2026-10-01 19:00:07,585 [INFO] ############################################################
+2026-10-01 19:00:07,585 [INFO] Fetching ETHUSDT from Binance Data Portal...
+2026-10-01 19:00:07,585 [INFO] Downloading 72 months from Binance Data Portal...
+2026-10-01 19:00:55,702 [WARNING] Fixed 365 corrupted timestamps
+2026-10-01 19:00:55,706 [INFO] Parsed 2192 candles, 0 months missing
+2026-10-01 19:00:55,710 [INFO] ✓ Fetched 2192 candles for ETHUSDT
+2026-10-01 19:00:55,710 [INFO] 
+============================================================
+2026-10-01 19:00:55,710 [INFO] DATA QA: ETHUSDT
+2026-10-01 19:00:55,710 [INFO] ============================================================
+2026-10-01 19:00:55,711 [INFO]   ✓ No missing values
+2026-10-01 19:00:55,712 [INFO]   ✓ No duplicate timestamps
+2026-10-01 19:00:55,713 [INFO]   ✓ Timestamps monotonic increasing (anomalies: 0/2 OK)
+2026-10-01 19:00:55,714 [INFO]   ✓ All OHLC bars valid
+2026-10-01 19:00:55,714 [INFO]   ✓ No zero volume candles
+2026-10-01 19:00:55,715 [INFO] 
+Data QA Status: ✓ PASS
+2026-10-01 19:00:55,715 [INFO] Candles: 2192, Date range: 2020-01-01 to 2025-12-31
+2026-10-01 19:00:55,715 [INFO] 
+============================================================
+2026-10-01 19:00:55,715 [INFO] PIT/LOOKAHEAD CHECK: ETHUSDT
+2026-10-01 19:00:55,715 [INFO] ============================================================
+2026-10-01 19:00:55,723 [INFO]   ✓ WFV windows created: 71
+2026-10-01 19:00:55,723 [INFO]   ✓ Train/OOS overlaps: 0
+2026-10-01 19:00:55,723 [INFO] 
+PIT Check Status: ✓ PASS
+2026-10-01 19:00:55,723 [INFO] 
+============================================================
+2026-10-01 19:00:55,723 [INFO] WALK-FORWARD VALIDATION: ETHUSDT
+2026-10-01 19:00:55,723 [INFO] ============================================================
+2026-10-01 19:00:55,817 [INFO] Window 0:
+2026-10-01 19:00:55,817 [INFO]   IS: trades=3 pf=5.64 return=0.16%
+2026-10-01 19:00:55,817 [INFO]   OOS: trades=1 pf=∞ return=1.47% ✓
+2026-10-01 19:00:55,901 [INFO] Window 1:
+2026-10-01 19:00:55,901 [INFO]   IS: trades=2 pf=∞ return=2.37%
+2026-10-01 19:00:55,902 [INFO]   OOS: trades=3 pf=∞ return=0.73% ✓
+2026-10-01 19:00:55,986 [INFO] Window 2:
+2026-10-01 19:00:55,986 [INFO]   IS: trades=3 pf=∞ return=2.07%
+2026-10-01 19:00:55,986 [INFO]   OOS: trades=1 pf=0.00 return=-0.44% ✗
+2026-10-01 19:00:56,074 [INFO] Window 3:
+2026-10-01 19:00:56,074 [INFO]   IS: trades=4 pf=1.65 return=0.29%
+2026-10-01 19:00:56,074 [INFO]   OOS: trades=3 pf=0.54 return=-0.20% ✗
+2026-10-01 19:00:56,169 [INFO] Window 4:
+2026-10-01 19:00:56,169 [INFO]   IS: trades=3 pf=0.00 return=-0.91%
+2026-10-01 19:00:56,169 [INFO]   OOS: trades=3 pf=2.42 return=0.13% ✓
+2026-10-01 19:00:56,268 [INFO] Window 5:
+2026-10-01 19:00:56,268 [INFO]   IS: trades=7 pf=0.69 return=-0.17%
+2026-10-01 19:00:56,268 [INFO]   OOS: trades=1 pf=0.00 return=-0.10% ✗
+2026-10-01 19:00:56,355 [INFO] Window 6:
+2026-10-01 19:00:56,356 [INFO]   IS: trades=4 pf=1.14 return=0.03%
+2026-10-01 19:00:56,356 [INFO]   OOS: trades=2 pf=∞ return=0.60% ✓
+2026-10-01 19:00:56,442 [INFO] Window 7:
+2026-10-01 19:00:56,443 [INFO]   IS: trades=3 pf=11.02 return=1.00%
+2026-10-01 19:00:56,443 [INFO]   OOS: trades=1 pf=0.00 return=-0.51% ✗
+2026-10-01 19:00:56,527 [WARNING] No trades to analyze
+2026-10-01 19:00:56,527 [INFO] Window 8:
+2026-10-01 19:00:56,528 [INFO]   IS: trades=4 pf=0.68 return=-0.29%
+2026-10-01 19:00:56,528 [INFO]   OOS: trades=0 pf=0.00 return=0.00% ✗
+2026-10-01 19:00:56,612 [INFO] Window 9:
+2026-10-01 19:00:56,613 [INFO]   IS: trades=2 pf=2.12 return=0.58%
+2026-10-01 19:00:56,613 [INFO]   OOS: trades=1 pf=∞ return=0.93% ✓
+2026-10-01 19:00:56,613 [INFO] 
+WFV Status: ✓ PASS
+2026-10-01 19:00:56,613 [INFO]   Aggregate IS PF: 2.42
+2026-10-01 19:00:56,613 [INFO]   Aggregate OOS PF: 2.65
+2026-10-01 19:00:56,613 [INFO]   Aggregate OOS Return: 2.60%
+2026-10-01 19:00:56,613 [INFO]   Degradation: -9.3%
+2026-10-01 19:00:56,613 [INFO]   Consistency (OOS positive folds): 50.0%
+2026-10-01 19:00:56,613 [INFO]   OOS Positive Folds: 5/10
+2026-10-01 19:00:56,614 [INFO] 
+
+############################################################
+2026-10-01 19:00:56,614 [INFO] # VALIDATING SOLUSDT
+2026-10-01 19:00:56,614 [INFO] ############################################################
+2026-10-01 19:00:56,614 [INFO] Fetching SOLUSDT from Binance Data Portal...
+2026-10-01 19:00:56,614 [INFO] Downloading 72 months from Binance Data Portal...
+2026-10-01 19:00:57,198 [WARNING] Missing: 2020-01
+2026-10-01 19:00:57,772 [WARNING] Missing: 2020-02
+2026-10-01 19:00:58,145 [WARNING] Missing: 2020-03
+2026-10-01 19:00:58,656 [WARNING] Missing: 2020-04
+2026-10-01 19:00:59,164 [WARNING] Missing: 2020-05
+2026-10-01 19:00:59,768 [WARNING] Missing: 2020-06
+2026-10-01 19:01:00,304 [WARNING] Missing: 2020-07
+2026-10-01 19:01:43,513 [WARNING] Fixed 365 corrupted timestamps
+2026-10-01 19:01:43,516 [INFO] Parsed 1969 candles, 7 months missing
+2026-10-01 19:01:43,519 [INFO] ✓ Fetched 1969 candles for SOLUSDT
+2026-10-01 19:01:43,519 [INFO] 
+============================================================
+2026-10-01 19:01:43,519 [INFO] DATA QA: SOLUSDT
+2026-10-01 19:01:43,519 [INFO] ============================================================
+2026-10-01 19:01:43,520 [INFO]   ✓ No missing values
+2026-10-01 19:01:43,520 [INFO]   ✓ No duplicate timestamps
+2026-10-01 19:01:43,521 [INFO]   ✓ Timestamps monotonic increasing (anomalies: 0/1 OK)
+2026-10-01 19:01:43,522 [INFO]   ✓ All OHLC bars valid
+2026-10-01 19:01:43,522 [INFO]   ✓ No zero volume candles
+2026-10-01 19:01:43,523 [INFO] 
+Data QA Status: ✓ PASS
+2026-10-01 19:01:43,523 [INFO] Candles: 1969, Date range: 2020-08-11 to 2025-12-31
+2026-10-01 19:01:43,523 [INFO] 
+============================================================
+2026-10-01 19:01:43,523 [INFO] PIT/LOOKAHEAD CHECK: SOLUSDT
+2026-10-01 19:01:43,523 [INFO] ============================================================
+2026-10-01 19:01:43,530 [INFO]   ✓ WFV windows created: 63
+2026-10-01 19:01:43,531 [INFO]   ✓ Train/OOS overlaps: 0
+2026-10-01 19:01:43,531 [INFO] 
+PIT Check Status: ✓ PASS
+2026-10-01 19:01:43,531 [INFO] 
+============================================================
+2026-10-01 19:01:43,531 [INFO] WALK-FORWARD VALIDATION: SOLUSDT
+2026-10-01 19:01:43,531 [INFO] ============================================================
+2026-10-01 19:01:43,621 [INFO] Window 0:
+2026-10-01 19:01:43,621 [INFO]   IS: trades=4 pf=15.89 return=0.02%
+2026-10-01 19:01:43,621 [INFO]   OOS: trades=1 pf=∞ return=0.16% ✓
+2026-10-01 19:01:43,696 [INFO] Window 1:
+2026-10-01 19:01:43,696 [INFO]   IS: trades=2 pf=∞ return=0.18%
+2026-10-01 19:01:43,696 [INFO]   OOS: trades=2 pf=0.00 return=-0.06% ✗
+2026-10-01 19:01:43,774 [INFO] Window 2:
+2026-10-01 19:01:43,774 [INFO]   IS: trades=2 pf=7.03 return=0.14%
+2026-10-01 19:01:43,774 [INFO]   OOS: trades=2 pf=0.00 return=-0.01% ✗
+2026-10-01 19:01:43,857 [INFO] Window 3:
+2026-10-01 19:01:43,857 [INFO]   IS: trades=4 pf=0.00 return=-0.08%
+2026-10-01 19:01:43,857 [INFO]   OOS: trades=1 pf=0.00 return=-0.00% ✗
+2026-10-01 19:01:43,931 [INFO] Window 4:
+2026-10-01 19:01:43,931 [INFO]   IS: trades=3 pf=0.00 return=-0.02%
+2026-10-01 19:01:43,931 [INFO]   OOS: trades=2 pf=1.74 return=0.00% ✓
+2026-10-01 19:01:44,005 [INFO] Window 5:
+2026-10-01 19:01:44,005 [INFO]   IS: trades=3 pf=0.08 return=-0.01%
+2026-10-01 19:01:44,006 [INFO]   OOS: trades=1 pf=∞ return=0.08% ✓
+2026-10-01 19:01:44,081 [INFO] Window 6:
+2026-10-01 19:01:44,082 [INFO]   IS: trades=3 pf=∞ return=0.08%
+2026-10-01 19:01:44,082 [INFO]   OOS: trades=2 pf=0.00 return=-0.05% ✗
+2026-10-01 19:01:44,155 [INFO] Window 7:
+2026-10-01 19:01:44,155 [INFO]   IS: trades=3 pf=2.63 return=0.07%
+2026-10-01 19:01:44,155 [INFO]   OOS: trades=1 pf=∞ return=0.02% ✓
+2026-10-01 19:01:44,229 [INFO] Window 8:
+2026-10-01 19:01:44,229 [INFO]   IS: trades=4 pf=0.26 return=-0.07%
+2026-10-01 19:01:44,229 [INFO]   OOS: trades=2 pf=0.05 return=-0.03% ✗
+2026-10-01 19:01:44,304 [INFO] Window 9:
+2026-10-01 19:01:44,304 [INFO]   IS: trades=3 pf=0.50 return=-0.03%
+2026-10-01 19:01:44,304 [INFO]   OOS: trades=1 pf=∞ return=0.03% ✓
+2026-10-01 19:01:44,304 [INFO] 
+WFV Status: ✓ PASS
+2026-10-01 19:01:44,304 [INFO]   Aggregate IS PF: 1.95
+2026-10-01 19:01:44,304 [INFO]   Aggregate OOS PF: 1.84
+2026-10-01 19:01:44,304 [INFO]   Aggregate OOS Return: 0.13%
+2026-10-01 19:01:44,304 [INFO]   Degradation: 5.4%
+2026-10-01 19:01:44,305 [INFO]   Consistency (OOS positive folds): 50.0%
+2026-10-01 19:01:44,305 [INFO]   OOS Positive Folds: 5/10
+2026-10-01 19:01:44,305 [INFO] 
+======================================================================
+2026-10-01 19:01:44,305 [INFO] VALIDATION SUMMARY
+2026-10-01 19:01:44,305 [INFO] ======================================================================
+2026-10-01 19:01:44,305 [INFO] BTCUSDT: ✗ FAIL
+2026-10-01 19:01:44,305 [INFO] ETHUSDT: ✓ PASS
+2026-10-01 19:01:44,305 [INFO] SOLUSDT: ✓ PASS
+2026-10-01 19:01:44,305 [INFO] 
+Overall: 2/3 assets passed
+2026-10-01 19:01:44,307 [INFO] 
+Results saved to: /home/user/crypto-agent/logs/phase2_validation/results_20261001_190144.json
+2026-10-01 19:01:44,307 [ERROR] 
+❌ Phase 2 Real Data Validation: SOME FAILED

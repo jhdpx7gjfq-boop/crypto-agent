@@ -1,0 +1,68 @@
+2026-10-01 12:45:32,616 [INFO] 
+======================================================================
+2026-10-01 12:45:32,616 [INFO] PHASE 2 REAL DATA VALIDATION HARNESS
+2026-10-01 12:45:32,616 [INFO] ======================================================================
+2026-10-01 12:45:32,616 [INFO] Data Source: Binance Data Portal
+2026-10-01 12:45:32,616 [INFO] Assets: BTCUSDT, ETHUSDT, SOLUSDT
+2026-10-01 12:45:32,617 [INFO] Date Range: 2020-01 to 2025-12
+2026-10-01 12:45:32,617 [INFO] WFV Config: train=60d, test=30d, step=30d
+2026-10-01 12:45:32,617 [INFO] 
+
+############################################################
+2026-10-01 12:45:32,617 [INFO] # VALIDATING BTCUSDT
+2026-10-01 12:45:32,617 [INFO] ############################################################
+2026-10-01 12:45:32,617 [INFO] Fetching BTCUSDT from Binance Data Portal...
+2026-10-01 12:45:32,617 [INFO] Downloading 72 months from Binance Data Portal...
+2026-10-01 12:46:24,698 [WARNING] Fixed 365 corrupted timestamps
+2026-10-01 12:46:24,705 [INFO] Parsed 2192 candles, 0 months missing
+2026-10-01 12:46:24,709 [INFO] ✓ Fetched 2192 candles for BTCUSDT
+2026-10-01 12:46:24,710 [INFO] 
+============================================================
+2026-10-01 12:46:24,710 [INFO] DATA QA: BTCUSDT
+2026-10-01 12:46:24,710 [INFO] ============================================================
+2026-10-01 12:46:24,711 [INFO]   ✓ No missing values
+2026-10-01 12:46:24,714 [INFO]   ✓ No duplicate timestamps
+2026-10-01 12:46:24,717 [WARNING]   ✗ Non-monotonic: 1
+2026-10-01 12:46:24,718 [INFO]   ✓ All OHLC bars valid
+2026-10-01 12:46:24,718 [INFO]   ✓ No zero volume candles
+2026-10-01 12:46:24,719 [INFO] 
+Data QA Status: ✗ FAIL
+2026-10-01 12:46:24,719 [INFO] Candles: 2192, Date range: 2020-01-01 to 2025-12-31
+2026-10-01 12:46:24,719 [ERROR] ✗ Data QA failed for BTCUSDT
+2026-10-01 12:46:24,719 [INFO] 
+
+############################################################
+2026-10-01 12:46:24,719 [INFO] # VALIDATING ETHUSDT
+2026-10-01 12:46:24,719 [INFO] ############################################################
+2026-10-01 12:46:24,719 [INFO] Fetching ETHUSDT from Binance Data Portal...
+2026-10-01 12:46:24,720 [INFO] Downloading 72 months from Binance Data Portal...
+2026-10-01 12:47:11,877 [WARNING] Fixed 365 corrupted timestamps
+2026-10-01 12:47:11,881 [INFO] Parsed 2192 candles, 0 months missing
+2026-10-01 12:47:11,885 [INFO] ✓ Fetched 2192 candles for ETHUSDT
+2026-10-01 12:47:11,885 [INFO] 
+============================================================
+2026-10-01 12:47:11,885 [INFO] DATA QA: ETHUSDT
+2026-10-01 12:47:11,885 [INFO] ============================================================
+2026-10-01 12:47:11,886 [INFO]   ✓ No missing values
+2026-10-01 12:47:11,887 [INFO]   ✓ No duplicate timestamps
+2026-10-01 12:47:11,888 [WARNING]   ✗ Non-monotonic: 1
+2026-10-01 12:47:11,889 [INFO]   ✓ All OHLC bars valid
+2026-10-01 12:47:11,889 [INFO]   ✓ No zero volume candles
+2026-10-01 12:47:11,889 [INFO] 
+Data QA Status: ✗ FAIL
+2026-10-01 12:47:11,889 [INFO] Candles: 2192, Date range: 2020-01-01 to 2025-12-31
+2026-10-01 12:47:11,889 [ERROR] ✗ Data QA failed for ETHUSDT
+2026-10-01 12:47:11,889 [INFO] 
+
+############################################################
+2026-10-01 12:47:11,890 [INFO] # VALIDATING SOLUSDT
+2026-10-01 12:47:11,890 [INFO] ############################################################
+2026-10-01 12:47:11,890 [INFO] Fetching SOLUSDT from Binance Data Portal...
+2026-10-01 12:47:11,890 [INFO] Downloading 72 months from Binance Data Portal...
+2026-10-01 12:47:12,405 [WARNING] Missing: 2020-01
+2026-10-01 12:47:12,977 [WARNING] Missing: 2020-02
+2026-10-01 12:47:13,465 [WARNING] Missing: 2020-03
+2026-10-01 12:47:14,122 [WARNING] Missing: 2020-04
+2026-10-01 12:47:14,729 [WARNING] Missing: 2020-05
+2026-10-01 12:47:15,527 [WARNING] Missing: 2020-06
+2026-10-01 12:47:16,236 [WARNING] Missing: 2020-07
