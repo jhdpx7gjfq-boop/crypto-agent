@@ -102,7 +102,7 @@ class TestWyckoffSignal:
     """Tests for WyckoffSignal and BCE scoring."""
 
     def test_bce_score_computation(self):
-        """BCE score should be average of 6 components."""
+        """BCE score should be sum of 6 components (0-6 scale)."""
         signal = WyckoffSignal(
             timestamp=datetime.utcnow(),
             asset="BTC",
@@ -114,8 +114,8 @@ class TestWyckoffSignal:
             market_structure=0.5,
             momentum_confirmation=0.0,
         )
-        # __post_init__ computes: (1+1+1+0.5+0.5+0)/6 = 4/6 ≈ 0.67
-        assert signal.bce_score == pytest.approx(2.5 / 6, abs=0.01)
+        # __post_init__ computes: (1+1+1+0.5+0.5+0) = 4.0
+        assert signal.bce_score == pytest.approx(4.0, abs=0.01)
 
     def test_valid_signal_threshold(self):
         """Signal with score >= 5.0 should be valid."""
