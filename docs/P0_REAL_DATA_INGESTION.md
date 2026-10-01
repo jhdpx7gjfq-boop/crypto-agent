@@ -171,11 +171,26 @@ python -m src.layers.layer3_wyckoff.real_data_wfv_pipeline
 |-------|-------------|
 | **1. Load & Audit** | Provenance validation on each file |
 | **2. Window Gen** | Generate 71 WFV windows (60d train, 30d test, 30d step) |
+| **2.5 Window Validation** | Verify: windows_computed ≥ 71. If NO → BLOCKED |
 | **3. PIT Validation** | No lookahead bias checks on train/test splits |
 | **4. BCE Backtest** | Run BCE scoring on each test window |
 | **5. OOS Metrics** | Calculate Profit Factor, Max DD, Consistency |
 | **6. Immutable Gates** | Apply frozen thresholds (OOS >= 200, PF >= 1.30, etc.) |
 | **7. Phase 3 Verdict** | PASS / FAIL / INCONCLUSIVE |
+
+### 71 Windows Requirement
+
+**Calculation** (rolling windows with 30-day step):
+```
+Days needed = train_days + test_days + (windows - 1) × step_days
+            = 60 + 30 + (71 - 1) × 30
+            = 2,190 days
+            ≈ 6.0 years
+```
+
+**2020–2025 scope**: ~2,068 calendar days (≈5.67 years)
+→ **At the limit**: May be insufficient depending on exact dates and gaps
+→ **Validation**: Pipeline computes actual windows; if < 71 → BLOCKED
 
 ### Immutable Gates (Cannot Change)
 

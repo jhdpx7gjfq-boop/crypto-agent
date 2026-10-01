@@ -141,6 +141,10 @@ class RealDataWFVPipeline:
             window_id += 1
 
         # Validate window count against requirement
+        # Formula: total_days = train_days + test_days + (required_windows - 1) × step_days
+        # For 71 windows: 60 + 30 + (71-1)×30 = 2,190 days (~6.0 years)
+        candles_needed = train_days + test_days + (required_windows - 1) * step_days
+
         validation = {
             "total_candles": total_candles,
             "train_days": train_days,
@@ -149,7 +153,9 @@ class RealDataWFVPipeline:
             "windows_computed": len(windows),
             "windows_required": required_windows,
             "requirement_met": len(windows) >= required_windows,
-            "candles_needed_for_requirement": required_windows * step_days + train_days + test_days - step_days,
+            "candles_needed_for_requirement": candles_needed,
+            "years_of_data_needed": round(candles_needed / 365.25, 1),
+            "coverage_status": "SUFFICIENT" if len(windows) >= required_windows else "INSUFFICIENT",
         }
 
         return windows, validation
