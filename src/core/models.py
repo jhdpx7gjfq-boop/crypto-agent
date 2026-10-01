@@ -80,7 +80,7 @@ class WyckoffSignal:
             self.smart_money_accumulation,
             self.market_structure,
             self.momentum_confirmation,
-        ]) / 6
+        ])
         self.valid = self.bce_score >= 5.0
 
 
