@@ -1,0 +1,650 @@
+{
+  "audit_id": "binance_pit_audit_20261001_phase2",
+  "phase": "Phase 2: Full Data Collection",
+  "query_time_utc": "2026-10-01T13:36:50.178231Z",
+  "assets": [
+    "BTC",
+    "ETH",
+    "SOL"
+  ],
+  "periods": 15,
+  "collections": [
+    {
+      "asset": "BTC",
+      "period": "2020-01",
+      "query_timestamp_utc": "2026-10-01T13:36:50.178244Z",
+      "date_range": {
+        "start": "2020-01-01",
+        "end": "2020-01-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:50.178244Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "BTC",
+      "period": "2020-02",
+      "query_timestamp_utc": "2026-10-01T13:36:50.656655Z",
+      "date_range": {
+        "start": "2020-02-01",
+        "end": "2020-02-29"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:50.656655Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "BTC",
+      "period": "2020-03",
+      "query_timestamp_utc": "2026-10-01T13:36:51.155028Z",
+      "date_range": {
+        "start": "2020-03-01",
+        "end": "2020-03-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:51.155028Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "BTC",
+      "period": "2021-01",
+      "query_timestamp_utc": "2026-10-01T13:36:51.313349Z",
+      "date_range": {
+        "start": "2021-01-01",
+        "end": "2021-01-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:51.313349Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "BTC",
+      "period": "2021-02",
+      "query_timestamp_utc": "2026-10-01T13:36:51.461641Z",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2021-02-28"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:51.461641Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "BTC",
+      "period": "2021-03",
+      "query_timestamp_utc": "2026-10-01T13:36:51.745492Z",
+      "date_range": {
+        "start": "2021-03-01",
+        "end": "2021-03-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:51.745492Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "BTC",
+      "period": "2022-05",
+      "query_timestamp_utc": "2026-10-01T13:36:51.922517Z",
+      "date_range": {
+        "start": "2022-05-01",
+        "end": "2022-05-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:51.922517Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "BTC",
+      "period": "2022-06",
+      "query_timestamp_utc": "2026-10-01T13:36:52.188504Z",
+      "date_range": {
+        "start": "2022-06-01",
+        "end": "2022-06-30"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:52.188504Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "BTC",
+      "period": "2022-07",
+      "query_timestamp_utc": "2026-10-01T13:36:52.332240Z",
+      "date_range": {
+        "start": "2022-07-01",
+        "end": "2022-07-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:52.332240Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "BTC",
+      "period": "2024-01",
+      "query_timestamp_utc": "2026-10-01T13:36:52.475322Z",
+      "date_range": {
+        "start": "2024-01-01",
+        "end": "2024-01-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:52.475322Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "BTC",
+      "period": "2024-02",
+      "query_timestamp_utc": "2026-10-01T13:36:52.661871Z",
+      "date_range": {
+        "start": "2024-02-01",
+        "end": "2024-02-29"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:52.661871Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "BTC",
+      "period": "2024-03",
+      "query_timestamp_utc": "2026-10-01T13:36:52.803729Z",
+      "date_range": {
+        "start": "2024-03-01",
+        "end": "2024-03-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:52.803729Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "BTC",
+      "period": "2025-01",
+      "query_timestamp_utc": "2026-10-01T13:36:52.965400Z",
+      "date_range": {
+        "start": "2025-01-01",
+        "end": "2025-01-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:52.965400Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "BTC",
+      "period": "2025-02",
+      "query_timestamp_utc": "2026-10-01T13:36:53.109787Z",
+      "date_range": {
+        "start": "2025-02-01",
+        "end": "2025-02-28"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:53.109787Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "BTC",
+      "period": "2025-03",
+      "query_timestamp_utc": "2026-10-01T13:36:53.261664Z",
+      "date_range": {
+        "start": "2025-03-01",
+        "end": "2025-03-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:53.261664Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2020-01",
+      "query_timestamp_utc": "2026-10-01T13:36:53.425929Z",
+      "date_range": {
+        "start": "2020-01-01",
+        "end": "2020-01-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:53.425929Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2020-02",
+      "query_timestamp_utc": "2026-10-01T13:36:53.588285Z",
+      "date_range": {
+        "start": "2020-02-01",
+        "end": "2020-02-29"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:53.588285Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2020-03",
+      "query_timestamp_utc": "2026-10-01T13:36:53.743352Z",
+      "date_range": {
+        "start": "2020-03-01",
+        "end": "2020-03-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:53.743352Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2021-01",
+      "query_timestamp_utc": "2026-10-01T13:36:53.894129Z",
+      "date_range": {
+        "start": "2021-01-01",
+        "end": "2021-01-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:53.894129Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2021-02",
+      "query_timestamp_utc": "2026-10-01T13:36:54.055486Z",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2021-02-28"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:54.055486Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2021-03",
+      "query_timestamp_utc": "2026-10-01T13:36:54.219015Z",
+      "date_range": {
+        "start": "2021-03-01",
+        "end": "2021-03-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:54.219015Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2022-05",
+      "query_timestamp_utc": "2026-10-01T13:36:54.363246Z",
+      "date_range": {
+        "start": "2022-05-01",
+        "end": "2022-05-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:54.363246Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2022-06",
+      "query_timestamp_utc": "2026-10-01T13:36:54.498131Z",
+      "date_range": {
+        "start": "2022-06-01",
+        "end": "2022-06-30"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:54.498131Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2022-07",
+      "query_timestamp_utc": "2026-10-01T13:36:54.659234Z",
+      "date_range": {
+        "start": "2022-07-01",
+        "end": "2022-07-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:54.659234Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2024-01",
+      "query_timestamp_utc": "2026-10-01T13:36:54.818435Z",
+      "date_range": {
+        "start": "2024-01-01",
+        "end": "2024-01-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:54.818435Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2024-02",
+      "query_timestamp_utc": "2026-10-01T13:36:54.966483Z",
+      "date_range": {
+        "start": "2024-02-01",
+        "end": "2024-02-29"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:54.966483Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2024-03",
+      "query_timestamp_utc": "2026-10-01T13:36:55.105945Z",
+      "date_range": {
+        "start": "2024-03-01",
+        "end": "2024-03-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:55.105945Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2025-01",
+      "query_timestamp_utc": "2026-10-01T13:36:55.253071Z",
+      "date_range": {
+        "start": "2025-01-01",
+        "end": "2025-01-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:55.253071Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2025-02",
+      "query_timestamp_utc": "2026-10-01T13:36:55.412478Z",
+      "date_range": {
+        "start": "2025-02-01",
+        "end": "2025-02-28"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:55.412478Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "ETH",
+      "period": "2025-03",
+      "query_timestamp_utc": "2026-10-01T13:36:55.544365Z",
+      "date_range": {
+        "start": "2025-03-01",
+        "end": "2025-03-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:55.544365Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2020-01",
+      "query_timestamp_utc": "2026-10-01T13:36:55.684479Z",
+      "date_range": {
+        "start": "2020-01-01",
+        "end": "2020-01-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:55.684479Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2020-02",
+      "query_timestamp_utc": "2026-10-01T13:36:55.820389Z",
+      "date_range": {
+        "start": "2020-02-01",
+        "end": "2020-02-29"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:55.820389Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2020-03",
+      "query_timestamp_utc": "2026-10-01T13:36:55.962723Z",
+      "date_range": {
+        "start": "2020-03-01",
+        "end": "2020-03-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:55.962723Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2021-01",
+      "query_timestamp_utc": "2026-10-01T13:36:56.136264Z",
+      "date_range": {
+        "start": "2021-01-01",
+        "end": "2021-01-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:56.136264Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2021-02",
+      "query_timestamp_utc": "2026-10-01T13:36:56.290241Z",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2021-02-28"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:56.290241Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2021-03",
+      "query_timestamp_utc": "2026-10-01T13:36:56.454274Z",
+      "date_range": {
+        "start": "2021-03-01",
+        "end": "2021-03-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:56.454274Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2022-05",
+      "query_timestamp_utc": "2026-10-01T13:36:56.648296Z",
+      "date_range": {
+        "start": "2022-05-01",
+        "end": "2022-05-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:56.648296Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2022-06",
+      "query_timestamp_utc": "2026-10-01T13:36:56.801261Z",
+      "date_range": {
+        "start": "2022-06-01",
+        "end": "2022-06-30"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:56.801261Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2022-07",
+      "query_timestamp_utc": "2026-10-01T13:36:56.945272Z",
+      "date_range": {
+        "start": "2022-07-01",
+        "end": "2022-07-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:56.945272Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2024-01",
+      "query_timestamp_utc": "2026-10-01T13:36:57.089085Z",
+      "date_range": {
+        "start": "2024-01-01",
+        "end": "2024-01-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:57.089085Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2024-02",
+      "query_timestamp_utc": "2026-10-01T13:36:57.232329Z",
+      "date_range": {
+        "start": "2024-02-01",
+        "end": "2024-02-29"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:57.232329Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2024-03",
+      "query_timestamp_utc": "2026-10-01T13:36:57.385514Z",
+      "date_range": {
+        "start": "2024-03-01",
+        "end": "2024-03-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:57.385514Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2025-01",
+      "query_timestamp_utc": "2026-10-01T13:36:57.552388Z",
+      "date_range": {
+        "start": "2025-01-01",
+        "end": "2025-01-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:57.552388Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2025-02",
+      "query_timestamp_utc": "2026-10-01T13:36:57.695719Z",
+      "date_range": {
+        "start": "2025-02-01",
+        "end": "2025-02-28"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:57.695719Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    },
+    {
+      "asset": "SOL",
+      "period": "2025-03",
+      "query_timestamp_utc": "2026-10-01T13:36:57.848371Z",
+      "date_range": {
+        "start": "2025-03-01",
+        "end": "2025-03-31"
+      },
+      "status": "error",
+      "candles": [],
+      "candle_count": 0,
+      "availability_time": "2026-10-01T13:36:57.848371Z",
+      "error_details": "HTTP 451: {\n  \"code\": 0,\n  \"msg\": \"Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.com/en/terms. Please contact customer service if you believe you received t"
+    }
+  ],
+  "summary": {
+    "total_requests": 45,
+    "successful": 0,
+    "failed": 45,
+    "total_candles_collected": 0,
+    "completion_pct": 0.0
+  }
+}
