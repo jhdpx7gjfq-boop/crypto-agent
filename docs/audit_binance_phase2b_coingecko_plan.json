@@ -1,0 +1,1050 @@
+{
+  "audit_id": "binance_pit_audit_20261001_phase2b",
+  "phase": "Phase 2b: Alternative Data Collection (CoinGecko)",
+  "reason": "Binance direct API network-restricted (HTTP 451)",
+  "query_time_utc": "2026-10-01T13:37:21.409890Z",
+  "assets": [
+    "BTC",
+    "ETH",
+    "SOL"
+  ],
+  "periods": 15,
+  "total_snapshots_needed": 1362,
+  "collections": [
+    {
+      "asset": "BTC",
+      "period": "2020-01",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2020-01-01",
+        "end": "2020-01-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412562Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "BTC",
+      "period": "2020-02",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2020-02-01",
+        "end": "2020-02-29"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412568Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "BTC",
+      "period": "2020-03",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2020-03-01",
+        "end": "2020-03-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412570Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "BTC",
+      "period": "2021-01",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2021-01-01",
+        "end": "2021-01-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412572Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "BTC",
+      "period": "2021-02",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2021-02-28"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412573Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "BTC",
+      "period": "2021-03",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2021-03-01",
+        "end": "2021-03-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412574Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "BTC",
+      "period": "2022-05",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2022-05-01",
+        "end": "2022-05-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412576Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "BTC",
+      "period": "2022-06",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2022-06-01",
+        "end": "2022-06-30"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412581Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "BTC",
+      "period": "2022-07",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2022-07-01",
+        "end": "2022-07-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412583Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "BTC",
+      "period": "2024-01",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2024-01-01",
+        "end": "2024-01-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412585Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "BTC",
+      "period": "2024-02",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2024-02-01",
+        "end": "2024-02-29"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412587Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "BTC",
+      "period": "2024-03",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2024-03-01",
+        "end": "2024-03-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412590Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "BTC",
+      "period": "2025-01",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2025-01-01",
+        "end": "2025-01-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412591Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "BTC",
+      "period": "2025-02",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2025-02-01",
+        "end": "2025-02-28"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412592Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "BTC",
+      "period": "2025-03",
+      "coingecko_id": "bitcoin",
+      "date_range": {
+        "start": "2025-03-01",
+        "end": "2025-03-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412593Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2020-01",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2020-01-01",
+        "end": "2020-01-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412595Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2020-02",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2020-02-01",
+        "end": "2020-02-29"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412596Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2020-03",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2020-03-01",
+        "end": "2020-03-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412597Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2021-01",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2021-01-01",
+        "end": "2021-01-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412598Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2021-02",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2021-02-28"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412599Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2021-03",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2021-03-01",
+        "end": "2021-03-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412601Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2022-05",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2022-05-01",
+        "end": "2022-05-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412604Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2022-06",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2022-06-01",
+        "end": "2022-06-30"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412605Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2022-07",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2022-07-01",
+        "end": "2022-07-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412606Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2024-01",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2024-01-01",
+        "end": "2024-01-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412607Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2024-02",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2024-02-01",
+        "end": "2024-02-29"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412608Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2024-03",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2024-03-01",
+        "end": "2024-03-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412610Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2025-01",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2025-01-01",
+        "end": "2025-01-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412611Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2025-02",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2025-02-01",
+        "end": "2025-02-28"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412612Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "ETH",
+      "period": "2025-03",
+      "coingecko_id": "ethereum",
+      "date_range": {
+        "start": "2025-03-01",
+        "end": "2025-03-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412613Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2020-01",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2020-01-01",
+        "end": "2020-01-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412616Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2020-02",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2020-02-01",
+        "end": "2020-02-29"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412622Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2020-03",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2020-03-01",
+        "end": "2020-03-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412625Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2021-01",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2021-01-01",
+        "end": "2021-01-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412627Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2021-02",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2021-02-01",
+        "end": "2021-02-28"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412702Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2021-03",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2021-03-01",
+        "end": "2021-03-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412704Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2022-05",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2022-05-01",
+        "end": "2022-05-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412705Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2022-06",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2022-06-01",
+        "end": "2022-06-30"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412707Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2022-07",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2022-07-01",
+        "end": "2022-07-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412710Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2024-01",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2024-01-01",
+        "end": "2024-01-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412711Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2024-02",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2024-02-01",
+        "end": "2024-02-29"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412712Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2024-03",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2024-03-01",
+        "end": "2024-03-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412718Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2025-01",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2025-01-01",
+        "end": "2025-01-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412719Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2025-02",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2025-02-01",
+        "end": "2025-02-28"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412720Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    },
+    {
+      "asset": "SOL",
+      "period": "2025-03",
+      "coingecko_id": "solana",
+      "date_range": {
+        "start": "2025-03-01",
+        "end": "2025-03-31"
+      },
+      "query_timestamp_utc": "2026-10-01T13:37:21.412721Z",
+      "status": "pending",
+      "method": "CoinGecko get-coin-history API",
+      "note": "Call MCP tool mcp__CoinGecko__get_coin_history for each date in period",
+      "availability_source": "coingecko_api_historical",
+      "proof_level": "C",
+      "proof_level_rationale": "CoinGecko API returns historical price with timestamp. Public API, documented availability. Proof Level C = API historical.",
+      "expected_fields": [
+        "date",
+        "price_usd",
+        "market_cap",
+        "volume"
+      ],
+      "error_details": null
+    }
+  ]
+}
