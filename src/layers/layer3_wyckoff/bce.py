@@ -141,7 +141,7 @@ class BottomConfirmationEngine:
         # Build result
         result = BCEResult(
             asset=self.asset,
-            timestamp=ohlcv_data[-1].open_time.isoformat() if hasattr(ohlcv_data[-1].open_time, 'isoformat') else str(ohlcv_data[-1].open_time),
+            timestamp=ohlcv_data[-1].timestamp.isoformat() if hasattr(ohlcv_data[-1].timestamp, 'isoformat') else str(ohlcv_data[-1].timestamp),
             bce_score=bce_score,
             components=components,
             signal=signal,
