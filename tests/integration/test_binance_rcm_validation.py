@@ -5,6 +5,8 @@ from src.layers.layer1_data.binance_collector import BinanceDataPortalCollector
 from src.layers.layer6_rcm.rcm_engine import RCMEngine
 
 
+@pytest.mark.slow
+@pytest.mark.binance
 class TestBinanceRCMValidation:
     """Validate RCM rotation confirmation engine on real Binance BTCUSDT data."""
 
