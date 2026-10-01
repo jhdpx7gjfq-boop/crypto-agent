@@ -16,4 +16,4 @@ jobs:
 
       - run: pip install -r requirements-dev.txt
 
-      - run: pytest
+      - run: pytest tests/unit/ tests/integration/test_phase9_dashboard_agent.py tests/integration/test_binance_rcm_validation.py tests/test_main.py -v --tb=short

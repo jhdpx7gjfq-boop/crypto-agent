@@ -218,31 +218,41 @@ class BacktestEngine:
 
 class WalkForwardValidator:
     """
-    Walk-forward validation for strategies.
+    Walk-forward validation for strategies (Phase 2).
 
     Prevents lookahead bias by:
-    1. Splitting data into train/test windows
+    1. Splitting data into train/test windows (default 50/50)
     2. Training on past data only
     3. Testing on future data
     4. Rolling forward
+
+    Phase 2 Constraints:
+    - 50/50 train/test split (configurable)
+    - Min 200 trades per walk
+    - Profit factor > 1.3
+    - Max drawdown < 25%
+    - All walks must pass WFV
     """
 
     def __init__(
         self,
-        total_periods: int = 5,
-        training_ratio: float = 0.7,
+        total_periods: int = 2,
+        training_ratio: float = 0.5,  # Phase 2: 50/50 split
     ):
         self.total_periods = total_periods
         self.training_ratio = training_ratio
         self.results: List[BacktestResult] = []
+        self.in_sample_metrics: List[BacktestResult] = []
+        self.out_of_sample_metrics: List[BacktestResult] = []
 
     def get_train_test_splits(self, data_length: int) -> List[tuple]:
         """
         Generate train/test index ranges.
 
+        For Phase 2: default 50/50 split (2 walks)
+
         Returns: List of (train_start, train_end, test_start, test_end) tuples
         """
-
         step_size = int(data_length / self.total_periods)
         splits = []
 
@@ -257,7 +267,10 @@ class WalkForwardValidator:
             if train_end > train_start:  # Only if valid training window
                 splits.append((train_start, train_end, test_start, test_end))
 
-        logger.info(f"Generated {len(splits)} walk-forward splits")
+        logger.info(
+            f"Generated {len(splits)} walk-forward splits "
+            f"({self.training_ratio*100:.0f} train / {(1-self.training_ratio)*100:.0f} test)"
+        )
         return splits
 
     def validate(
@@ -266,29 +279,32 @@ class WalkForwardValidator:
         ohlcv_data: List[OHLCV],
         min_profit_factor: float = 1.3,
         min_trades: int = 200,
+        max_drawdown: float = 0.25,
     ) -> bool:
         """
-        Run walk-forward validation.
+        Run walk-forward validation (Phase 2).
 
         Args:
             strategy_func: Function that takes (train_ohlcv, test_ohlcv) → trades
-            ohlcv_data: All OHLCV data
-            min_profit_factor: Minimum profit factor threshold
-            min_trades: Minimum trades required
+            ohlcv_data: All OHLCV data (sorted by time)
+            min_profit_factor: Minimum profit factor threshold (> 1.3)
+            min_trades: Minimum trades required (>= 200)
+            max_drawdown: Maximum drawdown threshold (< 0.25 = 25%)
 
         Returns:
-            True if strategy passes all walks
+            True if strategy passes all walk-forward windows
         """
-
         splits = self.get_train_test_splits(len(ohlcv_data))
         passed = 0
         failed = 0
 
-        for train_start, train_end, test_start, test_end in splits:
+        for walk_num, (train_start, train_end, test_start, test_end) in enumerate(splits):
             train_data = ohlcv_data[train_start:train_end]
             test_data = ohlcv_data[test_start:test_end]
 
             if not train_data or not test_data:
+                logger.warning(f"Walk {walk_num}: Insufficient data")
+                failed += 1
                 continue
 
             # Run strategy
@@ -296,7 +312,10 @@ class WalkForwardValidator:
                 trades = strategy_func(train_data, test_data)
 
                 if not trades or len(trades) < min_trades:
-                    logger.warning(f"Walk {passed + failed}: Only {len(trades)} trades (need {min_trades})")
+                    logger.warning(
+                        f"Walk {walk_num}: Only {len(trades) if trades else 0} trades "
+                        f"(need {min_trades})"
+                    )
                     failed += 1
                     continue
 
@@ -305,22 +324,59 @@ class WalkForwardValidator:
                 engine.add_trades_batch(trades)
                 metrics = engine.compute_metrics()
 
-                if metrics.profit_factor >= min_profit_factor:
-                    logger.info(f"Walk {passed + failed}: PF={metrics.profit_factor:.2f} ✓")
+                # Check constraints
+                pf_ok = metrics.profit_factor >= min_profit_factor
+                dd_ok = metrics.max_drawdown / 100 <= max_drawdown
+                trades_ok = len(trades) >= min_trades
+
+                if pf_ok and dd_ok and trades_ok:
+                    logger.info(
+                        f"Walk {walk_num}: ✓ PF={metrics.profit_factor:.3f}, "
+                        f"DD={metrics.max_drawdown:.2f}%, Trades={len(trades)}"
+                    )
                     passed += 1
+                    self.out_of_sample_metrics.append(metrics)
                 else:
-                    logger.warning(f"Walk {passed + failed}: PF={metrics.profit_factor:.2f} (need {min_profit_factor})")
+                    reasons = []
+                    if not trades_ok:
+                        reasons.append(f"trades={len(trades)}")
+                    if not pf_ok:
+                        reasons.append(f"PF={metrics.profit_factor:.3f}")
+                    if not dd_ok:
+                        reasons.append(f"DD={metrics.max_drawdown:.2f}%")
+
+                    logger.warning(f"Walk {walk_num}: ✗ {', '.join(reasons)}")
                     failed += 1
 
                 self.results.append(metrics)
 
             except Exception as e:
-                logger.error(f"Walk {passed + failed} failed: {e}")
+                logger.error(f"Walk {walk_num} failed: {e}")
                 failed += 1
 
         # All walks must pass
         all_passed = failed == 0 and passed == len(splits)
 
-        logger.info(f"Walk-forward validation: {passed}/{len(splits)} passed")
+        logger.info(
+            f"Walk-forward validation: {passed}/{len(splits)} passed "
+            f"{'✓ APPROVED' if all_passed else '✗ REJECTED'}"
+        )
 
         return all_passed
+
+    def get_summary(self) -> Dict:
+        """Get walk-forward validation summary."""
+        if not self.results:
+            return {}
+
+        pfs = [r.profit_factor for r in self.results if r.profit_factor is not None]
+        dds = [r.max_drawdown for r in self.results]
+
+        return {
+            "total_walks": len(self.results),
+            "passed_walks": len([r for r in self.results if r.profit_factor and r.profit_factor >= 1.3]),
+            "avg_profit_factor": sum(pfs) / len(pfs) if pfs else 0,
+            "avg_drawdown": sum(dds) / len(dds) if dds else 0,
+            "min_profit_factor": min(pfs) if pfs else 0,
+            "max_profit_factor": max(pfs) if pfs else 0,
+        }
