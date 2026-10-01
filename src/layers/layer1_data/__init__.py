@@ -20,6 +20,7 @@ CRITICAL INVARIANT:
 from .snapshot_manifest import SnapshotManifest, SourceMetadata, Checksum
 from .revision_audit import RevisionAuditLog, Change, RevisionAuditEngine
 from .snapshot_freezing import FrozenSnapshot, SnapshotFreezer
+from .pit_validator import PITValidator, AvailabilityProofLevel
 
 __all__ = [
     "SnapshotManifest",
@@ -30,4 +31,6 @@ __all__ = [
     "RevisionAuditEngine",
     "FrozenSnapshot",
     "SnapshotFreezer",
+    "PITValidator",
+    "AvailabilityProofLevel",
 ]
