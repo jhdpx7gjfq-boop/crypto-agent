@@ -26,7 +26,8 @@ class SmartMoney:
     def compute(
         self,
         ohlcv_data: List[OHLCV],
-        smart_money_data: Optional[Dict] = None
+        smart_money_data: Optional[Dict] = None,
+        asset: str = "BTC"
     ) -> float:
         """
         Compute smart money accumulation score.
@@ -34,23 +35,28 @@ class SmartMoney:
         Args:
             ohlcv_data: Time-series OHLCV data
             smart_money_data: Dict with keys like 'exchange_outflow', 'whale_inflow', 'funding_rate'
+            asset: Asset name (BTC, ETH, SOL, etc.) for threshold determination
 
         Returns:
             float: Score 0–1
         """
         if not smart_money_data:
-            logger.warning("No smart money data provided (SE = 0)")
+            logger.warning("No smart money data provided (SM = 0)")
             return 0.0
 
         # Parse tier 1 signals
         tier1_signals = 0
 
-        # Exchange outflows
+        # Exchange outflows (asset-dependent thresholds)
         outflow = smart_money_data.get('exchange_outflow', 0)
-        asset = ohlcv_data[0].__class__.__name__ if ohlcv_data else ""
 
-        # Thresholds depend on asset (simplified)
-        outflow_threshold = 1000 if "BTC" in str(ohlcv_data[-1]) else (10000 if "ETH" in str(ohlcv_data[-1]) else 100000)
+        # Thresholds depend on asset (per spec)
+        if "BTC" in asset:
+            outflow_threshold = 1000
+        elif "ETH" in asset:
+            outflow_threshold = 10000
+        else:
+            outflow_threshold = 100000  # Conservative for unknown assets
 
         if outflow > outflow_threshold:
             tier1_signals += 1

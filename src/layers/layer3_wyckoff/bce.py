@@ -108,7 +108,7 @@ class BottomConfirmationEngine:
         ws_score = WyckoffStructure().compute(ohlcv_data)
         va_score = VolumeAnalysis().compute(ohlcv_data)
         se_score = SellingExhaustion().compute(ohlcv_data)
-        sma_score = SmartMoney().compute(ohlcv_data, smart_money_data or {})
+        sma_score = SmartMoney().compute(ohlcv_data, smart_money_data or {}, asset=self.asset)
         ms_score = MarketStructure().compute(ohlcv_data)
         mc_score = MomentumConfirmation().compute(ohlcv_data)
 
