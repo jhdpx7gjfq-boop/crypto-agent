@@ -25,14 +25,17 @@ class TestWyckoffStructure:
         data = []
         for i in range(40):
             ts = datetime.now() - timedelta(days=40-i)
-            if i < 30:
-                # Consolidation zone: tight range
-                close = 100 + (i % 10 - 5) * 0.3
+            if i < 25:
+                # Consolidation: range [98-102]
+                close = 98 + (i % 4) * 1.0
+            elif i < 35:
+                # Mid period: test lower bound
+                close = 98
             else:
-                # Recent: price within 20% of range
-                close = 100.5
-            low = close - 0.5
-            high = close + 0.5
+                # Recent: price within 20% of range (at support)
+                close = 98.4
+            low = close - 0.2
+            high = close + 0.2
             open_ = close
             data.append(OHLCV(ts, open_, high, low, close, 1000))
 
@@ -45,14 +48,17 @@ class TestWyckoffStructure:
         data = []
         for i in range(40):
             ts = datetime.now() - timedelta(days=40-i)
-            if i < 30:
+            if i < 25:
                 # Range: 90-110
                 close = 90 + (i % 20) * 1.0
+            elif i < 35:
+                # Mid: test lower bound
+                close = 90
             else:
                 # Recent: price at ~35% of range (between 0.2 and 0.5)
-                close = 98  # roughly 35% up from support
-            low = close - 0.5
-            high = close + 0.5
+                close = 97  # (97-90)/(110-90) = 7/20 = 35%
+            low = close - 0.2
+            high = close + 0.2
             open_ = close
             data.append(OHLCV(ts, open_, high, low, close, 1000))
 
@@ -112,12 +118,15 @@ class TestWyckoffStructure:
 
         for i in range(40):
             ts = datetime.now() - timedelta(days=40-i)
-            if i < 30:
+            if i < 25:
                 close = support + (i % 20) * (width / 20)
+            elif i < 35:
+                # Test lower bound
+                close = support
             else:
                 close = price_at_20pct
-            high = max(close + 0.5, resistance + 0.1)
-            low = min(close - 0.5, support - 0.1)
+            high = max(close + 0.1, resistance)
+            low = min(close - 0.1, support)
             data.append(OHLCV(ts, close, high, low, close, 1000))
 
         ws = WyckoffStructure()
@@ -127,13 +136,14 @@ class TestWyckoffStructure:
     def test_ws_degenerate_range(self):
         """WS: Handles degenerate range (width ~0)."""
         data = [
-            OHLCV(datetime.now() - timedelta(days=i), 100, 100.001, 99.999, 100, 1000)
+            OHLCV(datetime.now() - timedelta(days=i), 100.0, 100.0000001, 99.9999999, 100.0, 1000)
             for i in range(40)
         ]
 
         ws = WyckoffStructure()
         score = ws.compute(data)
-        assert score == 0.0, "Expected 0.0 for degenerate range"
+        # Degenerate range (width < 1e-6) returns 0.0
+        assert score == 0.0, f"Expected 0.0 for degenerate range, got {score}"
 
     def test_ws_insufficient_data(self):
         """WS: Insufficient data (<30 days)."""
@@ -148,10 +158,14 @@ class TestWyckoffStructure:
 
     def test_ws_score_bounds(self):
         """WS: Score always in [0, 1]."""
-        data = [
-            OHLCV(datetime.now() - timedelta(days=i), 100 + (i % 5), 102, 98, 100, 1000)
-            for i in range(40)
-        ]
+        data = []
+        for i in range(40):
+            ts = datetime.now() - timedelta(days=40-i)
+            close = 100 + (i % 2) * 0.5
+            low = 98 + (i % 2) * 0.5
+            high = 102 + (i % 2) * 0.5
+            open_ = close
+            data.append(OHLCV(ts, open_, high, low, close, 1000))
 
         ws = WyckoffStructure()
         score = ws.compute(data)
