@@ -9,10 +9,11 @@ Governance constraints:
 - Walk-forward: 60-day train, 30-day test, 30-day step
 - No recalibration or threshold changes mid-pipeline
 - Metrics computed on OOS trades only
+- 71 windows REQUIREMENT: If unattainable with 2020-2025 data, return BLOCKED (do NOT extend period)
 """
 import json
 from pathlib import Path
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 
@@ -112,9 +113,15 @@ class RealDataWFVPipeline:
         return results
 
     def compute_wfv_windows(
-        self, total_candles: int, train_days: int = 60, test_days: int = 30, step_days: int = 30
-    ) -> List[WFVWindow]:
-        """Compute walk-forward windows (daily candles = days)."""
+        self, total_candles: int, train_days: int = 60, test_days: int = 30, step_days: int = 30, required_windows: int = 71
+    ) -> Tuple[List[WFVWindow], Dict[str, Any]]:
+        """
+        Compute walk-forward windows (daily candles = days).
+
+        GOVERNANCE: 71 windows is a CONDITION to validate, not a target to force.
+        If 71 windows cannot be constructed from available data, return BLOCKED.
+        Do NOT extend authorized period beyond 2020-2025 to achieve 71 windows.
+        """
         windows = []
         window_id = 0
 
@@ -133,7 +140,19 @@ class RealDataWFVPipeline:
             position += step_days
             window_id += 1
 
-        return windows
+        # Validate window count against requirement
+        validation = {
+            "total_candles": total_candles,
+            "train_days": train_days,
+            "test_days": test_days,
+            "step_days": step_days,
+            "windows_computed": len(windows),
+            "windows_required": required_windows,
+            "requirement_met": len(windows) >= required_windows,
+            "candles_needed_for_requirement": required_windows * step_days + train_days + test_days - step_days,
+        }
+
+        return windows, validation
 
     def validate_pit_for_window(self, ohlcv: List[Dict], window: WFVWindow, asset: str) -> Dict[str, bool]:
         """Run PIT checks on window (no lookahead bias)."""
@@ -218,15 +237,22 @@ class RealDataWFVPipeline:
             report["result"] = "BLOCKED"
             return report
 
-        # Stage 2: Generate WFV windows
+        # Stage 2: Generate WFV windows (with 71-window requirement validation)
         report["stage"] = "wfv_window_generation"
         all_windows = {}
+        window_validation = {}
+
         for symbol, ohlcv in self.real_data.items():
-            windows = self.compute_wfv_windows(len(ohlcv))
+            windows, validation = self.compute_wfv_windows(len(ohlcv), required_windows=71)
             all_windows[symbol] = windows
+            window_validation[symbol] = validation
+
             report[f"wfv_windows_{symbol}"] = {
                 "total_candles": len(ohlcv),
                 "window_count": len(windows),
+                "requirement_met": validation["requirement_met"],
+                "windows_required": 71,
+                "candles_needed_for_71_windows": validation["candles_needed_for_requirement"],
                 "window_summary": [
                     {
                         "window_id": w.window_id,
@@ -236,6 +262,18 @@ class RealDataWFVPipeline:
                     for w in windows[:5]
                 ],  # First 5 windows
             }
+
+        # Check if all symbols meet 71-window requirement
+        all_meet_requirement = all(v["requirement_met"] for v in window_validation.values())
+
+        if not all_meet_requirement:
+            report["stage"] = "window_requirement_validation"
+            report["status"] = "blocked_insufficient_candles"
+            report["result"] = "BLOCKED"
+            report["error"] = "Cannot construct 71 WFV windows with authorized data period (2020-2025)"
+            report["window_validation"] = window_validation
+            report["guidance"] = "Data period insufficient. Do NOT extend beyond 2020-2025 authorization. Acquire alternate data or accept INCONCLUSIVE verdict."
+            return report
 
         # Stage 3: PIT Validation
         report["stage"] = "pit_validation"
