@@ -257,15 +257,40 @@ Each feature requires:
 
 ---
 
-## Next: Production Validation
+## Research Candidates (Post-Phase 9)
 
-1. Real market data testing (Binance 2020-2025)
-2. Dashboard Next.js frontend development
-3. Agent IA → real-time market feeds
-4. API deployment (FastAPI + Docker)
-5. Email/Webhook alert integration
-6. Performance monitoring & tuning
+### DATA-SRC-COINDESK-001 — Liquidity Research Candidate
+**Status**: ⚠️ 0/6 validation gates passed (WFV-non-admissible until all gates pass)
+
+**Hypothesis**: Multi-venue liquidity metrics (Top-Tier Volume Ratio, Binance/CoinDesk Ratio) as confirmation signals.
+
+**6-Checkpoint POC**:
+1. API endpoint mapping ❌
+2. Historical access validation ❌
+3. Point-in-time semantics audit ❌
+4. Reference dataset (BTC/ETH/SOL, 12m) ❌
+5. Cross-venue correlation study ❌
+6. Signal quality assessment (non-WFV) ❌
+
+**Non-goals**: Not a price source. Not integrating into M4.2 until all gates pass. Not building signals yet.
+
+**Docs**: `docs/data_sources/coindesk_research_candidate.md`
 
 ---
 
-**Status**: All core layers implemented and tested. Ready for production integration.
+## Next: Production Validation
+
+1. ✅ Real-time CoinDesk WebSocket (data collection layer)
+2. 🔲 CoinDesk liquidity metrics POC (DATA-SRC-COINDESK-001)
+3. Real market data testing (Binance 2020-2025)
+4. Dashboard Next.js frontend development
+5. Agent IA → real-time market feeds
+6. API deployment (FastAPI + Docker)
+7. Email/Webhook alert integration
+8. Performance monitoring & tuning
+
+---
+
+**Status**: All core layers (1-9) complete. Phase 9 ready for production. CoinDesk WebSocket integrated as real-time data source. Liquidity metrics under research.
+
+**Principle**: "Research > speculation. Data-driven decisions only."
