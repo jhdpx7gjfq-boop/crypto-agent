@@ -47,6 +47,7 @@ class CoinDeskRealtimeRegimeFeed:
         self.manager = CoinDeskCollectorManager(api_key, use_header_auth)
         self.regime_detector = MarketRegimeDetector()
         self.regime_callbacks: list[Callable[[MarketRegime], None]] = []
+        self.candle_callbacks: list[Callable[[OHLCV], None]] = []
         self.is_running = False
 
         # State tracking
@@ -88,6 +89,15 @@ class CoinDeskRealtimeRegimeFeed:
         """
         self.regime_callbacks.append(callback)
 
+    def on_candle(self, callback: Callable[[OHLCV], None]):
+        """
+        Register callback for candle updates (Layer 3+ history).
+
+        Args:
+            callback: Function to call for each new candle
+        """
+        self.candle_callbacks.append(callback)
+
     def _process_candle(self, candle: OHLCV):
         """
         Process OHLCV candle and update regime.
@@ -98,6 +108,13 @@ class CoinDeskRealtimeRegimeFeed:
         try:
             # Update current price
             self.current_price = candle.close
+
+            # Dispatch candle to Layer 3+ consumers (for history tracking)
+            for callback in self.candle_callbacks:
+                try:
+                    callback(candle)
+                except Exception as e:
+                    logger.error(f"Candle callback error: {e}")
 
             # Detect regime
             regime = self.regime_detector.detect_regime(
@@ -114,12 +131,12 @@ class CoinDeskRealtimeRegimeFeed:
                     f"→ {regime.regime} @ ${candle.close:.2f}"
                 )
 
-                # Emit callbacks
+                # Emit regime callbacks (Layer 3+)
                 for callback in self.regime_callbacks:
                     try:
                         callback(regime)
                     except Exception as e:
-                        logger.error(f"Callback error: {e}")
+                        logger.error(f"Regime callback error: {e}")
 
             self.last_regime = regime
 
@@ -165,6 +182,38 @@ class RealtimeRegimePipeline:
         """
         logger.info(f"Registered regime consumer: {name}")
         self.feed.on_regime_change(callback)
+
+    def register_candle_consumer(
+        self,
+        name: str,
+        callback: Callable[[OHLCV], None]
+    ):
+        """
+        Register candle consumer for Layer 3+ history tracking.
+
+        Args:
+            name: Consumer name
+            callback: Function to call for each new candle
+        """
+        logger.info(f"Registered candle consumer: {name}")
+        self.feed.on_candle(callback)
+
+    def register_layer3_consumer(
+        self,
+        consumer_obj,
+        name: str = None
+    ):
+        """
+        Register Layer 3 consumer with both regime and candle callbacks.
+
+        Args:
+            consumer_obj: Consumer with on_regime_update and add_candle methods
+            name: Consumer name (defaults to class name)
+        """
+        name = name or consumer_obj.__class__.__name__
+        logger.info(f"Registered Layer 3 consumer: {name}")
+        self.feed.on_regime_change(consumer_obj.on_regime_update)
+        self.feed.on_candle(consumer_obj.add_candle)
 
     def get_current_regime(self) -> Optional[MarketRegime]:
         """Get latest detected regime."""
