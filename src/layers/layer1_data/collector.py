@@ -2,8 +2,9 @@
 
 import logging
 from datetime import datetime, timedelta
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Callable
 import json
+import asyncio
 
 from src.core.models import OHLCV
 from src.core.config import Config
@@ -25,6 +26,7 @@ class DataCollector:
     def __init__(self, use_mock: bool = False):
         self.config = Config
         self.use_mock = use_mock
+        self._coindesk_collector = None
 
     def fetch_coingecko(
         self,
@@ -203,6 +205,33 @@ class DataCollector:
         except Exception as e:
             logger.error(f"Parquet read failed: {e}")
             return []
+
+    def get_coindesk_ws_collector(
+        self,
+        api_key: str,
+        use_header_auth: bool = False
+    ):
+        """
+        Get CoinDesk WebSocket collector for real-time data.
+
+        Args:
+            api_key: CoinDesk API key
+            use_header_auth: Use header auth (more secure) instead of URL param
+
+        Returns:
+            CoinDeskCollectorManager instance
+        """
+        if self.use_mock:
+            logger.warning("Mock mode enabled, CoinDesk WebSocket collector will not connect")
+
+        try:
+            from src.layers.layer1_data.coindesk_ws_collector import CoinDeskCollectorManager
+            if self._coindesk_collector is None:
+                self._coindesk_collector = CoinDeskCollectorManager(api_key, use_header_auth)
+            return self._coindesk_collector
+        except ImportError:
+            logger.error("CoinDesk WebSocket collector requires websockets library")
+            return None
 
     @staticmethod
     def _generate_mock_ohlcv(

@@ -122,6 +122,7 @@ crypto-agent/
 ✅ **Public data only** (no CEX API access):
 - CoinGecko (prices, market data)
 - Binance public OHLCV
+- **CoinDesk WebSocket** (real-time tick data, reference rates) ✨ NEW
 - Glassnode (on-chain metrics)
 - CryptoQuant (derivatives, funding rates)
 - DefiLlama (TVL, yield)
@@ -248,10 +249,11 @@ Each feature requires:
 8. ✅ Phase 8: RPM X20 Optimizer (walk-forward validation)
 9. ✅ Phase 9: Dashboard & Agent IA (visualization + autonomous analysis)
 
-**Test Results**: 270+ tests passing
+**Test Results**: 293+ tests passing
+- Layer 1 (Data Intelligence): 23 tests ✅ (CoinDesk WebSocket + collectors)
 - Phase 7-9: 48 tests ✅
 - RCM real-market validation: 3 tests ✅ (Binance BTC 2020-2025, 2300+ candles, rolling windows)
-- Full suite: 270+ tests across all layers
+- Full suite: 293+ tests across all layers
 
 ---
 
