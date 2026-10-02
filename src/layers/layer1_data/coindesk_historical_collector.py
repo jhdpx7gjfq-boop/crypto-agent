@@ -252,9 +252,18 @@ class CoinDeskResearchGates:
     @staticmethod
     def checkpoint_1_api_mapping() -> bool:
         """Gate 1: Verify API endpoint mapping."""
-        # TODO: Implement endpoint discovery
-        logger.info("Gate 1: API endpoint mapping — NOT YET IMPLEMENTED")
-        return False
+        try:
+            from src.layers.layer1_data.coindesk_api_discovery import (
+                CoinDeskAPIDiscovery
+            )
+            endpoints = CoinDeskAPIDiscovery.list_endpoints()
+            volume_eps = CoinDeskAPIDiscovery.list_volume_endpoints()
+
+            logger.info(f"Gate 1: API mapping — PASS ({len(endpoints)} endpoints, {len(volume_eps)} volume-related)")
+            return len(volume_eps) > 0
+        except Exception as e:
+            logger.error(f"Gate 1: API mapping — FAIL ({e})")
+            return False
 
     @staticmethod
     def checkpoint_2_historical_access() -> bool:
@@ -307,12 +316,27 @@ class CoinDeskResearchGates:
     @staticmethod
     def status_report() -> Dict[str, Any]:
         """Generate status report for POC progress."""
+        passed = sum([
+            CoinDeskResearchGates.checkpoint_1_api_mapping(),
+            CoinDeskResearchGates.checkpoint_2_historical_access(),
+            CoinDeskResearchGates.checkpoint_3_pit_validation(),
+            CoinDeskResearchGates.checkpoint_4_reference_dataset(),
+            CoinDeskResearchGates.checkpoint_5_cross_venue_validation(),
+            CoinDeskResearchGates.checkpoint_6_signal_quality(),
+        ])
+
+        next_checkpoint = (
+            "Checkpoint 2: Historical access validation"
+            if passed >= 1
+            else "Checkpoint 1: API endpoint mapping"
+        )
+
         return {
             "data_source": "DATA-SRC-COINDESK-001",
             "status": "RESEARCH CANDIDATE",
-            "gates_passed": 3,
+            "gates_passed": passed,
             "gates_total": 6,
             "wfv_admissible": False,
-            "next_milestone": "Checkpoint 1: API endpoint mapping",
+            "next_milestone": next_checkpoint,
             "estimated_completion": "2026-10-15",
         }
