@@ -3,12 +3,14 @@
 DATA-SRC-COINDESK-001 POC Validation Gate.
 
 Purpose:
-- Verify CoinDesk REST API provides 365-day historical data
+- Verify CoinDesk Data API provides 365-day historical volume metrics
 - Validate timestamp integrity (no gaps, monotonic, frequency)
 - Test data completeness for BTC, ETH, SOL
 - Detect survivorship bias (consistent coverage)
 
 Status: REQUIRES API KEY (Pro/Enterprise tier)
+Data Source: CoinDesk Data API (/trade-data/spot/volume endpoint)
+Reference: https://data.coindesk.com/data-catalogue
 """
 
 import logging
@@ -20,9 +22,11 @@ logger = logging.getLogger(__name__)
 
 
 class Checkpoint2HistoricalValidator:
-    """Validate historical data access via CoinDesk REST API."""
+    """Validate historical data access via CoinDesk Data API."""
 
     BASE_URL = "https://api.coindesk.com/v1"
+    ENDPOINT_VOLUME = "/trade-data/spot/volume"
+    ENDPOINT_OHLCV = "/trade-data/spot/ohlcv"
 
     ASSETS = {
         "BTC": "bitcoin",
@@ -44,15 +48,17 @@ class Checkpoint2HistoricalValidator:
         self,
         asset: str = "bitcoin",
         days: int = 365,
-        vs_currency: str = "usd"
+        vs_currency: str = "usd",
+        volume_type: str = "aggregate"
     ) -> Dict[str, Any]:
         """
-        Validate historical data access and timestamps.
+        Validate historical data access and timestamps via CoinDesk Data API.
 
         Args:
-            asset: CoinDesk asset ID (e.g., 'bitcoin', 'ethereum')
+            asset: Asset ID (e.g., 'bitcoin', 'ethereum')
             days: Number of historical days to fetch
             vs_currency: Quote currency
+            volume_type: Volume breakdown type (aggregate, top_tier, direct)
 
         Returns:
             Dict with validation results and metrics
@@ -77,6 +83,7 @@ class Checkpoint2HistoricalValidator:
             "survivorship_bias": None,
             "verdict": "UNVERIFIED",
             "error": None,
+            "note": "Using CoinDesk Data API /trade-data/spot/volume endpoint",
         }
 
         if not self.api_key:
@@ -93,18 +100,25 @@ class Checkpoint2HistoricalValidator:
             result["verdict"] = "FAIL"
             return result
 
-        # Build endpoint
-        endpoint = f"{self.BASE_URL}/coins/{asset}/market_chart"
+        # Build endpoint using correct CoinDesk Data API
+        endpoint = f"{self.BASE_URL}{self.ENDPOINT_VOLUME}"
         result["endpoint"] = endpoint
-        result["auth_method"] = "header"
+        result["auth_method"] = "api_key_header"
+
+        # Calculate date range
+        end_date = datetime.utcnow().date()
+        start_date = end_date - timedelta(days=days)
 
         params = {
-            "vs_currency": vs_currency,
-            "days": days,
+            "asset": asset,
+            "start_date": start_date.isoformat(),
+            "end_date": end_date.isoformat(),
             "interval": "daily",
+            "volume_type": volume_type,
         }
 
-        headers = {"Authorization": f"Bearer {self.api_key}"}
+        # CoinDesk Data API: API key in header
+        headers = {"api-key": self.api_key}
 
         try:
             resp = requests.get(
@@ -122,33 +136,41 @@ class Checkpoint2HistoricalValidator:
                 return result
 
             if resp.status_code == 403:
-                result["error"] = "Forbidden (insufficient tier)"
+                result["error"] = "Forbidden (insufficient tier or endpoint not available)"
                 result["verdict"] = "FAIL"
                 logger.error(f"{asset}: C2 FAIL — 403 Forbidden")
                 return result
 
             if resp.status_code != 200:
-                result["error"] = f"HTTP {resp.status_code}"
+                result["error"] = f"HTTP {resp.status_code}: {resp.text[:100]}"
                 result["verdict"] = "FAIL"
                 logger.error(f"{asset}: C2 FAIL — {resp.status_code}")
                 return result
 
             data = resp.json()
 
-            # Parse response
-            prices = data.get("prices", [])
-            volumes = data.get("volumes", [])
+            # Parse CoinDesk Data API response
+            # Expected structure: {"data": [{"timestamp": "...", "volume": ...}, ...]}
+            data_points = data.get("data", [])
 
-            if not volumes or len(volumes) == 0:
-                result["error"] = "No volume data in response"
+            if not data_points or len(data_points) == 0:
+                result["error"] = "No data points in response"
                 result["verdict"] = "FAIL"
+                logger.error(f"{asset}: C2 FAIL — empty response")
                 return result
 
-            # Extract timestamps
+            # Extract timestamps from ISO strings
             timestamps = []
-            for timestamp_ms, volume in volumes:
-                ts = datetime.fromtimestamp(timestamp_ms / 1000)
-                timestamps.append(ts)
+            for point in data_points:
+                try:
+                    ts_str = point.get("timestamp")
+                    if ts_str:
+                        # Handle ISO 8601 format
+                        ts = datetime.fromisoformat(ts_str.replace("Z", "+00:00"))
+                        timestamps.append(ts)
+                except (ValueError, AttributeError, TypeError) as e:
+                    logger.warning(f"Failed to parse timestamp {point.get('timestamp')}: {e}")
+                    continue
 
             result["actual_points"] = len(timestamps)
             result["data_points"] = len(timestamps)

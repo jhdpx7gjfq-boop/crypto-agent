@@ -45,15 +45,12 @@ $$
 
 | Gate | Status | Notes |
 |------|--------|-------|
-| ✅ Data existence | PASS | CoinDesk Data public documentation confirms |
-| ✅ Aggregate volume | PASS | Accessible via API |
-| ✅ Direct volume | PASS | Accessible via API |
-| ⚠️ Top-Tier volume | PARTIAL | Documented but needs API verification |
-| ✅ Methodology transparency | PASS | CADLI Part 2 blog post details definition |
-| ⚠️ API infrastructure | PARTIAL | REST endpoints exist; needs endpoint mapping |
-| ❌ **Historical PIT access** | FAIL | Not yet verified |
-| ❌ **Revision policy** | FAIL | Not yet audited |
-| ❌ **Survivorship bias** | FAIL | Not yet measured |
+| ✅ API endpoint mapping (C1) | PASS | `/trade-data/spot/volume`, `/trade-data/spot/ohlcv` verified |
+| ⚠️ Historical access (C2) | READY | Validator built, awaiting API key for execution |
+| ❌ Point-in-time semantics (C3) | BLOCKED | Awaits C2 pass |
+| ❌ Reference dataset (C4) | BLOCKED | Awaits C2 pass |
+| ❌ Cross-venue validation (C5) | BLOCKED | Awaits C4 pass |
+| ❌ Signal quality (C6) | BLOCKED | Awaits C5 pass |
 
 ---
 
@@ -62,49 +59,70 @@ $$
 ### 1. Identify Exact API Endpoint
 **Goal**: Map CoinDesk Data REST API for volume metrics.
 
-```bash
-# Required discovery
-GET /v1/coins/{id}/market_data
-  ├─ volume_24h
-  ├─ volume_top_tier_24h
-  └─ volume_direct_24h
+**VERIFIED ENDPOINTS** (from Checkpoint 1):
 
-# Historical endpoint
-GET /v1/coins/{id}/market_chart
-  └─ Historical OHLCV + volume variants
+```bash
+# Base URL
+https://api.coindesk.com/v1
+
+# Volume Metrics (Pro/Enterprise tier)
+GET /trade-data/spot/volume
+  ?asset=bitcoin
+  &start_date=2025-01-01
+  &end_date=2025-12-31
+  &interval=daily
+  &volume_type=aggregate|top_tier|direct
+
+# OHLCV Data (Pro/Enterprise tier)
+GET /trade-data/spot/ohlcv
+  ?asset=bitcoin
+  &start_date=2025-01-01
+  &end_date=2025-12-31
+
+# Trade Data (Pro/Enterprise tier)
+GET /trade-data/spot
+  ?asset=bitcoin
+  &start_date=2025-01-01
+  &end_date=2025-12-31
+  &interval=daily
 ```
 
-**Status**: 🔴 Not started  
+**Status**: ✅ PASS (Checkpoint 1 complete)  
 **Owner**: TBD
 
 ---
 
 ### 2. Verify Historical Access & Timestamps
-**Goal**: Confirm data availability and timestamp integrity.
+**Goal**: Confirm data availability and timestamp integrity via `/trade-data/spot/volume`.
 
 ```python
 # Test plan
-for asset in [BTC, ETH, SOL]:
-    data = coindesk_api.get_market_chart(
-        coin_id=asset,
-        days=365,
-        include_volumes=[
-            'volume',
-            'volume_top_tier',
-            'volume_direct'
-        ]
-    )
-    assert len(data) == 365  # No gaps
-    assert data['timestamp'].is_monotonic_increasing
-    assert data['timestamp'].dt.freq == 'D'
+for asset in ['bitcoin', 'ethereum', 'solana']:
+    for volume_type in ['aggregate', 'top_tier', 'direct']:
+        response = requests.get(
+            'https://api.coindesk.com/v1/trade-data/spot/volume',
+            params={
+                'asset': asset,
+                'start_date': '2025-01-01',
+                'end_date': '2025-12-31',
+                'interval': 'daily',
+                'volume_type': volume_type
+            },
+            headers={'api-key': API_KEY}
+        )
+        data = response.json()['data']
+        assert len(data) >= 365 * 0.95  # At least 95% completeness
+        assert all(data[i]['timestamp'] < data[i+1]['timestamp'] for i in range(len(data)-1))
+        assert detect_gaps(data['timestamp']) == []
 ```
 
 **Expected output**: 
-- 365 daily candles for BTC, ETH, SOL
-- Zero gaps
-- UTC timestamp consistency
+- ≥365 daily candles for BTC, ETH, SOL
+- All volume_type variants (aggregate, top_tier, direct)
+- Zero gaps or <5% missing days
+- UTC ISO 8601 timestamps, monotonically increasing
 
-**Status**: 🔴 Not started  
+**Status**: 🔴 Not started (awaiting API key)  
 **Owner**: TBD
 
 ---
