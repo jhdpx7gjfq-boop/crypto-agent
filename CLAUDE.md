@@ -125,14 +125,32 @@ Architecture: 8 research layers combining market regime detection, Wyckoff analy
 - ✅ DO maintain version control on data layer
 - ✅ DO freeze baseline before H-005 feature engineering
 
-**Preflight 2 Tasks**:
-1. ✅ Data provider mini-audit: Complete (Glassnode selected 2026-10-05)
-2. ⏳ Glassnode API key: Awaiting owner authorization & deployment
-3. ⏳ Confirm PIT safety: Verify Glassnode docs (expected snapshot-versioned)
-4. ⏳ Initialize H-005 dev environment: Once key provisioned
-5. ⏳ Set embargo rule: 1 day minimum (per H-005 contract)
+**Preflight 2: Three-Gate Sequence** (H-005 BLOCKED until all gates pass)
 
-**Next Step** (after API key): Initialize H-005 development environment. Development period: [TBD] → 2024-09-25. Hold-out evaluation: 2024-09-26 → 2025-09-28 (locked).
+**2A: PIT Verification** (CRITICAL — unverified hypothesis)
+- ⏳ Fetch Glassnode API docs: Snapshot versioning policy
+- ⏳ Confirm: Data mutability, revision schedule, embargo feasibility
+- ❌ If Glassnode fails PIT → H-005 closes (same as CryptoQuant)
+- ✅ If Glassnode passes → proceed to 2B
+
+**2B: Resource Provisioning** (budget decision)
+- ⏳ Owner authorizes Glassnode API access ($588-999/yr)
+- ⏳ Obtain API key (store in local .env, NOT git)
+- ✅ Key deployed to environment → proceed to 2C
+
+**2C: Parameter Freeze** (governance lock)
+- ⏳ Confirm embargo rule: 1 day minimum (per H-005 contract)
+- ⏳ Lock development period: [TBD] → 2024-09-25
+- ⏳ Lock hold-out period: 2024-09-26 → 2025-09-28 (untouched)
+- ⏳ Confirm snapshot archival policy (Glassnode timestamp versioning)
+- ✅ All frozen → H-005 DEV PHASE begins
+
+**H-005 Status**: 🔴 **BLOCKED** (Preflight 2A-C gates pending)
+- Gate 2A (PIT verification): ⏳ TBD
+- Gate 2B (API key): ⏳ Awaiting owner authorization
+- Gate 2C (parameter freeze): ⏳ Pending 2A & 2B
+
+**Next Step** (after all 3 gates pass): Initialize H-005 development environment. Development period: [TBD] → 2024-09-25. Hold-out evaluation: 2024-09-26 → 2025-09-28 (locked).
 
 ---
 
