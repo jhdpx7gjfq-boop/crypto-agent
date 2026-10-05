@@ -330,19 +330,46 @@ Claude-Session: https://claude.ai/code/session_01Vh9TodeasSRHHrxPfYSHiK
 
 ### Gate Keeper Decision Status
 
-**Current Verdict:** PASS_CONDITIONAL
+**Verdict: D — DEFER**
 
-**Conditions FOR Unblock:**
-1. ✅ Temporal ordering verified (availability_time ≤ decision_time)
-2. ✅ Immutability confirmed (0 revisions)
-3. ✅ Future/late data 100% rejected
+**Decision (2026-10-05):**
+- ❌ P0.4 WFV unblock: **REJECTED**
+- ⚠️ Audit status: **PASS_CONDITIONAL** (accepted as research infrastructure)
+- 🔴 P0.1 data requirement: **UNCHANGED** (Binance BTCUSDT 1D 2017-2026 mandatory)
 
-**Conditions REQUIRED for Unblock:**
-1. ⏳ Gate keeper acceptance of Proof Level C
-2. ⏳ Documentation that CoinGecko publishes daily within 24h
-3. ⏳ Risk acceptance (sample-based, not exhaustive)
+**Rationale:**
 
-**Status:** AWAITING gate keeper decision form completion (see AUDIT_BINANCE_PHASE5_GATEKEEPER_REVIEW.md)
+The empirical audit demonstrates:
+- ✅ Temporal ordering correct (5 samples)
+- ✅ Immutability confirmed (0 revisions detected)
+- ✅ Infrastructure PIT engine functional
+
+But does NOT prove:
+- ❌ "CoinGecko publishes within 24h" = unverified assumption
+- ❌ 5 snapshots = exhaustive PIT proof (sample-based only)
+- ❌ CoinGecko substitutes for Binance P0.1 requirement
+
+**Critical Distinction:**
+```
+Fact demonstrated:    No revisions in observed sample
+Hypothesis assumed:   Provider always publishes on schedule (UNVERIFIED)
+Proof required:       Exhaustive PIT validation with real P0.1 data
+```
+
+CoinGecko may serve as complementary source research, not as P0.1 replacement.
+
+**P0.4 Blocking Condition (unchanged):**
+```
+P0.1: Binance BTCUSDT 1D 2017–2026
+  ↓
+dataset.parquet + manifest + SHA-256 + gap audit + expected_row_count
+  ↓
+P0.1 PASS
+  ↓
+P0.4 M4.2 WFV UNBLOCKED
+```
+
+**Status:** ✅ Audit archived as research; 🔴 P0.4 remains BLOCKED pending P0.1 completion
 
 ### Documents
 
