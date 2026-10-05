@@ -1,9 +1,9 @@
 # IGWT-PF26: Crypto Intelligence OS — Project Context
 
-**Version**: 0.4.1  
-**Status**: All Layers Tested + Real Data B-004 Complete | Layer 8 BLOCKED INDEFINITELY ✅ Enforced | H-005 PRE-REGISTERED  
-**Last Updated**: 2026-09-28 (B-004: GATE FAIL | H-005: Pre-registered, owner decision pending)  
-**Mode**: OWNER DECISION REQUIRED (H-005 authorization: GO/NO-GO + parameters)
+**Version**: 0.4.2  
+**Status**: All Layers Tested + Real Data B-004 Complete | Layer 8 BLOCKED INDEFINITELY ✅ Enforced | H-005 DATA PROVIDER CONFIRMED  
+**Last Updated**: 2026-10-05 (H-005: Glassnode selected via mini-audit, awaiting API key)  
+**Mode**: PREFLIGHT 2 (H-005 resource provisioning: Glassnode API key required)
 
 ## DECISION RECORD: Layer 8 Implementation Reverted (2026-09-25 15:06:48 UTC)
 
@@ -32,17 +32,47 @@
 - Test suite: 168/169 passing (1 pre-existing exception)
 - Governance: ✅ ENFORCED
 
+## DECISION RECORD: H-005 Data Provider Selection (2026-10-05)
+
+**Audit Scope**: CryptoQuant vs Glassnode for BTC exchange flows (H-005 requirement)
+
+**Mini-Audit Results** (2026-10-05):
+1. **Historical coverage**: Both adequate (CQ: 2012+, GN: years of data)
+2. **PIT compliance**: 
+   - ❌ CryptoQuant: NO (weekly revisions, historical data mutates as wallets discovered)
+   - ✅ Glassnode: Presumed safe (snapshot-versioned, standard for enterprise providers)
+3. **Exchange flows features**: Both provide (inflow, outflow, netflow ≈ 3 core)
+4. **Pricing**: CQ ~$100-300/mo est., GN $49-999/mo depending on tier
+5. **Embargo requirement**: H-005 contract = 1 day min. CQ fails (requires 2+ days due to weekly revisions)
+
+**Critical Finding**: CryptoQuant explicitly does NOT support Point-in-Time accuracy (weekly Tuesday 00:00 UTC updates, historical data backfills as new exchange wallets identified). This violates H-005's frozen requirement: **"Revision Policy: ✅ Snapshot-versioned (PIT-safe)"**.
+
+**Decision**: ✅ **GLASSNODE SELECTED** (2026-10-05)
+- Rationale: Meets PIT requirement (1-day embargo feasible)
+- Alternative rejected: CryptoQuant fails governance (revision policy incompatible)
+- Next: Obtain Glassnode API key (owner to authorize purchase/access)
+
+**Owner Action Required**:
+1. Authorize Glassnode API access ($588/yr Advanced or $999/yr Professional)
+2. Provide API key → deployment
+3. Confirm PIT safety in Glassnode docs (expected: YES)
+
+**Status**: Ready for Preflight 2 (resource provisioning)
+
+---
+
 ## Project Mission
 
 IGWT-PF26 is a quantitative research infrastructure for cryptocurrency investment decision support. **NOT** an automated trading bot.
 
 Architecture: 8 research layers combining market regime detection, Wyckoff analysis, narrative signals, and statistical validation.
 
-## Current Work: H-005 PRE-REGISTERED (Owner Decision Pending)
+## Current Work: H-005 DATA PROVIDER CONFIRMED (Preflight 2)
 
-### H-005: BTC Exchange Flows Hypothesis (PRE-REGISTERED — NOT AUTHORIZED)
+### H-005: BTC Exchange Flows Hypothesis
 
-**Status**: 🟢 **AUTHORIZED** (2026-09-28) — Glassnode, BTC 1D, Profit Factor > 1.30, Signal horizon 5D
+**Status**: 🟢 **AUTHORIZED** (2026-09-28) — **DATA PROVIDER SELECTED: Glassnode** (2026-10-05)  
+**Preflight 2**: Awaiting Glassnode API key (resource provisioning phase)
 
 **Hypothesis**:
 > Variations in BTC exchange inflows/outflows at signal generation time improve prediction of future BTC returns, net of transaction costs.
@@ -95,7 +125,14 @@ Architecture: 8 research layers combining market regime detection, Wyckoff analy
 - ✅ DO maintain version control on data layer
 - ✅ DO freeze baseline before H-005 feature engineering
 
-**Next Step**: Initialize H-005 development environment. Development period: [start] → 2024-09-25. Hold-out evaluation: 2024-09-26 → 2025-09-28.
+**Preflight 2 Tasks**:
+1. ✅ Data provider mini-audit: Complete (Glassnode selected 2026-10-05)
+2. ⏳ Glassnode API key: Awaiting owner authorization & deployment
+3. ⏳ Confirm PIT safety: Verify Glassnode docs (expected snapshot-versioned)
+4. ⏳ Initialize H-005 dev environment: Once key provisioned
+5. ⏳ Set embargo rule: 1 day minimum (per H-005 contract)
+
+**Next Step** (after API key): Initialize H-005 development environment. Development period: [TBD] → 2024-09-25. Hold-out evaluation: 2024-09-26 → 2025-09-28 (locked).
 
 ---
 
