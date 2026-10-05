@@ -32,7 +32,15 @@ from .controls import (
     composite_regime_score,
 )
 
+from .data_connectors import (
+    CoinGeckoConnector,
+    BinanceFuturesConnector,
+    MacroConnector,
+    RegimeDataCollector,
+)
+
 __all__ = [
+    # Phase 1: Core Controls
     "RegimeSnapshot",
     "bitcoin_regime",
     "liquidity_regime",
@@ -41,4 +49,9 @@ __all__ = [
     "etf_regime",
     "oi_regime",
     "composite_regime_score",
+    # Phase 2: Data Connectors
+    "CoinGeckoConnector",
+    "BinanceFuturesConnector",
+    "MacroConnector",
+    "RegimeDataCollector",
 ]
