@@ -1,0 +1,107 @@
+{
+  "spec_version": "m42_spec_2026_10_06",
+  "execution_date": "2026-10-06T14:22:38.470471",
+  "status": "COMPLETE \u2014 Data analysis phase",
+  "note": "F1-score requires ground truth labels (M4.2 spec requires labeled bounces)",
+  "data_candles": 2192,
+  "windows_analyzed": 6,
+  "valid_signals_count": 0,
+  "windows": [
+    {
+      "window_id": 1,
+      "test_start": "2020-06-01T00:00:00",
+      "test_end": "2020-11-28T00:00:00",
+      "candles": 180,
+      "bce_score": 3.15,
+      "valid_signal": false,
+      "components": {
+        "wyckoff_structure": 0.8,
+        "volume_analysis": 0.5,
+        "selling_exhaustion": 0.1,
+        "smart_money": 0.65,
+        "market_structure": 0.6,
+        "momentum": 0.5
+      }
+    },
+    {
+      "window_id": 2,
+      "test_start": "2020-11-28T00:00:00",
+      "test_end": "2021-05-27T00:00:00",
+      "candles": 180,
+      "bce_score": 3.95,
+      "valid_signal": false,
+      "components": {
+        "wyckoff_structure": 0.5,
+        "volume_analysis": 0.5,
+        "selling_exhaustion": 0.9,
+        "smart_money": 0.65,
+        "market_structure": 0.6,
+        "momentum": 0.8
+      }
+    },
+    {
+      "window_id": 3,
+      "test_start": "2021-05-27T00:00:00",
+      "test_end": "2021-11-23T00:00:00",
+      "candles": 180,
+      "bce_score": 3.35,
+      "valid_signal": false,
+      "components": {
+        "wyckoff_structure": 0.8,
+        "volume_analysis": 0.2,
+        "selling_exhaustion": 0.5,
+        "smart_money": 0.65,
+        "market_structure": 0.6,
+        "momentum": 0.6
+      }
+    },
+    {
+      "window_id": 4,
+      "test_start": "2021-11-23T00:00:00",
+      "test_end": "2022-05-22T00:00:00",
+      "candles": 180,
+      "bce_score": 3.95,
+      "valid_signal": false,
+      "components": {
+        "wyckoff_structure": 0.5,
+        "volume_analysis": 0.5,
+        "selling_exhaustion": 0.9,
+        "smart_money": 0.65,
+        "market_structure": 0.6,
+        "momentum": 0.8
+      }
+    },
+    {
+      "window_id": 5,
+      "test_start": "2022-05-22T00:00:00",
+      "test_end": "2022-11-18T00:00:00",
+      "candles": 180,
+      "bce_score": 4.2,
+      "valid_signal": false,
+      "components": {
+        "wyckoff_structure": 0.8,
+        "volume_analysis": 0.9,
+        "selling_exhaustion": 0.9,
+        "smart_money": 0.4,
+        "market_structure": 0.6,
+        "momentum": 0.6
+      }
+    },
+    {
+      "window_id": 6,
+      "test_start": "2022-11-18T00:00:00",
+      "test_end": "2023-05-17T00:00:00",
+      "candles": 180,
+      "bce_score": 2.8,
+      "valid_signal": false,
+      "components": {
+        "wyckoff_structure": 0.5,
+        "volume_analysis": 0.5,
+        "selling_exhaustion": 0.5,
+        "smart_money": 0.1,
+        "market_structure": 0.6,
+        "momentum": 0.6
+      }
+    }
+  ]
+}

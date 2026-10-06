@@ -1,0 +1,14 @@
+{
+  "symbol": "BTCUSDT",
+  "granularity": "1d",
+  "date_range": "2020-01-01 to 2025-12-31",
+  "total_candles": 2192,
+  "gaps": 0,
+  "duplicates": 0,
+  "ohlc_errors": 0,
+  "timestamp_fixes": 365,
+  "status": "VALIDATED",
+  "source": "data.binance.vision (monthly ZIPs)",
+  "validation_date": "2026-10-06",
+  "data_gate": "PASS"
+}
