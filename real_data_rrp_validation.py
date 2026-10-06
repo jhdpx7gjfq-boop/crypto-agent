@@ -35,22 +35,38 @@ class RealDataRRPValidator:
         self.output_dir.mkdir(exist_ok=True)
 
         # Load real data from saved JSON files
-        # Try weekly data first (27 candles, 6 months), fallback to monthly (25 candles)
+        # Priority: interpolated daily > weekly > monthly
         self.datasets = {}
         data_dir_path = Path(data_dir)
         for symbol in self.symbols:
-            # Try weekly first (better granularity)
-            filepath = data_dir_path / f"{symbol}_tipransk_weekly_6m.json"
-            if not filepath.exists():
-                # Fallback to monthly
-                filepath = data_dir_path / f"{symbol}_tipransk_real_730d.json"
+            filepath = None
+            granularity = None
 
-            if filepath.exists():
+            # Try interpolated daily first (534 candles, best for validation windows)
+            candidate = data_dir_path / f"{symbol}_interpolated_daily_534d.json"
+            if candidate.exists():
+                filepath = candidate
+                granularity = "interpolated daily (534)"
+
+            # Fallback to weekly (27 candles, 6 months)
+            if not filepath:
+                candidate = data_dir_path / f"{symbol}_tipransk_weekly_6m.json"
+                if candidate.exists():
+                    filepath = candidate
+                    granularity = "weekly (27)"
+
+            # Fallback to monthly (25 candles, 2 years)
+            if not filepath:
+                candidate = data_dir_path / f"{symbol}_tipransk_real_730d.json"
+                if candidate.exists():
+                    filepath = candidate
+                    granularity = "monthly (25)"
+
+            if filepath and filepath.exists():
                 try:
                     with open(filepath) as f:
                         data = json.load(f)
                         self.datasets[symbol] = data["candles"]
-                        granularity = "weekly" if "weekly" in str(filepath) else "monthly"
                         logger.info(f"Loaded {len(data['candles'])} {granularity} candles for {symbol}")
                 except Exception as e:
                     logger.error(f"Failed to load {symbol}: {e}")
