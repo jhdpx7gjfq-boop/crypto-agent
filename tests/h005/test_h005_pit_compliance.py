@@ -7,14 +7,14 @@ import pytest
 import pandas as pd
 import numpy as np
 from pathlib import Path
-
-# Assuming H-005 modules in src/research/h005
 import sys
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "research" / "h005"))
 
-from h005_data_layer import H005DataLayer
-from h005_feature_engineering import ExchangeFlowFeatures, H005SignalGenerator
-from h005_runner import H005WFVRunner
+# Add src to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+from src.research.h005.h005_data_layer import H005DataLayer
+from src.research.h005.h005_feature_engineering import ExchangeFlowFeatures, H005SignalGenerator
+from src.research.h005.h005_runner import H005WFVRunner
 
 
 class TestH005PITCompliance:
