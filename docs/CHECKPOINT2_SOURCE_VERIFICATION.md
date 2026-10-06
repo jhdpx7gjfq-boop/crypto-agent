@@ -102,10 +102,25 @@ ts = datetime.fromisoformat(ts_str.replace("Z", "+00:00"))
 
 ## Next Steps
 
+### Governance: No C3–C6 Unlocking Until Real C2 Pass
+
+**Current State**:
+- Framework: ✅ **PASS** (32 tests validating logic)
+- Live CoinDesk execution: ⏳ **PENDING** (requires API key)
+
+**Decision Gate**: C3–C6 remain **BLOCKED** until:
+1. `COINDESK_API_KEY` injected into test environment
+2. Both integration tests execute (HTTP 200 + full payload validation)
+3. Proof of live API response stored (audit trail)
+4. C2 status updates to **VERIFIED LIVE**
+
+**No code changes** until this gate passes. Framework is complete; proof is pending.
+
 ### When API Key Becomes Available
 ```bash
 export COINDESK_API_KEY="your_pro_or_enterprise_key"
 pytest tests/integration/test_checkpoint2_historical_access.py::TestCheckpoint2HistoricalAccess::test_historical_access_with_real_key -v
+pytest tests/integration/test_checkpoint2_historical_access.py::TestCheckpoint2HistoricalAccess::test_all_assets_validation_with_real_key -v
 ```
 
 ### Expected C2 PASS Criteria
